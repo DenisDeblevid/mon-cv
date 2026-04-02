@@ -3,102 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Denis DEBLEVID - CV Interactif</title>
+    <title>Denis DEBLEVID | Business & Leadership</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #2980b9;
-            --text: #333;
-            --bg: #f4f7f6;
+            --gold: #c5a059;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --grey: #a0a0a0;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: grid; grid-template-columns: 300px 1fr; border-radius: 8px; overflow: hidden; }
+        body { margin: 0; font-family: 'Inter', -apple-system, sans-serif; background: var(--dark); color: var(--light); line-height: 1.6; }
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%); padding: 20px; }
+        .card { max-width: 1000px; width: 100%; display: flex; background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
-        /* Colonne de Gauche */
-        .sidebar { background: var(--primary); color: white; padding: 30px; }
-        .sidebar h2 { border-bottom: 2px solid var(--accent); padding-bottom: 10px; font-size: 1.2rem; margin-top: 30px; }
-        .contact-link { color: #bdc3c7; text-decoration: none; display: block; margin: 10px 0; transition: 0.3s; }
-        .contact-link:hover { color: white; transform: translateX(5px); }
-        .tag { background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px; display: inline-block; margin: 3px; font-size: 0.85rem; }
+        .sidebar { width: 35%; background: rgba(0,0,0,0.2); padding: 40px; border-right: 1px solid rgba(255,255,255,0.1); }
+        .content { width: 65%; padding: 50px; overflow-y: auto; max-height: 85vh; }
 
-        /* Colonne de Droite */
-        .main { padding: 40px; }
-        h1 { margin: 0; color: var(--primary); font-size: 2.5rem; }
-        .subtitle { color: var(--accent); font-weight: bold; font-size: 1.1rem; margin-bottom: 20px; display: block; }
-        .quote { font-style: italic; border-left: 4px solid var(--accent); padding-left: 15px; margin: 20px 0; color: #555; }
+        h1 { font-size: 2.5rem; margin: 0; letter-spacing: -1px; color: var(--light); }
+        .tagline { color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 30px; display: block; }
         
-        section { margin-bottom: 30px; }
-        h3 { color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .exp-item { margin-bottom: 20px; }
-        .exp-title { font-weight: bold; color: var(--text); display: flex; justify-content: space-between; }
-        .date { color: var(--accent); font-size: 0.9rem; }
+        .section-title { color: var(--gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 40px; border-bottom: 1px solid rgba(197, 160, 89, 0.3); padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .contact-item { margin-bottom: 15px; font-size: 0.9rem; }
+        .contact-item i { color: var(--gold); margin-right: 10px; width: 20px; }
+        .contact-item a { color: var(--light); text-decoration: none; transition: 0.3s; }
+        .contact-item a:hover { color: var(--gold); }
 
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+        .btn { display: inline-block; padding: 12px 30px; background: var(--gold); color: var(--dark); text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); }
+
+        .exp-box { margin-bottom: 25px; }
+        .exp-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .exp-year { color: var(--gold); font-weight: bold; font-size: 0.8rem; }
+        .skill-badge { display: inline-block; border: 1px solid var(--grey); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; margin: 4px; color: var(--grey); }
+
+        @media (max-width: 850px) {
+            .card { flex-direction: column; }
+            .sidebar, .content { width: 100%; max-height: none; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="sidebar">
-        <h2>CONTACT</h2>
-        <a href="tel:+33783038800" class="contact-link"><i class="fas fa-phone"></i> 07 83 03 88 00</a>
-        <a href="mailto:denisdeblevidcontact@gmail.com" class="contact-link"><i class="fas fa-envelope"></i> Email</a>
-        <a href="https://www.linkedin.com/in/denisdeblevid" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <p><i class="fas fa-map-marker-alt"></i> 13012 Marseille<br>Permis A, C (Mobilité)</p>
+<div class="hero">
+    <div class="card">
+        <div class="sidebar">
+            <div style="width: 80px; height: 4px; background: var(--gold); margin-bottom: 20px;"></div>
+            <h1>Denis<br>DEBLEVID</h1>
+            <span class="tagline">Strategy & Business</span>
+            
+            <div class="section-title">Contact</div>
+            <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+33783038800">07 83 03 88 00</a></div>
+            <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:denisdeblevidcontact@gmail.com">denisdeblevidcontact@gmail.com</a></div>
+            <div class="contact-item"><i class="fab fa-linkedin"></i><a href="https://www.linkedin.com/in/denisdeblevid" target="_blank">LinkedIn Profile</a></div>
+            <div class="contact-item"><i class="fas fa-map-marker-alt"></i>Marseille, France</div>
 
-        <h2>LANGUES</h2>
-        <p>Français (C) • Anglais (I) • Espagnol (I)</p>
+            <div class="section-title">Atouts</div>
+            <div class="skill-badge">Stoïcisme</div>
+            <div class="skill-badge">Arts Martiaux</div>
+            <div class="skill-badge">Négociation</div>
+            <div class="skill-badge">Leadership</div>
+            
+            <a href="mailto:denisdeblevidcontact@gmail.com" class="btn">DISPONIBLE</a>
+        </div>
 
-        <h2>SOFT SKILLS</h2>
-        <span class="tag">Négociation</span> <span class="tag">Prospection</span> 
-        <span class="tag">Stoïcisme</span> <span class="tag">Écoute active</span>
-        <span class="tag">Agilité</span> <span class="tag">Analyse Transactionnelle</span>
+        <div class="content">
+            <p style="font-size: 1.1rem; color: #ccc; border-left: 2px solid var(--gold); padding-left: 20px;">
+                "Transformer le capital humain en levier de croissance par l'excellence relationnelle."
+            </p>
 
-        <h2>ENGAGEMENTS</h2>
-        <p style="font-size: 0.9rem;">Expert psychologie de l'attention • Professeur d'Arts Martiaux • Père de 9 enfants (Collectif)</p>
-    </div>
+            <div class="section-title">Expertise Singulière</div>
+            <p><strong>Maîtrise de l'attention :</strong> Ancien prestidigitateur, j'utilise les mécanismes cognitifs pour lever les résistances et faciliter la décision en haute négociation.</p>
 
-    <div class="main">
-        <h1>Denis DEBLEVID</h1>
-        <span class="subtitle">Management • Relations & Business • Expertise Formation</span>
-        
-        <p><strong>Profil Stratégique :</strong> Piloter l'excellence relationnelle pour sécuriser la performance et transformer le capital humain en levier de croissance.</p>
-
-        <section>
-            <h3><i class="fas fa-magic"></i> Expertise Singulière</h3>
-            <p><strong>Ancien Prestidigitateur :</strong> Maîtrise des mécanismes de l'attention pour captiver, lever les résistances et faciliter la décision en négociation.</p>
-        </section>
-
-        <section>
-            <h3><i class="fas fa-briefcase"></i> Expériences</h3>
-            <div class="exp-item">
-                <div class="exp-title">Entrepreneur & Consultant <span class="date">2013 — Présent</span></div>
-                <small>Vente Directe B2B/B2C, Négociation, Fidélisation Premium.</small>
+            <div class="section-title">Expériences Clefs</div>
+            
+            <div class="exp-box">
+                <div class="exp-header">
+                    <strong>Consultant Commercial & Entrepreneur</strong>
+                    <span class="exp-year">2013 — 2026</span>
+                </div>
+                <small style="color: var(--grey);">Stratégie de vente B2B/B2C & Fidélisation Premium.</small>
             </div>
-            <div class="exp-item">
-                <div class="exp-title">Direction de projets <span class="date">1994 — 2024</span></div>
-                <small>Ingénierie de formation, pilotage de structures socio-culturelles.</small>
-            </div>
-            <div class="exp-item">
-                <div class="exp-title">Maître d'Hôtel VIP <span class="date">1990 — 2013</span></div>
-                <small>Hôtellerie de luxe, management d'équipes (2 à 30 pers).</small>
-            </div>
-        </section>
 
-        <section>
-            <h3><i class="fas fa-graduation-cap"></i> Formations</h3>
-            <ul>
-                <li>Bachelor Responsable Commercial (Niv. 6 - En cours)</li>
-                <li>BTS Négociation & Digitalisation (Niv. 5 - En cours)</li>
-                <li>CQP Formateur Adultes (Certifié)</li>
-            </ul>
-        </section>
+            <div class="exp-box">
+                <div class="exp-header">
+                    <strong>Direction de Projets Formation</strong>
+                    <span class="exp-year">1994 — 2024</span>
+                </div>
+                <small style="color: var(--grey);">Ingénierie de projets complexes et management d'équipes.</small>
+            </div>
 
-        <div class="quote">« Le courage n'attend jamais la permission. »</div>
-        
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="https://www.linkedin.com/in/denisdeblevid" style="background: var(--accent); color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">ME CONTACTER SUR LINKEDIN</a>
+            <div class="exp-box">
+                <div class="exp-header">
+                    <strong>Hôtellerie de Luxe (VIP)</strong>
+                    <span class="exp-year">1990 — 2013</span>
+                </div>
+                <small style="color: var(--grey);">Maître d'Hôtel : Excellence de service sous haute pression.</small>
+            </div>
+
+            <div class="section-title">Cursus</div>
+            <p style="font-size: 0.85rem; color: #ccc;">
+                • Bachelor Responsable Commercial (Niv. 6)<br>
+                • BTS Négociation et Digitalisation (Niv. 5)<br>
+                • CQP Formateur Professionnel d'Adultes
+            </p>
+
+            <p style="margin-top: 40px; font-style: italic; font-size: 0.8rem; color: var(--grey);">
+                « Le courage n'attend jamais la permission. »
+            </p>
         </div>
     </div>
 </div>
