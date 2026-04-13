@@ -148,17 +148,17 @@
 
         /* Bandeau horizontal */
         .citation-img {
-            width: 100%; max-width: 600px; height: 180px;
+            width: 100%; max-width: 600px; height: 240px;
             overflow: hidden; margin-bottom: 36px;
             border-top: 1px solid rgba(197,160,89,0.2);
             border-bottom: 1px solid rgba(197,160,89,0.2);
         }
         .citation-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(40%) contrast(1.1) brightness(0.85); }
-        #img-ma1 { object-position: center 15%; }
-        #img-ma2 { object-position: center 5%; filter: grayscale(50%) contrast(1.3) brightness(0.8); }
-        #img-s1  { object-position: center 25%; }
-        #img-s2  { object-position: center 20%; }
-        #img-s3  { object-position: center 35%; }
+        #img-ma1 { object-position: center 25%; filter: grayscale(30%) contrast(1.1) brightness(0.9); }
+        #img-ma2 { object-position: center 35%; filter: grayscale(50%) contrast(1.2) brightness(0.85); }
+        #img-s1  { object-position: center 30%; }
+        #img-s2  { object-position: center 15%; }
+        #img-s3  { object-position: center 40%; filter: grayscale(20%) contrast(1.1) brightness(0.9); }
 
         .citation-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-style: italic; font-weight: 300; color: var(--white); line-height: 1.6; margin-bottom: 24px; position: relative; max-width: 680px; }
         .citation-text::before { content: '"'; font-size: 5rem; color: rgba(197,160,89,0.15); position: absolute; top: -30px; left: -20px; font-family: 'Cormorant Garamond', serif; line-height: 1; }
@@ -268,7 +268,7 @@
     <!-- RGPD BANDEAU -->
     <div class="rgpd-banner" id="rgpd-banner">
         <p class="rgpd-text">
-            <strong>Ce site respecte votre vie privée.</strong> Nous utilisons uniquement des cookies techniques nécessaires au bon fonctionnement du site. Aucune donnée n'est transmise à des tiers à des fins publicitaires. En continuant votre navigation, vous acceptez leur utilisation. <a href="mailto:denisdeblevidcontact@gmail.com">En savoir plus</a>
+            <strong>Ce site respecte votre vie privée.</strong> Nous utilisons uniquement des cookies techniques nécessaires au bon fonctionnement du site. Aucune donnée n'est transmise à des tiers à des fins publicitaires. En continuant votre navigation, vous acceptez leur utilisation. <a href="/cdn-cgi/l/email-protection#fa9e9f9493899e9f98969f8c939e9995948e9b998eba9d979b9396d4999597">En savoir plus</a>
         </p>
         <div class="rgpd-buttons">
             <button class="rgpd-refuse" id="rgpd-refuse">Refuser</button>
@@ -560,7 +560,7 @@
                         <p class="citation-author">Épictète · Manuel</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img id="img-s3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien3_avif.webp" alt="Stoïcien"></div>
+                        <div class="citation-img"><img id="img-s3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/Logo-Vertus-Stoiciennes-2.jpg" alt="Vertus Stoïciennes"></div>
                         <p class="citation-text">Retire-toi en toi-même autant que tu peux. Fréquente ceux qui sont susceptibles de te rendre meilleur.</p>
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
@@ -625,7 +625,7 @@
         <div class="footer-copy">© 2026 Denis Deblevid · Marseille</div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // RGPD
         const banner = document.getElementById('rgpd-banner');
         const consent = localStorage.getItem('rgpd-consent');
@@ -726,9 +726,4 @@
             const mailto = `mailto:denisdeblevidcontact@gmail.com?subject=Demande de devis — ${presta}&body=Prénom : ${prenom}%0ANom : ${nom}%0AEmail : ${email}%0ATéléphone : ${tel}%0APrestation : ${presta}%0AMessage : ${msg}%0ADisponibilités : ${dispo}`;
             window.location.href = mailto;
             document.getElementById('form-content').style.display = 'none';
-            document.getElementById('success-name').textContent = prenom;
-            document.getElementById('form-success').style.display = 'block';
-        });
-    </script>
-</body>
-</html>
+            document.getElementB
