@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denis Deblevid | Consultant · Formateur & Coach</title>
+    <meta name="description" content="Denis Deblevid — Consultant, Formateur & Coach. Relations Humaines & Business. Je pose les bonnes questions. Vous trouvez vos réponses.">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --gold-light: #d4b97a;
+            --gold-dim: rgba(197, 160, 89, 0.15);
+            --black: #080808;
+            --dark: #111111;
+            --darker: #0d0d0d;
+            --white: #ffffff;
+            --gray: #888888;
+            --soft: #cccccc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ─── CURSEUR ─── */
+        .cursor {
+            width: 8px; height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease;
+        }
+        .cursor-ring {
+            width: 32px; height: 32px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            opacity: 0.7;
+        }
+
+        /* ─── NAVIGATION ─── */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 20px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(8,8,8,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(197,160,89,0.12);
+            z-index: 1000;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-cta {
+            padding: 9px 20px;
+            border: 1px solid rgba(197,160,89,0.4);
+            color: var(--gold) !important;
+            transition: all 0.3s !important;
+        }
+        .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
+
+        /* ─── SÉPARATEUR ─── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.25), transparent);
+            margin: 0 60px;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 60px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(197,160,89,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.3), transparent);
+        }
+        .hero-card {
+            display: flex; flex-direction: column; align-items: center;
+            max-width: 780px; width: 100%;
+        }
+        .hero-top {
+            display: flex; flex-direction: row; align-items: center;
+            gap: 60px; width: 100%; margin-bottom: 40px;
+            animation: fadeIn 0.8s ease both;
+        }
+        .photo-circle {
+            width: 160px; height: 160px; border-radius: 50%; overflow: hidden;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 0 6px rgba(197,160,89,0.1), 0 0 40px rgba(197,160,89,0.12);
+            flex-shrink: 0;
+        }
+        .photo-circle img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center top;
+            filter: grayscale(15%) contrast(1.05);
+        }
+        .hero-identity { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+        .hero-tag {
+            font-size: 0.63rem; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--gold); border: 1px solid rgba(197,160,89,0.3);
+            padding: 5px 14px; margin-bottom: 16px;
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 4.5vw, 5rem);
+            font-weight: 300; line-height: 1.0; letter-spacing: -1px;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+        .hero-name span { color: var(--gold); font-style: italic; }
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 2vw, 1.45rem);
+            font-style: italic; color: var(--soft); font-weight: 300; line-height: 1.6;
+            margin-bottom: 40px; padding: 16px 28px; text-align: center; width: 100%;
+            border-top: 1px solid rgba(197,160,89,0.2);
+            border-bottom: 1px solid rgba(197,160,89,0.2);
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+        .hero-contacts {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 16px 32px; margin-bottom: 40px;
+            animation: fadeUp 0.8s 0.4s ease both;
+        }
+        .contact-line {
+            display: flex; align-items: center; gap: 10px;
+            color: var(--gray); font-size: 0.82rem;
+            text-decoration: none; transition: color 0.3s;
+        }
+        .contact-line:hover { color: var(--gold); }
+        .contact-icon {
+            width: 30px; height: 30px;
+            border: 1px solid rgba(197,160,89,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); flex-shrink: 0; transition: all 0.3s;
+        }
+        .contact-line:hover .contact-icon { background: var(--gold-dim); border-color: var(--gold); }
+        .hero-btn {
+            display: inline-flex; align-items: center; gap: 12px;
+            padding: 15px 36px; background: var(--gold); color: var(--black);
+            text-decoration: none; font-size: 0.73rem; font-weight: 600;
+            letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.3s;
+            animation: fadeUp 0.8s 0.5s ease both;
+        }
+        .hero-btn:hover { background: var(--gold-light); transform: translateX(4px); }
+        .hero-btn svg { transition: transform 0.3s; }
+        .hero-btn:hover svg { transform: translateX(4px); }
+
+        /* ─── SECTIONS COMMUNES ─── */
+        .section-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: 60px; }
+        .section-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem; color: rgba(197,160,89,0.12);
+            font-weight: 300; line-height: 1;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem; font-weight: 300; color: var(--white);
+        }
+        .section-title span { color: var(--gold); font-style: italic; }
+        .section-intro {
+            font-size: 0.95rem; color: var(--gray);
+            line-height: 1.9; font-weight: 300;
+            max-width: 700px; margin-bottom: 50px;
+        }
+        .section-intro strong { color: var(--soft); font-weight: 500; }
+
+        /* ─── PARCOURS ─── */
+        #parcours { padding: 100px 60px; background: var(--darker); position: relative; }
+        #parcours::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(197,160,89,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .parcours-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+        }
+        .parcours-left { }
+        .parcours-text { font-size: 0.93rem; color: var(--gray); line-height: 1.9; font-weight: 300; margin-bottom: 20px; }
+        .parcours-text strong { color: var(--soft); font-weight: 500; }
+        .parcours-atouts {
+            display: flex; flex-direction: column; gap: 16px; margin-top: 40px;
+        }
+        .atout {
+            display: flex; gap: 20px; align-items: flex-start;
+            padding: 20px 24px;
+            border: 1px solid rgba(197,160,89,0.1);
+            transition: all 0.3s;
+        }
+        .atout:hover { border-color: rgba(197,160,89,0.3); background: var(--gold-dim); }
+        .atout-icon {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem; color: var(--gold);
+            font-style: italic; line-height: 1; flex-shrink: 0;
+        }
+        .atout-content h4 { color: var(--soft); font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .atout-content p { color: var(--gray); font-size: 0.82rem; line-height: 1.7; font-weight: 300; }
+
+        /* ─── PRESTATIONS ─── */
+        #prestations { padding: 100px 60px; }
+        .presta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+        .presta-card {
+            background: var(--darker);
+            padding: 48px 36px;
+            border: 1px solid rgba(197,160,89,0.06);
+            position: relative; overflow: hidden;
+            transition: all 0.4s;
+            display: flex; flex-direction: column;
+        }
+        .presta-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 2px; background: var(--gold);
+            transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+        }
+        .presta-card:hover { background: #141414; }
+        .presta-card:hover::before { transform: scaleX(1); }
+        .presta-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem; color: rgba(197,160,89,0.07);
+            font-weight: 300; line-height: 1; margin-bottom: 20px;
+        }
+        .presta-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem; font-weight: 400;
+            color: var(--gold); margin-bottom: 8px; line-height: 1.2;
+        }
+        .presta-subtitle {
+            font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--gray); margin-bottom: 20px;
+        }
+        .presta-line { width: 30px; height: 1px; background: var(--gold); margin-bottom: 20px; transition: width 0.4s; }
+        .presta-card:hover .presta-line { width: 55px; }
+        .presta-text { font-size: 0.86rem; color: var(--gray); line-height: 1.8; font-weight: 300; flex: 1; }
+        .presta-items { list-style: none; margin: 16px 0; }
+        .presta-items li {
+            font-size: 0.82rem; color: var(--gray); padding: 6px 0;
+            border-bottom: 1px solid rgba(197,160,89,0.06);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .presta-items li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+        .presta-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 28px; padding: 12px 24px;
+            border: 1px solid rgba(197,160,89,0.4);
+            color: var(--gold); text-decoration: none;
+            font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.3s; align-self: flex-start;
+        }
+        .presta-btn:hover { background: var(--gold); color: var(--black); }
+
+        /* ─── CITATIONS CARROUSEL ─── */
+        #citations { padding: 100px 60px; background: var(--darker); position: relative; overflow: hidden; }
+        #citations::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(197,160,89,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .carousel-wrap { position: relative; max-width: 900px; margin: 0 auto; }
+        .carousel-track { overflow: hidden; }
+        .carousel-slides { display: flex; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .citation-slide {
+            min-width: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; padding: 20px 40px;
+        }
+        .citation-img {
+            width: 120px; height: 120px; border-radius: 50%;
+            overflow: hidden; border: 1px solid rgba(197,160,89,0.3);
+            margin-bottom: 36px; flex-shrink: 0;
+        }
+        .citation-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%) contrast(1.1); }
+        .citation-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-style: italic; font-weight: 300;
+            color: var(--white); line-height: 1.5;
+            margin-bottom: 24px; position: relative;
+        }
+        .citation-text::before {
+            content: '"';
+            font-size: 5rem; color: rgba(197,160,89,0.15);
+            position: absolute; top: -30px; left: -20px;
+            font-family: 'Cormorant Garamond', serif; line-height: 1;
+        }
+        .citation-author {
+            font-size: 0.72rem; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--gold);
+        }
+        .carousel-controls {
+            display: flex; justify-content: center; align-items: center;
+            gap: 16px; margin-top: 48px;
+        }
+        .carousel-btn {
+            width: 44px; height: 44px;
+            border: 1px solid rgba(197,160,89,0.3);
+            background: transparent; color: var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+        }
+        .carousel-btn:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+        .carousel-dots { display: flex; gap: 8px; }
+        .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: rgba(197,160,89,0.3); transition: all 0.3s;
+        }
+        .dot.active { background: var(--gold); width: 20px; border-radius: 3px; }
+
+        /* ─── CONTACT ─── */
+        #contact { padding: 100px 60px; }
+        .contact-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+        .contact-left { }
+        .contact-info { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
+        .contact-item {
+            display: flex; gap: 16px; align-items: flex-start;
+            padding: 18px 20px;
+            border: 1px solid rgba(197,160,89,0.1);
+            transition: all 0.3s;
+        }
+        .contact-item:hover { border-color: rgba(197,160,89,0.3); background: var(--gold-dim); }
+        .contact-item-icon {
+            width: 36px; height: 36px;
+            border: 1px solid rgba(197,160,89,0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); flex-shrink: 0;
+        }
+        .contact-item-text { }
+        .contact-item-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+        .contact-item-value { font-size: 0.88rem; color: var(--soft); }
+        .contact-item-value a { color: var(--soft); text-decoration: none; transition: color 0.3s; }
+        .contact-item-value a:hover { color: var(--gold); }
+        .social-row { display: flex; gap: 12px; margin-top: 32px; }
+        .social-btn {
+            width: 44px; height: 44px;
+            border: 1px solid rgba(197,160,89,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gray); text-decoration: none; transition: all 0.3s;
+        }
+        .social-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+        .calendar-wrap {
+            background: var(--white); padding: 4px;
+            border: 1px solid rgba(197,160,89,0.2);
+        }
+        .calendar-wrap iframe { width: 100%; height: 620px; border: none; display: block; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 44px 60px;
+            border-top: 1px solid rgba(197,160,89,0.12);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .footer-logo { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+        .footer-links { display: flex; gap: 28px; }
+        .footer-links a { color: var(--gray); text-decoration: none; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ─── MOBILE ─── */
+        @media (max-width: 900px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .hero { padding: 90px 24px 60px; }
+            .hero-top { flex-direction: column; gap: 24px; text-align: center; }
+            .hero-identity { align-items: center; text-align: center; }
+            .divider { margin: 0 24px; }
+            #parcours { padding: 60px 24px; }
+            .parcours-grid { grid-template-columns: 1fr; gap: 40px; }
+            #prestations { padding: 60px 24px; }
+            .presta-grid { grid-template-columns: 1fr; }
+            #citations { padding: 60px 24px; }
+            .citation-slide { padding: 20px 10px; }
+            #contact { padding: 60px 24px; }
+            .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+            footer { padding: 36px 24px; flex-direction: column; gap: 18px; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+            * { cursor: auto; }
+            .cursor, .cursor-ring { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#" class="logo">Denis Deblevid</a>
+        <div class="nav-links">
+            <a href="#parcours">Parcours</a>
+            <a href="#prestations">Prestations</a>
+            <a href="#citations">Citations</a>
+            <a href="#contact" class="nav-cta">Prendre RDV</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-card">
+            <div class="hero-top">
+                <div class="photo-circle">
+                    <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/6869282c30c23b6a92e4caf6fa110a766cfe5e15/denis-deblevid.jpg" alt="Denis Deblevid">
+                </div>
+                <div class="hero-identity">
+                    <div class="hero-tag">Consultant · Formateur & Coach · Relations Humaines & Business</div>
+                    <h1 class="hero-name">Denis<br><span>Deblevid</span></h1>
+                </div>
+            </div>
+            <p class="hero-tagline">Je pose les bonnes questions.<br>Vous trouvez vos réponses.</p>
+            <div class="hero-contacts">
+                <a href="tel:+33783038800" class="contact-line">
+                    <div class="contact-icon">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+                    </div>
+                    +33 7 83 03 88 00
+                </a>
+                <a href="#" id="email-link" class="contact-line">
+                    <div class="contact-icon">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <span id="email-display"></span>
+                </a>
+                <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank" class="contact-line">
+                    <div class="contact-icon">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    </div>
+                    linkedin.com/in/denisdeblevid
+                </a>
+            </div>
+            <a href="#contact" class="hero-btn">
+                Planifier un échange
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+            </a>
+        </div>
+    </header>
+
+    <div class="divider"></div>
+
+    <!-- PARCOURS -->
+    <section id="parcours">
+        <div class="section-header reveal">
+            <span class="section-num">01</span>
+            <h2 class="section-title">Parcours & <span>Valeur</span></h2>
+        </div>
+        <div class="parcours-grid">
+            <div class="parcours-left">
+                <p class="parcours-text reveal">
+                    <strong>Trente ans de terrain réel.</strong> Pas de parcours linéaire — une vie dense, construite par les expériences, les chutes et les reconstructions. De l'hôtellerie de luxe à Marseille aux scènes de prestidigitation, des salles de sport aux salles de formation, chaque étape a forgé une compréhension profonde et incarnée de l'être humain.
+                </p>
+                <p class="parcours-text reveal">
+                    Ce que la vie m'a appris sur les autres — et que les formations seules ne peuvent pas enseigner. Je connais vos problématiques de l'intérieur, parce que j'en ai traversé l'essentiel.
+                </p>
+                <p class="parcours-text reveal">
+                    Ancré dans la <strong>philosophie stoïcienne</strong> et l'<strong>Analyse Transactionnelle</strong>, ma pratique est celle du prokoptôn — celui qui progresse, qui transmet ce qu'il vit, et non ce qu'il a lu.
+                </p>
+            </div>
+            <div class="parcours-atouts">
+                <div class="atout reveal">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>L'art de la magie — psychologie de l'attention</h4>
+                        <p>Ancien prestidigitateur professionnel, je maîtrise les mécanismes de perception et d'attention. Cette expertise rare me permet de capter, de lever les résistances et de faciliter la décision là où les méthodes classiques échouent.</p>
+                    </div>
+                </div>
+                <div class="atout reveal">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>La rigueur stoïcienne — stabilité décisionnelle</h4>
+                        <p>La philosophie du Portique comme outil concret de discernement. Dans les environnements sous pression, cette discipline intérieure apporte une clarté et une stabilité que ni la motivation ni l'enthousiasme ne peuvent garantir.</p>
+                    </div>
+                </div>
+                <div class="atout reveal">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>La maïeutique — faire émerger vos réponses</h4>
+                        <p>Je ne donne pas de réponses. Je pose les bonnes questions. Héritée de Socrate, enrichie par l'Analyse Transactionnelle, cette approche transforme durablement les individus et les collectifs.</p>
+                    </div>
+                </div>
+                <div class="atout reveal">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>20 ans de terrain en hôtellerie & restauration</h4>
+                        <p>L'excellence relationnelle dans des environnements exigeants. La gestion d'équipes sous pression, la culture du service premium et la maîtrise de la relation client sont des fondations concrètes, pas des concepts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- PRESTATIONS -->
+    <section id="prestations">
+        <div class="section-header reveal">
+            <span class="section-num">02</span>
+            <h2 class="section-title">Mes <span>Prestations</span></h2>
+        </div>
+        <div class="presta-grid">
+
+            <!-- Formation & Coaching -->
+            <div class="presta-card reveal">
+                <div class="presta-num">01</div>
+                <h3 class="presta-title">Formation<br>& Coaching</h3>
+                <p class="presta-subtitle">Individuel · Groupe · Présentiel · Distanciel</p>
+                <div class="presta-line"></div>
+                <p class="presta-text">Accompagner les personnes à se comprendre, à communiquer mieux et à progresser — seules ou en équipe. Des formations concrètes, adaptées à chaque public, ancrées dans la réalité du terrain.</p>
+                <ul class="presta-items">
+                    <li>Communication relationnelle & interpersonnelle</li>
+                    <li>Prévention & gestion des conflits</li>
+                    <li>Leadership & cohésion d'équipe</li>
+                    <li>Développement personnel & professionnel</li>
+                    <li>Coaching individuel sur mesure</li>
+                </ul>
+                <a href="#contact" class="presta-btn">
+                    Demander un devis
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+                </a>
+            </div>
+
+            <!-- Consultant -->
+            <div class="presta-card reveal">
+                <div class="presta-num">02</div>
+                <h3 class="presta-title">Consultant<br>& Stratégie</h3>
+                <p class="presta-subtitle">Communication · Management · Business</p>
+                <div class="presta-line"></div>
+                <p class="presta-text">Voir là où personne ne regarde. Diagnostiquer les enjeux cachés, aligner l'humain avec la stratégie, accompagner les dirigeants dans leurs décisions complexes.</p>
+                <ul class="presta-items">
+                    <li>Diagnostic organisationnel & humain</li>
+                    <li>Stratégie de communication</li>
+                    <li>Accompagnement au changement</li>
+                    <li>Conseil en management & leadership</li>
+                    <li>Connecteur stratégique</li>
+                </ul>
+                <a href="#contact" class="presta-btn">
+                    Demander un devis
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+                </a>
+            </div>
+
+            <!-- Mise en relation -->
+            <div class="presta-card reveal">
+                <div class="presta-num">03</div>
+                <h3 class="presta-title">Mise en Relation<br>& Développement</h3>
+                <p class="presta-subtitle">Personnes · Entreprises · Partenariats</p>
+                <div class="presta-line"></div>
+                <p class="presta-text">Créer des connexions utiles, durables et alignées. Ouvrir des portes là où les méthodes classiques échouent, sécuriser les alliances et transformer vos relations en véritables actifs.</p>
+                <ul class="presta-items">
+                    <li>Apporteur d'affaires & connecteur</li>
+                    <li>Identification de synergies</li>
+                    <li>Création de partenariats durables</li>
+                    <li>Accompagnement réseau & développement</li>
+                    <li>Mise en relation ciblée B2B & B2C</li>
+                </ul>
+                <a href="#contact" class="presta-btn">
+                    Demander un devis
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CITATIONS CARROUSEL -->
+    <section id="citations">
+        <div class="section-header reveal" style="justify-content:center; text-align:center; flex-direction:column; gap:8px;">
+            <h2 class="section-title">Sagesse <span>Stoïcienne</span></h2>
+        </div>
+        <div class="carousel-wrap reveal">
+            <div class="carousel-track">
+                <div class="carousel-slides" id="slides">
+
+                    <div class="citation-slide">
+                        <div class="citation-img">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Seneca-berlinAntikesammlung.jpg/440px-Seneca-berlinAntikesammlung.jpg" alt="Sénèque">
+                        </div>
+                        <p class="citation-text">Ce n'est pas parce que les choses sont difficiles que nous n'osons pas — c'est parce que nous n'osons pas qu'elles sont difficiles.</p>
+                        <p class="citation-author">Sénèque · Lettres à Lucilius</p>
+                    </div>
+
+                    <div class="citation-slide">
+                        <div class="citation-img">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Marc_Aurel_Louvre_Ma1161.jpg/440px-Marc_Aurel_Louvre_Ma1161.jpg" alt="Marc Aurèle">
+                        </div>
+                        <p class="citation-text">L'obstacle sur le chemin devient le chemin. Jamais oublier cela dans les domaines qui nous résistent.</p>
+                        <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
+                    </div>
+
+                    <div class="citation-slide">
+                        <div class="citation-img">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Epiktetos.jpg/440px-Epiktetos.jpg" alt="Épictète">
+                        </div>
+                        <p class="citation-text">Ce qui trouble les hommes, ce ne sont pas les choses, mais les opinions qu'ils ont des choses.</p>
+                        <p class="citation-author">Épictète · Manuel</p>
+                    </div>
+
+                    <div class="citation-slide">
+                        <div class="citation-img">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Seneca-berlinAntikesammlung.jpg/440px-Seneca-berlinAntikesammlung.jpg" alt="Sénèque">
+                        </div>
+                        <p class="citation-text">Retire-toi en toi-même autant que tu peux. Fréquente ceux qui sont susceptibles de te rendre meilleur.</p>
+                        <p class="citation-author">Sénèque · Lettres à Lucilius</p>
+                    </div>
+
+                    <div class="citation-slide">
+                        <div class="citation-img">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Marc_Aurel_Louvre_Ma1161.jpg/440px-Marc_Aurel_Louvre_Ma1161.jpg" alt="Marc Aurèle">
+                        </div>
+                        <p class="citation-text">Commence le matin en te disant : aujourd'hui je rencontrerai des gens indiscrets, ingrats, arrogants — mais ils sont ainsi par ignorance du bien et du mal.</p>
+                        <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="prev">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+                </button>
+                <div class="carousel-dots" id="dots"></div>
+                <button class="carousel-btn" id="next">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="section-header reveal">
+            <span class="section-num">03</span>
+            <h2 class="section-title">Entrer en <span>Contact</span></h2>
+        </div>
+        <div class="contact-inner">
+            <div class="contact-left">
+                <p class="section-intro reveal">Un échange suffit souvent pour savoir si nous pouvons avancer ensemble. Choisissez directement un créneau dans mon agenda ou contactez-moi par l'un de ces canaux.</p>
+                <div class="contact-info">
+                    <div class="contact-item reveal">
+                        <div class="contact-item-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <div class="contact-item-label">Téléphone</div>
+                            <div class="contact-item-value"><a href="tel:+33783038800">+33 7 83 03 88 00</a></div>
+                        </div>
+                    </div>
+                    <div class="contact-item reveal">
+                        <div class="contact-item-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <div class="contact-item-label">Email</div>
+                            <div class="contact-item-value" id="contact-email-value"></div>
+                        </div>
+                    </div>
+                    <div class="contact-item reveal">
+                        <div class="contact-item-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <div class="contact-item-label">Localisation</div>
+                            <div class="contact-item-value">Marseille · France<br><span style="font-size:0.78rem;color:var(--gray);">Présentiel & Distanciel</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-row reveal">
+                    <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank" class="social-btn" title="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                    <!-- Facebook & Instagram désactivés pour le moment -->
+                </div>
+            </div>
+            <div class="calendar-wrap reveal">
+                <iframe src="https://koalendar.com/e/rencontrer-denis?embed=true" width="100%" height="620" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">Denis Deblevid</div>
+        <div class="footer-links">
+            <a href="#parcours">Parcours</a>
+            <a href="#prestations">Prestations</a>
+            <a href="#citations">Citations</a>
+            <a href="#contact">Contact</a>
+            <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank">LinkedIn</a>
+        </div>
+        <div class="footer-copy">© 2026 Denis Deblevid · Marseille</div>
+    </footer>
+
+    <script>
+        // Email anti-spam
+        const u = 'denisdeblevidcontact';
+        const d = 'gmail.com';
+        const email = u + '@' + d;
+        const el = document.getElementById('email-display');
+        const link = document.getElementById('email-link');
+        const contactVal = document.getElementById('contact-email-value');
+        if (el && link) { el.textContent = email; link.href = 'mailto:' + email; }
+        if (contactVal) { contactVal.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>'; }
+
+        // Curseur doré
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursorRing');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.left = mouseX - 4 + 'px';
+            cursor.style.top = mouseY - 4 + 'px';
+        });
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.5)'; });
+            el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; });
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Carrousel citations
+        const slides = document.getElementById('slides');
+        const dotsContainer = document.getElementById('dots');
+        const total = document.querySelectorAll('.citation-slide').length;
+        let current = 0;
+
+        // Créer les dots
+        for (let i = 0; i < total; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goTo(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        function goTo(n) {
+            current = (n + total) % total;
+            slides.style.transform = `translateX(-${current * 100}%)`;
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === current);
+            });
+        }
+
+        document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+        document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+
+        // Auto-play
+        setInterval(() => goTo(current + 1), 6000);
+    </script>
+</body>
+</html>
