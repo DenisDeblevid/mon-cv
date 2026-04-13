@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Denis Deblevid | Consultant · Formateur & Coach</title>
-    <meta name="description" content="Denis Deblevid — Consultant, Formateur & Coach. Relations Humaines & Business. Je pose les bonnes questions. Vous trouvez vos réponses.">
+    <meta name="description" content="Denis Deblevid — L'humain au cœur de tout ce que j'entreprends. Consultant, Formateur & Coach. Relations Humaines & Business.">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,130 +21,44 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--black);
-            color: var(--white);
-            overflow-x: hidden;
-        }
+        body { font-family: 'Outfit', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
 
         /* ─── CURSEUR ─── */
-        .cursor {
-            width: 8px; height: 8px;
-            background: var(--gold); border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9999;
-            transition: transform 0.15s ease;
-        }
-        .cursor-ring {
-            width: 32px; height: 32px;
-            border: 1.5px solid var(--gold); border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9998;
-            transform: translate(-50%, -50%); opacity: 0.7;
-        }
+        .cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; }
+        .cursor-ring { width: 32px; height: 32px; border: 1.5px solid var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); opacity: 0.7; }
 
         /* ─── NAVIGATION ─── */
-        nav {
-            position: fixed; top: 0; width: 100%;
-            padding: 20px 60px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(8,8,8,0.95); backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(197,160,89,0.12); z-index: 1000;
-        }
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--gold); font-size: 1.2rem; font-weight: 400;
-            letter-spacing: 3px; text-transform: uppercase; text-decoration: none;
-        }
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(197,160,89,0.12); z-index: 1000; }
+        .logo { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.2rem; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; }
         .nav-links { display: flex; gap: 32px; align-items: center; }
-        .nav-links a {
-            color: var(--gray); text-decoration: none; font-size: 0.7rem;
-            letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s;
-        }
+        .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s; }
         .nav-links a:hover { color: var(--gold); }
-        .nav-cta {
-            padding: 9px 20px; border: 1px solid rgba(197,160,89,0.4);
-            color: var(--gold) !important; transition: all 0.3s !important;
-        }
+        .nav-cta { padding: 9px 20px; border: 1px solid rgba(197,160,89,0.4); color: var(--gold) !important; transition: all 0.3s !important; }
         .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
 
         /* ─── SÉPARATEUR ─── */
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.25), transparent);
-            margin: 0 60px;
-        }
+        .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(197,160,89,0.25), transparent); margin: 0 60px; }
 
         /* ─── HERO ─── */
-        .hero {
-            min-height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            padding: 120px 60px 100px; position: relative; overflow: hidden;
-        }
-        .hero::before {
-            content: ''; position: absolute; top: -200px; right: -200px;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(197,160,89,0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero::after {
-            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.3), transparent);
-        }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 120px 60px 100px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(197,160,89,0.05) 0%, transparent 70%); pointer-events: none; }
+        .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(197,160,89,0.3), transparent); }
         .hero-card { display: flex; flex-direction: column; align-items: center; max-width: 780px; width: 100%; }
-        .hero-top {
-            display: flex; flex-direction: row; align-items: center;
-            gap: 60px; width: 100%; margin-bottom: 40px;
-            animation: fadeIn 0.8s ease both;
-        }
-        .photo-circle {
-            width: 160px; height: 160px; border-radius: 50%; overflow: hidden;
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 0 6px rgba(197,160,89,0.1), 0 0 40px rgba(197,160,89,0.12);
-            flex-shrink: 0;
-        }
+        .hero-top { display: flex; flex-direction: row; align-items: center; gap: 60px; width: 100%; margin-bottom: 40px; animation: fadeIn 0.8s ease both; }
+        .photo-circle { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); box-shadow: 0 0 0 6px rgba(197,160,89,0.1), 0 0 40px rgba(197,160,89,0.12); flex-shrink: 0; }
         .photo-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(15%) contrast(1.05); }
         .hero-identity { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
-        .hero-tag {
-            font-size: 0.63rem; letter-spacing: 2px; text-transform: uppercase;
-            color: var(--gold); border: 1px solid rgba(197,160,89,0.3);
-            padding: 5px 14px; margin-bottom: 16px; animation: fadeUp 0.8s 0.1s ease both;
-        }
-        .hero-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.8rem, 4.5vw, 5rem); font-weight: 300;
-            line-height: 1.0; letter-spacing: -1px; animation: fadeUp 0.8s 0.2s ease both;
-        }
+        .hero-phrase { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--soft); font-weight: 300; margin-bottom: 8px; animation: fadeUp 0.8s 0.05s ease both; }
+        .hero-tag { font-size: 0.63rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(197,160,89,0.3); padding: 5px 14px; margin-bottom: 16px; animation: fadeUp 0.8s 0.1s ease both; }
+        .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 4.5vw, 5rem); font-weight: 300; line-height: 1.0; letter-spacing: -1px; animation: fadeUp 0.8s 0.2s ease both; }
         .hero-name span { color: var(--gold); font-style: italic; }
-        .hero-tagline {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.1rem, 2vw, 1.45rem); font-style: italic;
-            color: var(--soft); font-weight: 300; line-height: 1.6;
-            margin-bottom: 40px; padding: 16px 28px; text-align: center; width: 100%;
-            border-top: 1px solid rgba(197,160,89,0.2); border-bottom: 1px solid rgba(197,160,89,0.2);
-            animation: fadeUp 0.8s 0.3s ease both;
-        }
-        .hero-contacts {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 16px 32px; margin-bottom: 40px; animation: fadeUp 0.8s 0.4s ease both;
-        }
-        .contact-line {
-            display: flex; align-items: center; gap: 10px;
-            color: var(--gray); font-size: 0.82rem; text-decoration: none; transition: color 0.3s;
-        }
+        .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2vw, 1.45rem); font-style: italic; color: var(--soft); font-weight: 300; line-height: 1.6; margin-bottom: 40px; padding: 16px 28px; text-align: center; width: 100%; border-top: 1px solid rgba(197,160,89,0.2); border-bottom: 1px solid rgba(197,160,89,0.2); animation: fadeUp 0.8s 0.3s ease both; }
+        .hero-contacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 32px; margin-bottom: 40px; animation: fadeUp 0.8s 0.4s ease both; }
+        .contact-line { display: flex; align-items: center; gap: 10px; color: var(--gray); font-size: 0.82rem; text-decoration: none; transition: color 0.3s; }
         .contact-line:hover { color: var(--gold); }
-        .contact-icon {
-            width: 30px; height: 30px; border: 1px solid rgba(197,160,89,0.2);
-            display: flex; align-items: center; justify-content: center;
-            color: var(--gold); flex-shrink: 0; transition: all 0.3s;
-        }
+        .contact-icon { width: 30px; height: 30px; border: 1px solid rgba(197,160,89,0.2); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; transition: all 0.3s; }
         .contact-line:hover .contact-icon { background: var(--gold-dim); border-color: var(--gold); }
-        .hero-btn {
-            display: inline-flex; align-items: center; gap: 12px;
-            padding: 15px 36px; background: var(--gold); color: var(--black);
-            text-decoration: none; font-size: 0.73rem; font-weight: 600;
-            letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.3s;
-            animation: fadeUp 0.8s 0.5s ease both;
-        }
+        .hero-btn { display: inline-flex; align-items: center; gap: 12px; padding: 15px 36px; background: var(--gold); color: var(--black); text-decoration: none; font-size: 0.73rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.3s; animation: fadeUp 0.8s 0.5s ease both; }
         .hero-btn:hover { background: var(--gold-light); transform: translateX(4px); }
         .hero-btn svg { transition: transform 0.3s; }
         .hero-btn:hover svg { transform: translateX(4px); }
@@ -157,19 +71,12 @@
 
         /* ─── PARCOURS ─── */
         #parcours { padding: 100px 60px; background: var(--darker); position: relative; }
-        #parcours::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(ellipse at 20% 50%, rgba(197,160,89,0.04) 0%, transparent 60%);
-            pointer-events: none;
-        }
+        #parcours::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 50%, rgba(197,160,89,0.04) 0%, transparent 60%); pointer-events: none; }
         .parcours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
         .parcours-text { font-size: 0.93rem; color: var(--gray); line-height: 1.9; font-weight: 300; margin-bottom: 20px; }
         .parcours-text strong { color: var(--soft); font-weight: 500; }
         .parcours-atouts { display: flex; flex-direction: column; gap: 16px; }
-        .atout {
-            display: flex; gap: 20px; align-items: flex-start;
-            padding: 20px 24px; border: 1px solid rgba(197,160,89,0.1); transition: all 0.3s;
-        }
+        .atout { display: flex; gap: 20px; align-items: flex-start; padding: 20px 24px; border: 1px solid rgba(197,160,89,0.1); transition: all 0.3s; }
         .atout:hover { border-color: rgba(197,160,89,0.3); background: var(--gold-dim); }
         .atout-icon { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); font-style: italic; line-height: 1; flex-shrink: 0; }
         .atout-content h4 { color: var(--soft); font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px; }
@@ -180,25 +87,11 @@
         .methode-intro { font-size: 0.95rem; color: var(--gray); line-height: 1.9; font-weight: 300; max-width: 700px; margin-bottom: 60px; }
         .methode-intro strong { color: var(--soft); font-weight: 500; }
         .methode-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-        .methode-card {
-            background: var(--darker); padding: 40px 28px;
-            border: 1px solid rgba(197,160,89,0.06);
-            position: relative; overflow: hidden; transition: all 0.4s;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-        }
-        .methode-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 2px; background: var(--gold);
-            transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
-        }
+        .methode-card { background: var(--darker); padding: 40px 28px; border: 1px solid rgba(197,160,89,0.06); position: relative; overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .methode-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
         .methode-card:hover { background: #141414; }
         .methode-card:hover::before { transform: scaleX(1); }
-        .methode-letter {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 4rem; color: var(--gold); font-weight: 300;
-            line-height: 1; margin-bottom: 16px; font-style: italic;
-            opacity: 0.8;
-        }
+        .methode-letter { font-family: 'Cormorant Garamond', serif; font-size: 4rem; color: var(--gold); font-weight: 300; line-height: 1; margin-bottom: 16px; font-style: italic; opacity: 0.8; }
         .methode-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--white); margin-bottom: 12px; }
         .methode-line { width: 24px; height: 1px; background: var(--gold); margin: 0 auto 16px; transition: width 0.4s; }
         .methode-card:hover .methode-line { width: 48px; }
@@ -207,17 +100,8 @@
         /* ─── PRESTATIONS ─── */
         #prestations { padding: 100px 60px; background: var(--darker); }
         .presta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
-        .presta-card {
-            background: var(--black); padding: 48px 36px;
-            border: 1px solid rgba(197,160,89,0.06);
-            position: relative; overflow: hidden; transition: all 0.4s;
-            display: flex; flex-direction: column;
-        }
-        .presta-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 2px; background: var(--gold);
-            transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
-        }
+        .presta-card { background: var(--black); padding: 48px 36px; border: 1px solid rgba(197,160,89,0.06); position: relative; overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column; }
+        .presta-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
         .presta-card:hover { background: #0e0e0e; }
         .presta-card:hover::before { transform: scaleX(1); }
         .presta-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: rgba(197,160,89,0.07); font-weight: 300; line-height: 1; margin-bottom: 20px; }
@@ -227,55 +111,55 @@
         .presta-card:hover .presta-line { width: 55px; }
         .presta-text { font-size: 0.86rem; color: var(--gray); line-height: 1.8; font-weight: 300; flex: 1; }
         .presta-items { list-style: none; margin: 16px 0; }
-        .presta-items li {
-            font-size: 0.82rem; color: var(--gray); padding: 6px 0;
-            border-bottom: 1px solid rgba(197,160,89,0.06);
-            display: flex; align-items: center; gap: 10px;
-        }
+        .presta-items li { font-size: 0.82rem; color: var(--gray); padding: 6px 0; border-bottom: 1px solid rgba(197,160,89,0.06); display: flex; align-items: center; gap: 10px; }
         .presta-items li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
-        .presta-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            margin-top: 28px; padding: 12px 24px;
-            border: 1px solid rgba(197,160,89,0.4);
-            color: var(--gold); text-decoration: none;
-            font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-            transition: all 0.3s; align-self: flex-start;
-        }
+        .presta-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 12px 24px; border: 1px solid rgba(197,160,89,0.4); color: var(--gold); text-decoration: none; font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; align-self: flex-start; }
         .presta-btn:hover { background: var(--gold); color: var(--black); }
+
+        /* ─── MODAL FORMULAIRE ─── */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--darker); border: 1px solid rgba(197,160,89,0.2); max-width: 560px; width: 100%; padding: 50px 44px; position: relative; animation: fadeUp 0.3s ease both; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--gray); font-size: 1.4rem; line-height: 1; transition: color 0.3s; padding: 4px 8px; }
+        .modal-close:hover { color: var(--gold); }
+        .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--white); margin-bottom: 6px; }
+        .modal-subtitle { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; }
+        .modal-line { width: 30px; height: 1px; background: var(--gold); margin-bottom: 32px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        .form-group label { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+        .form-group input, .form-group textarea, .form-group select { background: rgba(255,255,255,0.04); border: 1px solid rgba(197,160,89,0.15); color: var(--white); padding: 12px 16px; font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 300; transition: border-color 0.3s; outline: none; width: 100%; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: rgba(197,160,89,0.5); }
+        .form-group select option { background: var(--darker); color: var(--white); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-submit { width: 100%; padding: 14px; background: var(--gold); color: var(--black); border: none; font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.3s; margin-top: 8px; }
+        .form-submit:hover { background: var(--gold-light); }
+        .form-success { display: none; text-align: center; padding: 20px 0; }
+        .form-success p { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; color: var(--soft); line-height: 1.6; }
+        .form-success span { color: var(--gold); }
 
         /* ─── CITATIONS CARROUSEL ─── */
         #citations { padding: 100px 60px; position: relative; overflow: hidden; }
-        #citations::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(ellipse at 50% 50%, rgba(197,160,89,0.04) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .carousel-wrap { position: relative; max-width: 860px; margin: 0 auto; }
+        #citations::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 50%, rgba(197,160,89,0.04) 0%, transparent 70%); pointer-events: none; }
+        .carousel-wrap { position: relative; max-width: 900px; margin: 0 auto; }
         .carousel-track { overflow: hidden; }
         .carousel-slides { display: flex; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .citation-slide { min-width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px 40px; }
+
+        /* Bandeau horizontal */
         .citation-img {
-            width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
-            border: 1px solid rgba(197,160,89,0.3); margin-bottom: 36px; flex-shrink: 0;
+            width: 100%; max-width: 600px; height: 180px;
+            overflow: hidden; margin-bottom: 36px;
+            border-top: 1px solid rgba(197,160,89,0.2);
+            border-bottom: 1px solid rgba(197,160,89,0.2);
         }
-        .citation-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%) contrast(1.1); }
-        .citation-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-style: italic; font-weight: 300;
-            color: var(--white); line-height: 1.6; margin-bottom: 24px; position: relative; max-width: 680px;
-        }
-        .citation-text::before {
-            content: '"'; font-size: 5rem; color: rgba(197,160,89,0.15);
-            position: absolute; top: -30px; left: -20px;
-            font-family: 'Cormorant Garamond', serif; line-height: 1;
-        }
+        .citation-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; filter: grayscale(40%) contrast(1.1) brightness(0.85); }
+
+        .citation-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-style: italic; font-weight: 300; color: var(--white); line-height: 1.6; margin-bottom: 24px; position: relative; max-width: 680px; }
+        .citation-text::before { content: '"'; font-size: 5rem; color: rgba(197,160,89,0.15); position: absolute; top: -30px; left: -20px; font-family: 'Cormorant Garamond', serif; line-height: 1; }
         .citation-author { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
         .carousel-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 48px; }
-        .carousel-btn {
-            width: 44px; height: 44px; border: 1px solid rgba(197,160,89,0.3);
-            background: transparent; color: var(--gold);
-            display: flex; align-items: center; justify-content: center; transition: all 0.3s;
-        }
+        .carousel-btn { width: 44px; height: 44px; border: 1px solid rgba(197,160,89,0.3); background: transparent; color: var(--gold); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
         .carousel-btn:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
         .carousel-dots { display: flex; gap: 8px; }
         .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(197,160,89,0.3); transition: all 0.3s; }
@@ -285,26 +169,15 @@
         #contact { padding: 100px 60px; background: var(--darker); }
         .contact-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
         .contact-info { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
-        .contact-item {
-            display: flex; gap: 16px; align-items: flex-start;
-            padding: 18px 20px; border: 1px solid rgba(197,160,89,0.1); transition: all 0.3s;
-        }
+        .contact-item { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; border: 1px solid rgba(197,160,89,0.1); transition: all 0.3s; }
         .contact-item:hover { border-color: rgba(197,160,89,0.3); background: var(--gold-dim); }
-        .contact-item-icon {
-            width: 36px; height: 36px; border: 1px solid rgba(197,160,89,0.3);
-            display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0;
-        }
+        .contact-item-icon { width: 36px; height: 36px; border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; }
         .contact-item-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
         .contact-item-value { font-size: 0.88rem; color: var(--soft); }
         .contact-item-value a { color: var(--soft); text-decoration: none; transition: color 0.3s; }
         .contact-item-value a:hover { color: var(--gold); }
         .social-row { display: flex; gap: 12px; margin-top: 28px; align-items: center; }
-        .social-btn {
-            display: flex; align-items: center; gap: 10px;
-            padding: 10px 16px; border: 1px solid rgba(197,160,89,0.2);
-            color: var(--gray); text-decoration: none; transition: all 0.3s;
-            font-size: 0.78rem;
-        }
+        .social-btn { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border: 1px solid rgba(197,160,89,0.2); color: var(--gray); text-decoration: none; transition: all 0.3s; font-size: 0.78rem; }
         .social-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
         .calendar-wrap { background: var(--white); padding: 4px; border: 1px solid rgba(197,160,89,0.2); }
         .calendar-wrap iframe { width: 100%; height: 620px; border: none; display: block; }
@@ -337,6 +210,9 @@
             .presta-grid { grid-template-columns: 1fr; }
             .contact-inner { grid-template-columns: 1fr; gap: 40px; }
             .citation-slide { padding: 20px 10px; }
+            .citation-img { height: 130px; }
+            .form-row { grid-template-columns: 1fr; }
+            .modal { padding: 36px 24px; }
             footer { padding: 36px 24px; flex-direction: column; gap: 18px; text-align: center; }
             .footer-links { flex-wrap: wrap; justify-content: center; }
             * { cursor: auto; }
@@ -348,6 +224,59 @@
 
     <div class="cursor" id="cursor"></div>
     <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- MODAL FORMULAIRE -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">✕</button>
+            <h2 class="modal-title">Demande de devis</h2>
+            <p class="modal-subtitle" id="modal-prestation">Prestation</p>
+            <div class="modal-line"></div>
+            <div id="form-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Prénom</label>
+                        <input type="text" id="f-prenom" placeholder="Votre prénom">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" id="f-nom" placeholder="Votre nom">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="f-email" placeholder="votre@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" id="f-tel" placeholder="+33 6 ...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Prestation souhaitée</label>
+                    <select id="f-presta">
+                        <option value="Formation & Coaching">Formation & Coaching</option>
+                        <option value="Consultant & Stratégie">Consultant & Stratégie</option>
+                        <option value="Mise en Relation & Développement">Mise en Relation & Développement</option>
+                        <option value="Accompagnement Philosophico-Spirituel">Accompagnement Philosophico-Spirituel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Votre besoin</label>
+                    <textarea id="f-message" placeholder="Décrivez brièvement votre situation et ce que vous recherchez..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Vos disponibilités</label>
+                    <input type="text" id="f-dispo" placeholder="Ex : semaine, week-end, matin...">
+                </div>
+                <button class="form-submit" id="form-submit">Envoyer ma demande</button>
+            </div>
+            <div class="form-success" id="form-success">
+                <p>Merci <span id="success-name"></span> —<br>votre demande a bien été transmise.<br>Je vous recontacte rapidement.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- NAVIGATION -->
     <nav>
@@ -369,6 +298,7 @@
                     <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/6869282c30c23b6a92e4caf6fa110a766cfe5e15/denis-deblevid.jpg" alt="Denis Deblevid">
                 </div>
                 <div class="hero-identity">
+                    <p class="hero-phrase">L'humain au cœur de tout ce que j'entreprends</p>
                     <div class="hero-tag">Consultant · Formateur & Coach · Relations Humaines & Business</div>
                     <h1 class="hero-name">Denis<br><span>Deblevid</span></h1>
                 </div>
@@ -376,28 +306,19 @@
             <p class="hero-tagline">Je pose les bonnes questions.<br>Vous trouvez vos réponses.</p>
             <div class="hero-contacts">
                 <a href="tel:+33783038800" class="contact-line">
-                    <div class="contact-icon">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
-                    </div>
+                    <div class="contact-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg></div>
                     +33 7 83 03 88 00
                 </a>
                 <a href="#" id="email-link" class="contact-line">
-                    <div class="contact-icon">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
+                    <div class="contact-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
                     <span id="email-display"></span>
                 </a>
                 <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank" class="contact-line">
-                    <div class="contact-icon">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </div>
+                    <div class="contact-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
                     linkedin.com/in/denisdeblevid
                 </a>
             </div>
-            <a href="#contact" class="hero-btn">
-                Planifier un échange
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
-            </a>
+            <a href="#contact" class="hero-btn">Planifier un échange <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
         </div>
     </header>
 
@@ -419,8 +340,8 @@
                 <div class="atout reveal">
                     <div class="atout-icon">✦</div>
                     <div class="atout-content">
-                        <h4>Arts martiaux & discipline du combat</h4>
-                        <p>Éducateur sportif et professeur d'arts martiaux dès 18 ans — 120 élèves, deux clubs. Le combat enseigne ce que rien d'autre n'enseigne : la gestion de la pression, la maîtrise de soi sous contrainte, et la capacité à se relever. Une fondation que je transmets dans chaque accompagnement.</p>
+                        <h4>Arts martiaux — discipline du combat & efficacité</h4>
+                        <p>Professeur d'arts martiaux dès 18 ans — deux clubs, 120 élèves, un club ouvert à Tahiti, compétitions au niveau national. Le combat enseigne ce que rien d'autre n'enseigne : la gestion de la pression, la maîtrise de soi sous contrainte. Aujourd'hui cette discipline est mise au service de l'efficacité — pas de la performance sportive, mais de l'action juste dans la vie et le travail.</p>
                     </div>
                 </div>
                 <div class="atout reveal">
@@ -456,21 +377,19 @@
             <span class="section-num">02</span>
             <h2 class="section-title">La Méthode <span>des 4P</span></h2>
         </div>
-        <p class="methode-intro reveal">
-            Une approche globale et incarnée de l'être humain — développée au fil de trente ans de terrain, ancrée dans la sagesse grecque antique. <strong>Quatre dimensions indissociables</strong> pour retrouver son équilibre, sa clarté et sa puissance d'action.
-        </p>
+        <p class="methode-intro reveal"><strong>Quatre dimensions indissociables</strong> de l'être humain — développées au fil de trente ans de terrain, ancrées dans la sagesse grecque antique. Une approche globale et incarnée pour retrouver son équilibre, sa clarté et sa puissance d'action.</p>
         <div class="methode-grid">
             <div class="methode-card reveal">
                 <div class="methode-letter">P</div>
                 <div class="methode-name">Psychologique</div>
                 <div class="methode-line"></div>
-                <p class="methode-desc">Comprendre ses mécanismes intérieurs, décoder les dynamiques relationnelles, maîtriser ses émotions et ses réactions. L'Analyse Transactionnelle et la CNV comme outils de transformation.</p>
+                <p class="methode-desc">Comprendre ses mécanismes intérieurs, décoder les dynamiques relationnelles, maîtriser ses émotions. L'Analyse Transactionnelle et la CNV comme outils de transformation durable.</p>
             </div>
             <div class="methode-card reveal">
                 <div class="methode-letter">P</div>
                 <div class="methode-name">Physique</div>
                 <div class="methode-line"></div>
-                <p class="methode-desc">Le corps comme premier espace de discipline et de présence. Les arts martiaux ont enseigné que la maîtrise intérieure commence par la maîtrise du corps — sous pression, sous contrainte, dans l'effort.</p>
+                <p class="methode-desc">Le corps comme premier espace de discipline et de présence. La maîtrise intérieure commence par la maîtrise du corps — sous pression, sous contrainte, dans l'effort quotidien.</p>
             </div>
             <div class="methode-card reveal">
                 <div class="methode-letter">P</div>
@@ -482,7 +401,7 @@
                 <div class="methode-letter">P</div>
                 <div class="methode-name">Pneuma</div>
                 <div class="methode-line"></div>
-                <p class="methode-desc">Le souffle vital — dimension philosophico-spirituelle qui englobe l'intelligence, l'intellect et l'essence profonde. Ce qui donne sens à l'action et relie l'individu à quelque chose de plus grand que lui.</p>
+                <p class="methode-desc">Le souffle vital — dimension philosophico-spirituelle qui englobe l'intelligence et l'intellect. Ce qui donne sens à l'action et relie l'individu à quelque chose de plus grand que lui.</p>
             </div>
         </div>
     </section>
@@ -509,7 +428,7 @@
                     <li>Développement personnel & professionnel</li>
                     <li>Coaching individuel sur mesure</li>
                 </ul>
-                <a href="#contact" class="presta-btn">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+                <button class="presta-btn" onclick="openModal('Formation & Coaching')">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
             </div>
             <div class="presta-card reveal">
                 <div class="presta-num">02</div>
@@ -524,7 +443,7 @@
                     <li>Conseil en management & leadership</li>
                     <li>Connecteur stratégique</li>
                 </ul>
-                <a href="#contact" class="presta-btn">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+                <button class="presta-btn" onclick="openModal('Consultant & Stratégie')">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
             </div>
             <div class="presta-card reveal">
                 <div class="presta-num">03</div>
@@ -539,7 +458,7 @@
                     <li>Accompagnement réseau & développement</li>
                     <li>Mise en relation ciblée B2B & B2C</li>
                 </ul>
-                <a href="#contact" class="presta-btn">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+                <button class="presta-btn" onclick="openModal('Mise en Relation & Développement')">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
             </div>
             <div class="presta-card reveal">
                 <div class="presta-num">04</div>
@@ -552,16 +471,16 @@
                     <li>Suivi sur période — rééducation intérieure</li>
                     <li>Ateliers & retraites — format collectif</li>
                     <li>Sagesse stoïcienne & biblique</li>
-                    <li>Méthode des 4P — Psychologique · Physique · Philosophique · Pneuma</li>
+                    <li>Méthode des 4P</li>
                 </ul>
-                <a href="#contact" class="presta-btn">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+                <button class="presta-btn" onclick="openModal('Accompagnement Philosophico-Spirituel')">Demander un devis <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
             </div>
         </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- CITATIONS CARROUSEL -->
+    <!-- CITATIONS -->
     <section id="citations">
         <div class="section-header reveal" style="justify-content:center; flex-direction:column; gap:8px; text-align:center;">
             <h2 class="section-title">Sagesse <span>Stoïcienne</span></h2>
@@ -570,50 +489,36 @@
             <div class="carousel-track">
                 <div class="carousel-slides" id="slides">
                     <div class="citation-slide">
-                        <div class="citation-img">
-                            <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le1.jpeg" alt="Marc Aurèle">
-                        </div>
+                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le1.jpeg" alt="Marc Aurèle"></div>
                         <p class="citation-text">L'obstacle sur le chemin devient le chemin. Jamais oublier cela dans les domaines qui nous résistent.</p>
                         <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img">
-                            <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien1.jpg" alt="Sénèque">
-                        </div>
+                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien1.jpg" alt="Sénèque"></div>
                         <p class="citation-text">Ce n'est pas parce que les choses sont difficiles que nous n'osons pas — c'est parce que nous n'osons pas qu'elles sont difficiles.</p>
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img">
-                            <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le2.jpg" alt="Marc Aurèle">
-                        </div>
+                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le2.jpg" alt="Marc Aurèle"></div>
                         <p class="citation-text">Commence le matin en te disant : aujourd'hui je rencontrerai des gens difficiles — mais ils sont ainsi par ignorance du bien et du mal.</p>
                         <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img">
-                            <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien2.jpeg" alt="Épictète">
-                        </div>
+                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien2.jpeg" alt="Épictète"></div>
                         <p class="citation-text">Ce qui trouble les hommes, ce ne sont pas les choses, mais les opinions qu'ils ont des choses.</p>
                         <p class="citation-author">Épictète · Manuel</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img">
-                            <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien3_avif.webp" alt="Stoïcien">
-                        </div>
+                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien3_avif.webp" alt="Stoïcien"></div>
                         <p class="citation-text">Retire-toi en toi-même autant que tu peux. Fréquente ceux qui sont susceptibles de te rendre meilleur.</p>
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
                 </div>
             </div>
             <div class="carousel-controls">
-                <button class="carousel-btn" id="prev">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
-                </button>
+                <button class="carousel-btn" id="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg></button>
                 <div class="carousel-dots" id="dots"></div>
-                <button class="carousel-btn" id="next">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
-                </button>
+                <button class="carousel-btn" id="next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg></button>
             </div>
         </div>
     </section>
@@ -631,31 +536,16 @@
                 <p class="parcours-text reveal">Un échange suffit souvent pour savoir si nous pouvons avancer ensemble. Choisissez directement un créneau dans mon agenda ou contactez-moi par l'un de ces canaux.</p>
                 <div class="contact-info">
                     <div class="contact-item reveal">
-                        <div class="contact-item-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
-                        </div>
-                        <div>
-                            <div class="contact-item-label">Téléphone</div>
-                            <div class="contact-item-value"><a href="tel:+33783038800">+33 7 83 03 88 00</a></div>
-                        </div>
+                        <div class="contact-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg></div>
+                        <div><div class="contact-item-label">Téléphone</div><div class="contact-item-value"><a href="tel:+33783038800">+33 7 83 03 88 00</a></div></div>
                     </div>
                     <div class="contact-item reveal">
-                        <div class="contact-item-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        </div>
-                        <div>
-                            <div class="contact-item-label">Email</div>
-                            <div class="contact-item-value" id="contact-email-value"></div>
-                        </div>
+                        <div class="contact-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                        <div><div class="contact-item-label">Email</div><div class="contact-item-value" id="contact-email-value"></div></div>
                     </div>
                     <div class="contact-item reveal">
-                        <div class="contact-item-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        </div>
-                        <div>
-                            <div class="contact-item-label">Localisation</div>
-                            <div class="contact-item-value">Marseille · France<br><span style="font-size:0.78rem;color:var(--gray);">Présentiel & Distanciel</span></div>
-                        </div>
+                        <div class="contact-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <div><div class="contact-item-label">Localisation</div><div class="contact-item-value">Marseille · France<br><span style="font-size:0.78rem;color:var(--gray);">Présentiel & Distanciel</span></div></div>
                     </div>
                 </div>
                 <div class="social-row reveal">
@@ -693,7 +583,7 @@
         if (el && link) { el.textContent = email; link.href = 'mailto:' + email; }
         if (cv) { cv.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>'; }
 
-        // Curseur doré
+        // Curseur
         const cursor = document.getElementById('cursor');
         const ring = document.getElementById('cursorRing');
         let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
@@ -740,6 +630,41 @@
         document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
         document.getElementById('next').addEventListener('click', () => goTo(current + 1));
         setInterval(() => goTo(current + 1), 6000);
+
+        // Modal formulaire
+        function openModal(prestation) {
+            document.getElementById('modal-prestation').textContent = prestation;
+            document.getElementById('f-presta').value = prestation;
+            document.getElementById('form-content').style.display = 'block';
+            document.getElementById('form-success').style.display = 'none';
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        document.getElementById('modal-close').addEventListener('click', () => {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('modal').addEventListener('click', e => {
+            if (e.target === document.getElementById('modal')) {
+                document.getElementById('modal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        document.getElementById('form-submit').addEventListener('click', () => {
+            const prenom = document.getElementById('f-prenom').value.trim();
+            const nom = document.getElementById('f-nom').value.trim();
+            const email = document.getElementById('f-email').value.trim();
+            if (!prenom || !nom || !email) { alert('Merci de remplir au minimum votre prénom, nom et email.'); return; }
+            const presta = document.getElementById('f-presta').value;
+            const tel = document.getElementById('f-tel').value;
+            const msg = document.getElementById('f-message').value;
+            const dispo = document.getElementById('f-dispo').value;
+            const mailto = `mailto:denisdeblevidcontact@gmail.com?subject=Demande de devis — ${presta}&body=Prénom : ${prenom}%0ANom : ${nom}%0AEmail : ${email}%0ATéléphone : ${tel}%0APrestation : ${presta}%0AMessage : ${msg}%0ADisponibilités : ${dispo}`;
+            window.location.href = mailto;
+            document.getElementById('form-content').style.display = 'none';
+            document.getElementById('success-name').textContent = prenom;
+            document.getElementById('form-success').style.display = 'block';
+        });
     </script>
 </body>
 </html>
