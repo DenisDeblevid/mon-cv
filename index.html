@@ -96,9 +96,10 @@
         .hero {
             min-height: 100vh;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
             align-items: center;
-            padding: 120px 60px 80px;
+            padding: 120px 40px 80px;
+            gap: 40px;
             position: relative;
             overflow: hidden;
         }
@@ -119,7 +120,7 @@
         }
 
         /* Hero gauche */
-        .hero-left { padding-right: 80px; }
+        .hero-left { padding-right: 20px; }
         .hero-tag {
             display: inline-block;
             font-size: 0.7rem;
@@ -217,23 +218,8 @@
         }
         .photo-frame {
             position: relative;
-            width: 380px;
-        }
-        .photo-frame::before {
-            content: '';
-            position: absolute;
-            top: -16px; left: -16px;
-            right: 16px; bottom: 16px;
-            border: 1px solid rgba(197,160,89,0.25);
-            pointer-events: none;
-        }
-        .photo-frame::after {
-            content: '';
-            position: absolute;
-            bottom: -16px; right: -16px;
-            left: 16px; top: 16px;
-            border: 1px solid rgba(197,160,89,0.1);
-            pointer-events: none;
+            width: 320px;
+            border: 1px solid rgba(197,160,89,0.35);
         }
         .photo-frame img {
             width: 100%;
@@ -553,11 +539,11 @@
                     </div>
                     +33 7 83 03 88 00
                 </a>
-                <a href="/cdn-cgi/l/email-protection#b9dddcd7d0cadddcdbd5dccfd0dddad6d7cdd8dacdf9ded4d8d0d597dad6d4" class="contact-line">
+                <a href="#" id="email-link" class="contact-line">
                     <div class="contact-icon">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
-                    <span class="__cf_email__" data-cfemail="d4b0b1babda7b0b1b6b8b1a2bdb0b7bbbaa0b5b7a094b3b9b5bdb8fab7bbb9">[email&#160;protected]</span>
+                    <span id="email-display"></span>
                 </a>
                 <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank" class="contact-line">
                     <div class="contact-icon">
@@ -672,7 +658,15 @@
     </footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Curseur personnalisé
+        // Email anti-spam
+        const u = 'denisdeblevidcontact';
+        const d = 'gmail.com';
+        const el = document.getElementById('email-display');
+        const link = document.getElementById('email-link');
+        if (el && link) {
+            el.textContent = u + '@' + d;
+            link.href = 'mailto:' + u + '@' + d;
+        }
         const cursor = document.getElementById('cursor');
         const ring = document.getElementById('cursorRing');
         let mouseX = 0, mouseY = 0;
