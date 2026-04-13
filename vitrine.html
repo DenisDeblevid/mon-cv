@@ -3,110 +3,724 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Denis DEBLEVID | Relations & Business</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Denis Deblevid | Consultant & Formateur</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c5a059;
-            --black: #0a0a0a;
-            --dark-gray: #1a1a1a;
+            --gold-light: #d4b97a;
+            --gold-dim: rgba(197, 160, 89, 0.15);
+            --black: #080808;
+            --dark: #111111;
+            --darker: #0d0d0d;
             --white: #ffffff;
-            --soft-white: #e0e0e0;
+            --gray: #888888;
+            --soft: #cccccc;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { font-family: 'Montserrat', sans-serif; background-color: var(--black); color: var(--white); line-height: 1.6; overflow-x: hidden; }
 
-        /* Navigation */
-        nav { position: fixed; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(10, 10, 10, 0.95); z-index: 1000; border-bottom: 1px solid rgba(197, 160, 89, 0.2); }
-        .logo { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.5rem; font-weight: bold; text-decoration: none; }
-        .nav-links a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 0.9rem; letter-spacing: 1px; transition: 0.3s; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ─── CURSEUR PERSONNALISÉ ─── */
+        * { cursor: none; }
+        .cursor {
+            width: 8px; height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease;
+        }
+        .cursor-ring {
+            width: 32px; height: 32px;
+            border: 1px solid rgba(197,160,89,0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ─── NAVIGATION ─── */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 24px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(8,8,8,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(197,160,89,0.12);
+            z-index: 1000;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold);
+            font-size: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
         .nav-links a:hover { color: var(--gold); }
+        .nav-cta {
+            padding: 10px 24px;
+            border: 1px solid rgba(197,160,89,0.4);
+            color: var(--gold) !important;
+            font-size: 0.72rem !important;
+            letter-spacing: 2px;
+            transition: all 0.3s !important;
+        }
+        .nav-cta:hover {
+            background: var(--gold) !important;
+            color: var(--black) !important;
+        }
 
-        /* Hero Section */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--gold); margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: var(--soft-white); margin-bottom: 30px; }
-        .hero .tagline { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-style: italic; color: var(--white); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 20px 0; max-width: 800px; margin-bottom: 40px; }
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 120px 60px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(197,160,89,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.3), transparent);
+        }
 
-        /* Sections Générales */
-        section { padding: 100px 10% 60px; min-height: 60vh; }
-        h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 40px; text-align: center; }
+        /* Hero gauche */
+        .hero-left { padding-right: 80px; }
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(197,160,89,0.3);
+            padding: 6px 16px;
+            margin-bottom: 40px;
+            animation: fadeUp 0.8s ease forwards;
+        }
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+        .hero-name span { color: var(--gold); font-style: italic; }
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-style: italic;
+            color: var(--soft);
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 48px;
+            padding-left: 20px;
+            border-left: 2px solid var(--gold);
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
 
-        /* Cartes Expertise */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
-        .card { background: var(--dark-gray); padding: 40px; border: 1px solid rgba(197, 160, 89, 0.1); transition: 0.4s; position: relative; overflow: hidden; }
-        .card:hover { border-color: var(--gold); transform: translateY(-10px); }
-        .card h3 { color: var(--gold); margin-bottom: 15px; font-size: 1.4rem; }
-        .card p { color: var(--soft-white); font-size: 0.95rem; }
+        .hero-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 48px;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+        .contact-line {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--gray);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: 0.5px;
+        }
+        .contact-line:hover { color: var(--gold); }
+        .contact-icon {
+            width: 34px; height: 34px;
+            border: 1px solid rgba(197,160,89,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem;
+            color: var(--gold);
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+        .contact-line:hover .contact-icon {
+            background: var(--gold-dim);
+            border-color: var(--gold);
+        }
 
-        /* Section Koalendar (Embed) */
-        .calendar-container { background: var(--white); padding: 20px; border-radius: 10px; max-width: 1000px; margin: 0 auto; height: 700px; }
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 36px;
+            background: var(--gold);
+            color: var(--black);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            animation: fadeUp 0.8s 0.4s ease both;
+        }
+        .hero-btn:hover {
+            background: var(--gold-light);
+            transform: translateX(4px);
+        }
+        .hero-btn svg { transition: transform 0.3s; }
+        .hero-btn:hover svg { transform: translateX(4px); }
 
-        /* Boutons */
-        .cta-btn { padding: 15px 40px; border: 2px solid var(--gold); color: var(--gold); text-decoration: none; font-weight: bold; letter-spacing: 2px; transition: 0.4s; text-transform: uppercase; }
-        .cta-btn:hover { background: var(--gold); color: var(--black); }
+        /* Hero droite — photo */
+        .hero-right {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            animation: fadeIn 1s 0.3s ease both;
+        }
+        .photo-frame {
+            position: relative;
+            width: 380px;
+        }
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -16px; left: -16px;
+            right: 16px; bottom: 16px;
+            border: 1px solid rgba(197,160,89,0.25);
+            pointer-events: none;
+        }
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            bottom: -16px; right: -16px;
+            left: 16px; top: 16px;
+            border: 1px solid rgba(197,160,89,0.1);
+            pointer-events: none;
+        }
+        .photo-frame img {
+            width: 100%;
+            display: block;
+            filter: grayscale(20%) contrast(1.05);
+        }
+        .photo-caption {
+            position: absolute;
+            bottom: -40px;
+            right: 0;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
 
-        footer { padding: 50px; text-align: center; border-top: 1px solid rgba(197, 160, 89, 0.2); font-size: 0.8rem; color: gray; }
+        /* ─── SÉPARATEUR ─── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.3), transparent);
+            margin: 0 60px;
+        }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero .tagline { font-size: 1.2rem; }
-            nav { padding: 20px; }
-            .nav-links { display: none; } /* On simplifie pour le premier jet */
+        /* ─── SECTION EXPERTISE ─── */
+        #expertise {
+            padding: 100px 60px;
+        }
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            margin-bottom: 70px;
+        }
+        .section-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            color: rgba(197,160,89,0.15);
+            font-weight: 300;
+            line-height: 1;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: var(--white);
+        }
+        .section-title span { color: var(--gold); font-style: italic; }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .expertise-card {
+            background: var(--darker);
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            border: 1px solid rgba(197,160,89,0.06);
+        }
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+        .expertise-card:hover { background: #141414; }
+        .expertise-card:hover::before { transform: scaleX(1); }
+
+        .card-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            color: rgba(197,160,89,0.08);
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        .card-text {
+            font-size: 0.88rem;
+            color: var(--gray);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+        .card-line {
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+            margin: 24px 0;
+            transition: width 0.4s;
+        }
+        .expertise-card:hover .card-line { width: 60px; }
+
+        /* ─── SECTION VISION ─── */
+        #vision {
+            padding: 100px 60px;
+            background: var(--darker);
+            position: relative;
+        }
+        #vision::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 80% 50%, rgba(197,160,89,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .vision-inner {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .vision-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.4;
+            color: var(--white);
+            position: relative;
+            padding-left: 30px;
+        }
+        .vision-quote::before {
+            content: '"';
+            position: absolute;
+            left: 0; top: -20px;
+            font-size: 6rem;
+            color: rgba(197,160,89,0.2);
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1;
+        }
+        .vision-quote span { color: var(--gold); }
+        .vision-attribution {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--gray);
+            text-transform: uppercase;
+            padding-left: 30px;
+        }
+        .vision-text { }
+        .vision-text p {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.9;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        .vision-text p strong {
+            color: var(--soft);
+            font-weight: 500;
+        }
+        .vision-pillars {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .pillar {
+            padding: 16px 20px;
+            border: 1px solid rgba(197,160,89,0.12);
+            font-size: 0.78rem;
+            color: var(--gray);
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+        .pillar span {
+            display: block;
+            color: var(--gold);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .pillar:hover {
+            border-color: rgba(197,160,89,0.35);
+            background: var(--gold-dim);
+        }
+
+        /* ─── SECTION RDV ─── */
+        #contact {
+            padding: 100px 60px;
+        }
+        .contact-header { text-align: center; margin-bottom: 60px; }
+        .contact-header p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            letter-spacing: 1px;
+            margin-top: 16px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        .calendar-wrap {
+            background: var(--white);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4px;
+            border: 1px solid rgba(197,160,89,0.2);
+        }
+        .calendar-wrap iframe {
+            width: 100%;
+            height: 680px;
+            border: none;
+            display: block;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 50px 60px;
+            border-top: 1px solid rgba(197,160,89,0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+        .footer-links { display: flex; gap: 30px; }
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-copy {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 1px;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ─── MOBILE ─── */
+        @media (max-width: 900px) {
+            nav { padding: 20px 24px; }
+            .nav-links { display: none; }
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 100px 24px 60px;
+                text-align: center;
+            }
+            .hero-left { padding-right: 0; }
+            .hero-tagline { border-left: none; border-top: 1px solid var(--gold); padding: 16px 0 0; }
+            .hero-contacts { align-items: center; }
+            .hero-right { margin-top: 50px; }
+            .photo-frame { width: 260px; }
+            .divider { margin: 0 24px; }
+            #expertise { padding: 70px 24px; }
+            .expertise-grid { grid-template-columns: 1fr; gap: 2px; }
+            #vision { padding: 70px 24px; }
+            .vision-inner { grid-template-columns: 1fr; gap: 40px; }
+            #contact { padding: 70px 24px; }
+            footer { padding: 40px 24px; flex-direction: column; gap: 20px; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+            * { cursor: auto; }
+            .cursor, .cursor-ring { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Curseur -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Navigation -->
     <nav>
-        <a href="#" class="logo">DENIS DEBLEVID</a>
+        <a href="#" class="logo">Denis Deblevid</a>
         <div class="nav-links">
-            <a href="#expertise">EXPERTISE</a>
-            <a href="#vision">VISION</a>
-            <a href="#contact">RENDEZ-VOUS</a>
+            <a href="#expertise">Expertise</a>
+            <a href="#vision">Vision</a>
+            <a href="#contact" class="nav-cta">Prendre RDV</a>
         </div>
     </nav>
 
+    <!-- Hero -->
     <header class="hero">
-        <p>Relations & Business | Consultant | Formateur & Coach</p>
-        <h1>Denis DEBLEVID</h1>
-        <div class="tagline">
-            "Aligner l’Humain et la Stratégie pour booster votre Croissance" ✅
+        <div class="hero-left">
+            <div class="hero-tag">Consultant · Formateur · Marseille & International</div>
+            <h1 class="hero-name">Denis<br><span>Deblevid</span></h1>
+            <p class="hero-tagline">
+                Je pose les bonnes questions.<br>Vous trouvez vos réponses.
+            </p>
+
+            <div class="hero-contacts">
+                <a href="tel:+33783038800" class="contact-line">
+                    <div class="contact-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+                    </div>
+                    +33 7 83 03 88 00
+                </a>
+                <a href="mailto:denisdeblevidcontact@gmail.com" class="contact-line">
+                    <div class="contact-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    denisdeblevidcontact@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank" class="contact-line">
+                    <div class="contact-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    </div>
+                    linkedin.com/in/denisdeblevid
+                </a>
+            </div>
+
+            <a href="#contact" class="hero-btn">
+                Planifier un échange
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+            </a>
         </div>
-        <a href="#contact" class="cta-btn">Entrer en contact</a>
+
+        <div class="hero-right">
+            <div class="photo-frame">
+                <img src="https://media.licdn.com/dms/image/v2/D4E03AQF7vhKhOKhXqQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1699882661424?e=2147483647&v=beta&t=R8rE3dLuKi47zPe9s6E2gHqnA_kXv2dBZlxTUGHYCfA" alt="Denis Deblevid" onerror="this.style.display='none'; this.parentElement.style.background='#1a1a1a'; this.parentElement.style.minHeight='460px';">
+                <div class="photo-caption">Marseille · France</div>
+            </div>
+        </div>
     </header>
 
+    <div class="divider"></div>
+
+    <!-- Expertise -->
     <section id="expertise">
-        <h2>Domaines d'Intervention</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Management Stratégique</h3>
-                <p>Pilotage de la performance et accompagnement au changement pour des structures en quête d'excellence.</p>
+        <div class="section-header">
+            <span class="section-num">01</span>
+            <h2 class="section-title">Axes <span>d'intervention</span></h2>
+        </div>
+
+        <div class="expertise-grid">
+            <div class="expertise-card">
+                <div class="card-num">01</div>
+                <h3 class="card-title">Diagnostic<br>& Clarté</h3>
+                <div class="card-line"></div>
+                <p class="card-text">Voir là où personne ne regarde. Nommer ce qui bloque vraiment. Identifier les enjeux cachés avant d'agir — parce qu'une bonne décision commence toujours par une bonne question.</p>
             </div>
-            <div class="card">
-                <h3>Expertise Relationnelle</h3>
-                <p>Maîtrise de la psychologie de l'attention appliquée au business haut de gamme et au luxe.</p>
+            <div class="expertise-card">
+                <div class="card-num">02</div>
+                <h3 class="card-title">Transmission<br>& Maïeutique</h3>
+                <div class="card-line"></div>
+                <p class="card-text">Faire émerger vos réponses — pas les miennes. Une pédagogie ancrée dans 2 500 ans de sagesse humaine : Socrate, les stoïciens, l'Analyse Transactionnelle et la psychologie de l'attention.</p>
             </div>
-            <div class="card">
-                <h3>Développement des Compétences</h3>
-                <p>Formation et coaching sur-mesure pour transformer vos talents en leviers de croissance.</p>
+            <div class="expertise-card">
+                <div class="card-num">03</div>
+                <h3 class="card-title">Alignement Humain<br>& Performance</h3>
+                <div class="card-line"></div>
+                <p class="card-text">Remettre l'humain au centre. La stratégie suit. Accompagner les individus et les organisations à retrouver leur cohérence intérieure — pour que la croissance soit durable et incarnée.</p>
             </div>
         </div>
     </section>
 
-    <section id="contact" style="background-color: #111;">
-        <h2>Planifier un Échange</h2>
-        <p style="text-align:center; margin-bottom: 40px; color: var(--soft-white);">Sélectionnez un créneau directement dans mon agenda pour discuter de vos projets.</p>
-        
-        <div class="calendar-container">
-            <iframe src="https://koalendar.com/e/rencontrer-denis?embed=true" width="100%" height="100%" frameborder="0"></iframe>
+    <div class="divider"></div>
+
+    <!-- Vision -->
+    <section id="vision">
+        <div class="vision-inner">
+            <div>
+                <p class="vision-quote">
+                    Le courage<br>n'attend jamais<br><span>la permission.</span>
+                </p>
+                <p class="vision-attribution">— Denis Deblevid</p>
+            </div>
+            <div class="vision-text">
+                <p>
+                    <strong>Trente ans de terrain.</strong> De l'hôtellerie de luxe aux arts martiaux, de la prestidigitation à la formation, de Marseille à Tahiti — chaque étape a forgé une conviction : on ne comprend vraiment les autres que lorsqu'on s'est d'abord compris soi-même.
+                </p>
+                <p>
+                    Ma méthode est née de cette vie dense. Elle emprunte à la <strong>philosophie stoïcienne</strong> sa rigueur, à la <strong>maïeutique</strong> son art du questionnement, à la <strong>magie</strong> sa compréhension de l'attention humaine.
+                </p>
+                <p>
+                    Je ne vends pas des solutions. <strong>J'accompagne des personnes et des organisations à trouver les leurs.</strong>
+                </p>
+                <div class="vision-pillars">
+                    <div class="pillar"><span>Psychologique</span>Analyse Transactionnelle · Maïeutique</div>
+                    <div class="pillar"><span>Philosophique</span>Stoïcisme · Pensée grecque</div>
+                    <div class="pillar"><span>Spirituel</span>Valeurs · Éthique · Engagement</div>
+                    <div class="pillar"><span>Physique</span>Arts martiaux · Discipline · Présence</div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <div class="divider"></div>
+
+    <!-- Contact / Koalendar -->
+    <section id="contact">
+        <div class="contact-header">
+            <div class="section-header" style="justify-content:center; margin-bottom:20px;">
+                <span class="section-num">03</span>
+                <h2 class="section-title">Planifier <span>un échange</span></h2>
+            </div>
+            <p>Sélectionnez directement un créneau dans mon agenda.<br>Un échange suffit souvent pour savoir si nous pouvons avancer ensemble.</p>
+        </div>
+        <div class="calendar-wrap">
+            <iframe src="https://koalendar.com/e/rencontrer-denis?embed=true" width="100%" height="680" frameborder="0"></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        &copy; 2024 Denis DEBLEVID - Consultant & Formateur - Paris | International
+        <div class="footer-logo">Denis Deblevid</div>
+        <div class="footer-links">
+            <a href="#expertise">Expertise</a>
+            <a href="#vision">Vision</a>
+            <a href="mailto:denisdeblevidcontact@gmail.com">Contact</a>
+            <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank">LinkedIn</a>
+        </div>
+        <div class="footer-copy">© 2026 Denis Deblevid · Marseille</div>
     </footer>
 
+    <script>
+        // Curseur personnalisé
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursorRing');
+        let mouseX = 0, mouseY = 0;
+        let ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX - 4 + 'px';
+            cursor.style.top = mouseY - 4 + 'px';
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2.5)';
+                ring.style.borderColor = 'rgba(197,160,89,0.8)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                ring.style.borderColor = 'rgba(197,160,89,0.4)';
+            });
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.expertise-card, .pillar').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
