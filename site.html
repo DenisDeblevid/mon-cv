@@ -153,7 +153,12 @@
             border-top: 1px solid rgba(197,160,89,0.2);
             border-bottom: 1px solid rgba(197,160,89,0.2);
         }
-        .citation-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; filter: grayscale(40%) contrast(1.1) brightness(0.85); }
+        .citation-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(40%) contrast(1.1) brightness(0.85); }
+        #img-ma1 { object-position: center 15%; }
+        #img-ma2 { object-position: center 5%; filter: grayscale(50%) contrast(1.3) brightness(0.8); }
+        #img-s1  { object-position: center 25%; }
+        #img-s2  { object-position: center 20%; }
+        #img-s3  { object-position: center 35%; }
 
         .citation-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-style: italic; font-weight: 300; color: var(--white); line-height: 1.6; margin-bottom: 24px; position: relative; max-width: 680px; }
         .citation-text::before { content: '"'; font-size: 5rem; color: rgba(197,160,89,0.15); position: absolute; top: -30px; left: -20px; font-family: 'Cormorant Garamond', serif; line-height: 1; }
@@ -489,27 +494,27 @@
             <div class="carousel-track">
                 <div class="carousel-slides" id="slides">
                     <div class="citation-slide">
-                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le1.jpeg" alt="Marc Aurèle"></div>
+                        <div class="citation-img"><img id="img-ma1" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le1.jpeg" alt="Marc Aurèle"></div>
                         <p class="citation-text">L'obstacle sur le chemin devient le chemin. Jamais oublier cela dans les domaines qui nous résistent.</p>
                         <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien1.jpg" alt="Sénèque"></div>
+                        <div class="citation-img"><img id="img-s1" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien1.jpg" alt="Sénèque"></div>
                         <p class="citation-text">Ce n'est pas parce que les choses sont difficiles que nous n'osons pas — c'est parce que nous n'osons pas qu'elles sont difficiles.</p>
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le2.jpg" alt="Marc Aurèle"></div>
+                        <div class="citation-img"><img id="img-ma2" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le2.jpg" alt="Marc Aurèle"></div>
                         <p class="citation-text">Commence le matin en te disant : aujourd'hui je rencontrerai des gens difficiles — mais ils sont ainsi par ignorance du bien et du mal.</p>
                         <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien2.jpeg" alt="Épictète"></div>
+                        <div class="citation-img"><img id="img-s2" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien2.jpeg" alt="Épictète"></div>
                         <p class="citation-text">Ce qui trouble les hommes, ce ne sont pas les choses, mais les opinions qu'ils ont des choses.</p>
                         <p class="citation-author">Épictète · Manuel</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien3_avif.webp" alt="Stoïcien"></div>
+                        <div class="citation-img"><img id="img-s3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien3_avif.webp" alt="Stoïcien"></div>
                         <p class="citation-text">Retire-toi en toi-même autant que tu peux. Fréquente ceux qui sont susceptibles de te rendre meilleur.</p>
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
