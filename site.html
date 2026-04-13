@@ -223,12 +223,58 @@
             * { cursor: auto; }
             .cursor, .cursor-ring { display: none; }
         }
+        /* ─── RGPD BANDEAU ─── */
+        .rgpd-banner {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(10,10,10,0.97);
+            border-top: 1px solid rgba(197,160,89,0.25);
+            padding: 20px 60px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 30px; z-index: 5000;
+            backdrop-filter: blur(12px);
+            animation: fadeUp 0.5s ease both;
+        }
+        .rgpd-text { font-size: 0.8rem; color: var(--gray); line-height: 1.6; flex: 1; }
+        .rgpd-text strong { color: var(--soft); }
+        .rgpd-text a { color: var(--gold); text-decoration: none; }
+        .rgpd-text a:hover { text-decoration: underline; }
+        .rgpd-buttons { display: flex; gap: 12px; flex-shrink: 0; }
+        .rgpd-accept {
+            padding: 10px 24px; background: var(--gold); color: var(--black);
+            border: none; font-family: 'Outfit', sans-serif;
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; transition: all 0.3s;
+        }
+        .rgpd-accept:hover { background: var(--gold-light); }
+        .rgpd-refuse {
+            padding: 10px 24px; background: transparent;
+            border: 1px solid rgba(197,160,89,0.3); color: var(--gray);
+            font-family: 'Outfit', sans-serif; font-size: 0.72rem;
+            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .rgpd-refuse:hover { border-color: var(--gold); color: var(--gold); }
+        @media (max-width: 900px) {
+            .rgpd-banner { flex-direction: column; padding: 20px 24px; text-align: center; }
+            .rgpd-buttons { width: 100%; justify-content: center; }
+        }
     </style>
 </head>
 <body>
 
     <div class="cursor" id="cursor"></div>
     <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- RGPD BANDEAU -->
+    <div class="rgpd-banner" id="rgpd-banner">
+        <p class="rgpd-text">
+            <strong>Ce site respecte votre vie privée.</strong> Nous utilisons uniquement des cookies techniques nécessaires au bon fonctionnement du site. Aucune donnée n'est transmise à des tiers à des fins publicitaires. En continuant votre navigation, vous acceptez leur utilisation. <a href="mailto:denisdeblevidcontact@gmail.com">En savoir plus</a>
+        </p>
+        <div class="rgpd-buttons">
+            <button class="rgpd-refuse" id="rgpd-refuse">Refuser</button>
+            <button class="rgpd-accept" id="rgpd-accept">Accepter</button>
+        </div>
+    </div>
 
     <!-- MODAL FORMULAIRE -->
     <div class="modal-overlay" id="modal">
@@ -580,6 +626,19 @@
     </footer>
 
     <script>
+        // RGPD
+        const banner = document.getElementById('rgpd-banner');
+        const consent = localStorage.getItem('rgpd-consent');
+        if (consent) banner.style.display = 'none';
+        document.getElementById('rgpd-accept').addEventListener('click', () => {
+            localStorage.setItem('rgpd-consent', 'accepted');
+            banner.style.display = 'none';
+        });
+        document.getElementById('rgpd-refuse').addEventListener('click', () => {
+            localStorage.setItem('rgpd-consent', 'refused');
+            banner.style.display = 'none';
+        });
+
         // Email anti-spam
         const u = 'denisdeblevidcontact', d = 'gmail.com', email = u + '@' + d;
         const el = document.getElementById('email-display');
