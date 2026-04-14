@@ -89,8 +89,11 @@
         .methode-intro strong { color: var(--soft); }
 
         /* Vidéo */
-        .methode-video { max-width: 340px; margin: 0 auto 60px; }
-        .methode-video iframe { width: 100%; aspect-ratio: 9/16; border: 1px solid rgba(197,160,89,0.2); display: block; }
+        .methode-video-wrap { display: flex; align-items: center; gap: 40px; margin-bottom: 60px; }
+        .methode-video { width: 110px; flex-shrink: 0; }
+        .methode-video iframe { width: 110px; height: 196px; border: 1px solid rgba(197,160,89,0.2); display: block; }
+        .methode-video-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-top: 8px; text-align: center; }
+        .methode-video-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--gray); line-height: 1.8; }
 
         /* Colonnes antiques */
         .methode-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
@@ -419,9 +422,13 @@
         </div>
         <p class="methode-intro"><strong>Quatre dimensions indissociables</strong> de l'être humain — développées au fil de trente ans de terrain, ancrées dans la sagesse grecque antique. Une approche globale et incarnée pour retrouver son équilibre, sa clarté et sa puissance d'action.</p>
 
-        <!-- Vidéo -->
-        <div class="methode-video">
-            <iframe src="https://www.youtube.com/embed/wtyU6DecpYY" title="Ma méthode les 4P" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <!-- Vidéo + intro -->
+        <div class="methode-video-wrap">
+            <div class="methode-video">
+                <iframe src="https://www.youtube.com/embed/wtyU6DecpYY" title="Ma méthode les 4P" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p class="methode-video-label">Présentation</p>
+            </div>
+            <p class="methode-video-desc">Une approche globale et incarnée de l'être humain — développée au fil de trente ans de terrain, ancrée dans la sagesse grecque antique. Quatre dimensions indissociables pour retrouver son équilibre, sa clarté et sa puissance d'action.</p>
         </div>
 
         <!-- Colonnes antiques -->
@@ -648,7 +655,7 @@
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img id="img-ma3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le3.jpg" alt="Marc Aurèle"></div>
+                        <div class="citation-img"><img id="img-ma3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le2.jpg" alt="Marc Aurèle"></div>
                         <p class="citation-text">Commence le matin en te disant : aujourd'hui je rencontrerai des gens difficiles — mais ils sont ainsi par ignorance du bien et du mal.</p>
                         <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
                     </div>
