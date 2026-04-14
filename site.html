@@ -83,20 +83,57 @@
         .atout-content h4 { color: var(--soft); font-size: 0.86rem; font-weight: 600; margin-bottom: 4px; }
         .atout-content p { color: var(--gray); font-size: 0.8rem; line-height: 1.7; font-weight: 300; }
 
-        /* ─── MÉTHODE 4P ─── */
-        #methode { padding: 90px 60px; }
-        .methode-intro { font-size: 0.92rem; color: var(--gray); line-height: 1.9; max-width: 680px; margin-bottom: 50px; }
+        /* ─── MA MÉTHODE 4P ─── */
+        #methode { padding: 90px 60px; overflow: hidden; }
+        .methode-intro { font-size: 0.92rem; color: var(--gray); line-height: 1.9; max-width: 680px; margin-bottom: 40px; }
         .methode-intro strong { color: var(--soft); }
-        .methode-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-        .methode-card { background: var(--darker); padding: 36px 24px; border: 1px solid rgba(197,160,89,0.06); position: relative; overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .methode-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
-        .methode-card:hover { background: #141414; }
-        .methode-card:hover::before { transform: scaleX(1); }
-        .methode-letter { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--gold); font-weight: 300; line-height: 1; margin-bottom: 14px; font-style: italic; opacity: 0.8; }
-        .methode-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--white); margin-bottom: 10px; }
-        .methode-line { width: 22px; height: 1px; background: var(--gold); margin: 0 auto 14px; transition: width 0.4s; }
-        .methode-card:hover .methode-line { width: 44px; }
-        .methode-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.7; font-weight: 300; }
+
+        /* Vidéo */
+        .methode-video { max-width: 340px; margin: 0 auto 60px; }
+        .methode-video iframe { width: 100%; aspect-ratio: 9/16; border: 1px solid rgba(197,160,89,0.2); display: block; }
+
+        /* Colonnes antiques */
+        .methode-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+        .methode-col { display: flex; flex-direction: column; align-items: center; position: relative; }
+
+        /* Chapiteau SVG */
+        .col-capital { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .col-capital svg { width: 100%; height: auto; display: block; }
+
+        /* Fût de la colonne */
+        .col-shaft {
+            width: 28px;
+            background: linear-gradient(90deg, rgba(197,160,89,0.08) 0%, rgba(197,160,89,0.22) 30%, rgba(197,160,89,0.28) 50%, rgba(197,160,89,0.22) 70%, rgba(197,160,89,0.08) 100%);
+            flex: 1;
+            min-height: 60px;
+            position: relative;
+        }
+        .col-shaft::before, .col-shaft::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 1px;
+            background: rgba(197,160,89,0.15);
+        }
+        .col-shaft::before { left: 4px; }
+        .col-shaft::after { right: 4px; }
+
+        /* Base colonne */
+        .col-base { width: 80%; height: 8px; background: linear-gradient(90deg, transparent, rgba(197,160,89,0.2), rgba(197,160,89,0.3), rgba(197,160,89,0.2), transparent); }
+
+        /* Contenu colonne */
+        .col-content { padding: 24px 20px 0; text-align: center; width: 100%; }
+        .col-letter { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--gold); font-weight: 300; font-style: italic; line-height: 1; margin-bottom: 8px; }
+        .col-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: var(--white); margin-bottom: 16px; }
+        .col-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.7; font-weight: 300; padding-bottom: 40px; position: relative; }
+        .col-desc::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, rgba(197,160,89,0.2), transparent);
+        }
 
         /* ─── PRESTATIONS ─── */
         #prestations { padding: 90px 60px; background: var(--darker); }
@@ -147,12 +184,12 @@
         .carousel-slides { display: flex; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
         .citation-slide { min-width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 30px; }
         .citation-img { width: 100%; max-width: 580px; height: 220px; overflow: hidden; margin-bottom: 30px; border-top: 1px solid rgba(197,160,89,0.2); border-bottom: 1px solid rgba(197,160,89,0.2); }
-        .citation-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(35%) contrast(1.1) brightness(0.85); }
-        #img-ma2 { object-position: center 35%; }
+        .citation-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(35%) contrast(1.1) brightness(0.85); object-position: center 20%; }
+        #img-ma1 { object-position: center 25%; }
+        #img-ma3 { object-position: center 20%; }
+        #img-ep  { object-position: center 15%; }
         #img-s1  { object-position: center 30%; }
-        #img-s2  { object-position: center 15%; }
-        #img-s3  { object-position: center 40%; }
-        #img-logo { object-position: center center; filter: grayscale(20%) contrast(1.05) brightness(0.9); }
+        #img-s3  { object-position: center 20%; }
         .citation-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-style: italic; font-weight: 300; color: var(--white); line-height: 1.6; margin-bottom: 20px; max-width: 660px; position: relative; }
         .citation-text::before { content: '"'; font-size: 4.5rem; color: rgba(197,160,89,0.15); position: absolute; top: -24px; left: -16px; font-family: 'Cormorant Garamond', serif; line-height: 1; }
         .citation-author { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
@@ -374,38 +411,137 @@
 
     <div class="divider"></div>
 
-    <!-- MÉTHODE 4P -->
+    <!-- MA MÉTHODE 4P -->
     <section id="methode">
         <div class="section-header">
             <span class="section-num">02</span>
-            <h2 class="section-title">La Méthode <span>des 4P</span></h2>
+            <h2 class="section-title">Ma méthode : <span>les 4P</span></h2>
         </div>
         <p class="methode-intro"><strong>Quatre dimensions indissociables</strong> de l'être humain — développées au fil de trente ans de terrain, ancrées dans la sagesse grecque antique. Une approche globale et incarnée pour retrouver son équilibre, sa clarté et sa puissance d'action.</p>
+
+        <!-- Vidéo -->
+        <div class="methode-video">
+            <iframe src="https://www.youtube.com/embed/wtyU6DecpYY" title="Ma méthode les 4P" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <!-- Colonnes antiques -->
         <div class="methode-grid">
-            <div class="methode-card">
-                <div class="methode-letter">P</div>
-                <div class="methode-name">Psychologique</div>
-                <div class="methode-line"></div>
-                <p class="methode-desc">Comprendre ses mécanismes intérieurs, décoder les dynamiques relationnelles, maîtriser ses émotions. L'Analyse Transactionnelle et la CNV comme outils de transformation durable.</p>
+
+            <!-- P1 Psychologique -->
+            <div class="methode-col">
+                <div class="col-capital">
+                    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Abaque -->
+                        <rect x="5" y="2" width="110" height="10" fill="none" stroke="rgba(197,160,89,0.5)" stroke-width="1"/>
+                        <rect x="5" y="2" width="110" height="10" fill="rgba(197,160,89,0.06)"/>
+                        <!-- Échine -->
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1"/>
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="rgba(197,160,89,0.05)"/>
+                        <!-- Volutes -->
+                        <path d="M 15 35 Q 8 28 12 20 Q 16 12 22 18 Q 26 22 22 28 Q 18 32 22 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <path d="M 105 35 Q 112 28 108 20 Q 104 12 98 18 Q 94 22 98 28 Q 102 32 98 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <!-- Corps chapiteau -->
+                        <path d="M 22 36 Q 60 42 98 36 L 95 50 Q 60 56 25 50 Z" fill="rgba(197,160,89,0.08)" stroke="rgba(197,160,89,0.3)" stroke-width="0.8"/>
+                        <!-- Lettre P -->
+                        <text x="60" y="48" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="18" font-style="italic" fill="rgba(197,160,89,0.9)">P</text>
+                        <!-- Collet -->
+                        <rect x="46" y="52" width="28" height="6" fill="rgba(197,160,89,0.12)" stroke="rgba(197,160,89,0.25)" stroke-width="0.8"/>
+                        <!-- Début fût -->
+                        <rect x="50" y="58" width="20" height="22" fill="rgba(197,160,89,0.06)" stroke="none"/>
+                        <line x1="53" y1="58" x2="53" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                        <line x1="67" y1="58" x2="67" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                    </svg>
+                </div>
+                <div class="col-shaft"></div>
+                <div class="col-base"></div>
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Psychologique</div>
+                    <p class="col-desc">Comprendre ses mécanismes intérieurs, décoder les dynamiques relationnelles, maîtriser ses émotions. L'Analyse Transactionnelle et la CNV comme outils de transformation durable.</p>
+                </div>
             </div>
-            <div class="methode-card">
-                <div class="methode-letter">P</div>
-                <div class="methode-name">Physique</div>
-                <div class="methode-line"></div>
-                <p class="methode-desc">Le corps comme premier espace de discipline et de présence. La maîtrise intérieure commence par la maîtrise du corps — sous pression, dans l'effort quotidien.</p>
+
+            <!-- P2 Physique -->
+            <div class="methode-col">
+                <div class="col-capital">
+                    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="2" width="110" height="10" fill="none" stroke="rgba(197,160,89,0.5)" stroke-width="1"/>
+                        <rect x="5" y="2" width="110" height="10" fill="rgba(197,160,89,0.06)"/>
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1"/>
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="rgba(197,160,89,0.05)"/>
+                        <path d="M 15 35 Q 8 28 12 20 Q 16 12 22 18 Q 26 22 22 28 Q 18 32 22 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <path d="M 105 35 Q 112 28 108 20 Q 104 12 98 18 Q 94 22 98 28 Q 102 32 98 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <path d="M 22 36 Q 60 42 98 36 L 95 50 Q 60 56 25 50 Z" fill="rgba(197,160,89,0.08)" stroke="rgba(197,160,89,0.3)" stroke-width="0.8"/>
+                        <text x="60" y="48" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="18" font-style="italic" fill="rgba(197,160,89,0.9)">P</text>
+                        <rect x="46" y="52" width="28" height="6" fill="rgba(197,160,89,0.12)" stroke="rgba(197,160,89,0.25)" stroke-width="0.8"/>
+                        <rect x="50" y="58" width="20" height="22" fill="rgba(197,160,89,0.06)" stroke="none"/>
+                        <line x1="53" y1="58" x2="53" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                        <line x1="67" y1="58" x2="67" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                    </svg>
+                </div>
+                <div class="col-shaft"></div>
+                <div class="col-base"></div>
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Physique</div>
+                    <p class="col-desc">Le corps comme premier espace de discipline et de présence. La maîtrise intérieure commence par la maîtrise du corps — sous pression, dans l'effort quotidien.</p>
+                </div>
             </div>
-            <div class="methode-card">
-                <div class="methode-letter">P</div>
-                <div class="methode-name">Philosophique</div>
-                <div class="methode-line"></div>
-                <p class="methode-desc">La rigueur stoïcienne comme boussole de vie. Distinguer ce qui dépend de soi, cultiver la vertu dans l'action, faire de l'obstacle un chemin. Une philosophie vivante.</p>
+
+            <!-- P3 Philosophique -->
+            <div class="methode-col">
+                <div class="col-capital">
+                    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="2" width="110" height="10" fill="none" stroke="rgba(197,160,89,0.5)" stroke-width="1"/>
+                        <rect x="5" y="2" width="110" height="10" fill="rgba(197,160,89,0.06)"/>
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1"/>
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="rgba(197,160,89,0.05)"/>
+                        <path d="M 15 35 Q 8 28 12 20 Q 16 12 22 18 Q 26 22 22 28 Q 18 32 22 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <path d="M 105 35 Q 112 28 108 20 Q 104 12 98 18 Q 94 22 98 28 Q 102 32 98 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <path d="M 22 36 Q 60 42 98 36 L 95 50 Q 60 56 25 50 Z" fill="rgba(197,160,89,0.08)" stroke="rgba(197,160,89,0.3)" stroke-width="0.8"/>
+                        <text x="60" y="48" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="18" font-style="italic" fill="rgba(197,160,89,0.9)">P</text>
+                        <rect x="46" y="52" width="28" height="6" fill="rgba(197,160,89,0.12)" stroke="rgba(197,160,89,0.25)" stroke-width="0.8"/>
+                        <rect x="50" y="58" width="20" height="22" fill="rgba(197,160,89,0.06)" stroke="none"/>
+                        <line x1="53" y1="58" x2="53" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                        <line x1="67" y1="58" x2="67" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                    </svg>
+                </div>
+                <div class="col-shaft"></div>
+                <div class="col-base"></div>
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Philosophique</div>
+                    <p class="col-desc">La rigueur stoïcienne comme boussole de vie. Distinguer ce qui dépend de soi, cultiver la vertu dans l'action, faire de l'obstacle un chemin. Une philosophie vivante.</p>
+                </div>
             </div>
-            <div class="methode-card">
-                <div class="methode-letter">P</div>
-                <div class="methode-name">Pneuma</div>
-                <div class="methode-line"></div>
-                <p class="methode-desc">Le souffle vital — dimension philosophico-spirituelle qui englobe l'intelligence et l'intellect. Ce qui donne sens à l'action et relie l'individu à quelque chose de plus grand.</p>
+
+            <!-- P4 Pneuma -->
+            <div class="methode-col">
+                <div class="col-capital">
+                    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="2" width="110" height="10" fill="none" stroke="rgba(197,160,89,0.5)" stroke-width="1"/>
+                        <rect x="5" y="2" width="110" height="10" fill="rgba(197,160,89,0.06)"/>
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1"/>
+                        <ellipse cx="60" cy="20" rx="50" ry="10" fill="rgba(197,160,89,0.05)"/>
+                        <path d="M 15 35 Q 8 28 12 20 Q 16 12 22 18 Q 26 22 22 28 Q 18 32 22 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <path d="M 105 35 Q 112 28 108 20 Q 104 12 98 18 Q 94 22 98 28 Q 102 32 98 36" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="1.2"/>
+                        <path d="M 22 36 Q 60 42 98 36 L 95 50 Q 60 56 25 50 Z" fill="rgba(197,160,89,0.08)" stroke="rgba(197,160,89,0.3)" stroke-width="0.8"/>
+                        <text x="60" y="48" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="18" font-style="italic" fill="rgba(197,160,89,0.9)">P</text>
+                        <rect x="46" y="52" width="28" height="6" fill="rgba(197,160,89,0.12)" stroke="rgba(197,160,89,0.25)" stroke-width="0.8"/>
+                        <rect x="50" y="58" width="20" height="22" fill="rgba(197,160,89,0.06)" stroke="none"/>
+                        <line x1="53" y1="58" x2="53" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                        <line x1="67" y1="58" x2="67" y2="80" stroke="rgba(197,160,89,0.12)" stroke-width="0.5"/>
+                    </svg>
+                </div>
+                <div class="col-shaft"></div>
+                <div class="col-base"></div>
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Pneuma</div>
+                    <p class="col-desc">Le souffle vital — dimension philosophico-spirituelle qui englobe l'intelligence et l'intellect. Ce qui donne sens à l'action et relie l'individu à quelque chose de plus grand.</p>
+                </div>
             </div>
+
         </div>
     </section>
 
@@ -492,7 +628,7 @@
             <div class="carousel-track">
                 <div class="carousel-slides" id="slides">
                     <div class="citation-slide">
-                        <div class="citation-img"><img id="img-ma2" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le2.jpg" alt="Marc Aurèle"></div>
+                        <div class="citation-img"><img id="img-ma1" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le1.jpg" alt="Marc Aurèle"></div>
                         <p class="citation-text">L'obstacle sur le chemin devient le chemin. Jamais oublier cela dans les domaines qui nous résistent.</p>
                         <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
                     </div>
@@ -502,17 +638,17 @@
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img id="img-s2" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien2.jpeg" alt="Épictète"></div>
+                        <div class="citation-img"><img id="img-ep" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoEpict%C3%A8te.jpg" alt="Épictète"></div>
                         <p class="citation-text">Ce qui trouble les hommes, ce ne sont pas les choses, mais les opinions qu'ils ont des choses.</p>
                         <p class="citation-author">Épictète · Manuel</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img id="img-logo" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/Logo-Vertus-Stoiciennes-2.jpg" alt="Vertus Stoïciennes"></div>
+                        <div class="citation-img"><img id="img-s3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien3.jpg" alt="Sénèque"></div>
                         <p class="citation-text">Retire-toi en toi-même autant que tu peux. Fréquente ceux qui sont susceptibles de te rendre meilleur.</p>
                         <p class="citation-author">Sénèque · Lettres à Lucilius</p>
                     </div>
                     <div class="citation-slide">
-                        <div class="citation-img"><img id="img-s3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien2.jpeg" alt="Stoïcien"></div>
+                        <div class="citation-img"><img id="img-ma3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le3.jpg" alt="Marc Aurèle"></div>
                         <p class="citation-text">Commence le matin en te disant : aujourd'hui je rencontrerai des gens difficiles — mais ils sont ainsi par ignorance du bien et du mal.</p>
                         <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
                     </div>
