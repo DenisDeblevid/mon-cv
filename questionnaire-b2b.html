@@ -12,13 +12,10 @@
     --white:#fff; --gray:#888; --soft:#ccc;
     --border:rgba(197,160,89,0.12);
 }
-*{margin:0;padding:0;box-sizing:border-box;cursor:none !important;}
-body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:60px 20px 80px;}
-
-/* CURSOR */
-.cursor{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:-20px;left:-20px;pointer-events:none;z-index:9999;transition:transform 0.15s ease;}
-.cursor-ring{width:32px;height:32px;border:1.5px solid var(--gold);border-radius:50%;position:fixed;top:-20px;left:-20px;pointer-events:none;z-index:9998;opacity:0.7;}
-@media(max-width:620px){*{cursor:auto !important;}.cursor,.cursor-ring{display:none;}}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Outfit',sans-serif; background:var(--black); color:var(--white); min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:60px 20px 80px; }
+input, textarea, select { cursor:default !important; }@media(max-width:620px){
+    
 
 /* INTRO */
 .intro{max-width:660px;width:100%;text-align:center;margin-bottom:60px;animation:fadeUp .8s ease both;}
@@ -140,10 +137,6 @@ body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);
 </style>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- INTRO -->
 <div id="intro" style="width:100%;display:flex;flex-direction:column;align-items:center;">
@@ -356,26 +349,6 @@ var TXT={
     }
 };
 
-// ─── CURSEUR ───
-var cursor=document.getElementById('cursor');
-var ring=document.getElementById('cursorRing');
-var mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',function(e){
-    mx=e.clientX;my=e.clientY;
-    cursor.style.left=(mx-4)+'px';
-    cursor.style.top=(my-4)+'px';
-});
-function animRing(){
-    rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
-    ring.style.left=rx+'px';ring.style.top=ry+'px';
-    requestAnimationFrame(animRing);
-}
-animRing();
-document.querySelectorAll('a,button,.opt').forEach(function(el){
-    el.addEventListener('mouseenter',function(){cursor.style.transform='scale(2.5)';});
-    el.addEventListener('mouseleave',function(){cursor.style.transform='scale(1)';});
-});
-
 function shuffleArray(arr){
     var a=arr.slice();
     for(var i=a.length-1;i>0;i--){
@@ -384,14 +357,13 @@ function shuffleArray(arr){
     }
     return a;
 }
-// Pre-shuffle all questions' options, store shuffle map
+// Pre-shuffle — SHUFFLED[q][displayPos] = originalIndex
 var SHUFFLED=Q.map(function(q){
-    var indices=[0,1,2,3];
-    var shuffled=shuffleArray(indices);
-    return shuffled; // shuffled[displayPosition] = originalIndex
+    return shuffleArray([0,1,2,3]);
 });
 
 // ─── STATE ───
+// ans[q] stores the ORIGINAL index chosen (for correct scoring)
 var ans=new Array(Q.length).fill(null), cur=0;
 
 function getLevel(pct){ return pct<45?'low':pct<=72?'mid':'high'; }
@@ -427,7 +399,8 @@ function renderQ(){
     var shuffle=SHUFFLED[cur];
     shuffle.forEach(function(origIdx,displayPos){
         var opt=q.o[origIdx];
-        var isSelected=(ans[cur]===displayPos);
+        // Selected = this original index matches what was stored
+        var isSelected=(ans[cur]===origIdx);
         var d=document.createElement('div');
         d.className='opt'+(isSelected?' sel':'');
         d.innerHTML='<div class="om">'+letters[displayPos]+'</div><div class="ot">'+opt.t+'</div>';
@@ -435,12 +408,12 @@ function renderQ(){
             var m=d.querySelector('.om');
             m.style.background='var(--gold)';m.style.color='var(--black)';m.style.borderColor='var(--gold)';
         }
-        (function(dPos){d.onclick=function(){selOpt(dPos);};})(displayPos);
+        // Store ORIGINAL index so scoring is correct
+        (function(oIdx){d.onclick=function(){selOpt(oIdx);};})(origIdx);
         wrap.appendChild(d);
     });
     updateDots();
 }
-
 function selOpt(i){
     ans[cur]=i;
     document.querySelectorAll('.opt').forEach(function(el,idx){
