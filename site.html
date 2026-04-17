@@ -1,731 +1,792 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnostic 4P — Denis Deblevid</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ── VARIABLES ── */
-:root {
-  --gold: #c5a059;
-  --gold-l: #d4b97a;
-  --gold-dim: rgba(197,160,89,0.1);
-  --black: #080808;
-  --dark: #0d0d0d;
-  --white: #ffffff;
-  --gray: #888888;
-  --soft: #cccccc;
-  --border: rgba(197,160,89,0.12);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denis Deblevid | Consultant · Formateur & Coach</title>
+    <meta name="description" content="Denis Deblevid — L'humain au cœur de tout ce que j'entreprends.">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --gold-light: #d4b97a;
+            --gold-dim: rgba(197,160,89,0.15);
+            --black: #080808;
+            --dark: #111111;
+            --darker: #0d0d0d;
+            --white: #ffffff;
+            --gray: #888888;
+            --soft: #cccccc;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
+        body { font-family: 'Outfit', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
 
-/* ── RESET ── */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { cursor: none; }
-body {
-  font-family: 'Outfit', Arial, sans-serif;
-  background: var(--black);
-  color: var(--white);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 60px 20px 80px;
-}
+        /* ─── CURSEUR ─── */
+        .cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; top: -20px; left: -20px; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; }
+        .cursor-ring { width: 32px; height: 32px; border: 1.5px solid var(--gold); border-radius: 50%; position: fixed; top: -20px; left: -20px; pointer-events: none; z-index: 9998; opacity: 0.7; }
 
-/* ── CURSEUR ── */
-#cur { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; top: -20px; left: -20px; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; }
-#cur-ring { width: 32px; height: 32px; border: 1.5px solid var(--gold); border-radius: 50%; position: fixed; top: -20px; left: -20px; pointer-events: none; z-index: 9998; opacity: 0.7; }
-@media (max-width: 620px) { html, body { cursor: auto; } #cur, #cur-ring { display: none; } }
+        /* ─── NAV ─── */
+        nav { position: fixed; top: 0; width: 100%; padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(8,8,8,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(197,160,89,0.12); z-index: 1000; }
+        .logo { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.2rem; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-cta { padding: 8px 20px; border: 1px solid rgba(197,160,89,0.4); color: var(--gold) !important; transition: all 0.3s !important; }
+        .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
+        .nav-diag { padding: 8px 20px; background: var(--gold-dim) !important; border: 1px solid rgba(197,160,89,0.3); color: var(--gold) !important; transition: all 0.3s !important; }
+        .nav-diag:hover { background: var(--gold) !important; color: var(--black) !important; }
 
-/* ── ÉCRANS ── */
-#screen-intro { width: 100%; display: flex; flex-direction: column; align-items: center; }
-#screen-quiz  { width: 100%; display: none; flex-direction: column; align-items: center; }
-#screen-result{ width: 100%; display: none; flex-direction: column; align-items: center; }
+        /* ─── SÉPARATEUR ─── */
+        .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(197,160,89,0.25), transparent); margin: 0 60px; }
 
-/* ── INTRO ── */
-.intro-wrap { max-width: 660px; width: 100%; text-align: center; }
-.i-tag { font-family: 'Outfit', sans-serif; font-size: 0.58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(197,160,89,0.28); padding: 5px 16px; display: inline-block; margin-bottom: 24px; }
-.i-h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2rem,4vw,3rem); font-weight: 300; line-height: 1.1; margin-bottom: 14px; }
-.i-h1 em { color: var(--gold); font-style: italic; }
-.i-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1rem; font-style: italic; color: var(--gray); line-height: 1.8; max-width: 480px; margin: 0 auto 14px; }
-.i-method { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.75rem; color: rgba(197,160,89,0.55); line-height: 1.7; max-width: 500px; margin: 0 auto 28px; padding: 14px 20px; border: 1px solid rgba(197,160,89,0.1); font-style: italic; }
-.i-stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 32px; }
-.i-stats > div { text-align: center; }
-.stat-n { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; color: var(--gold); font-weight: 300; line-height: 1; display: block; }
-.stat-l { font-family: 'Outfit', Arial, sans-serif; font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-top: 4px; display: block; }
-.i-divider { width: 36px; height: 1px; background: rgba(197,160,89,0.3); margin: 0 auto 32px; }
+        /* ─── HERO ─── */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 80px 60px 60px; position: relative; overflow: hidden; }
+        .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(197,160,89,0.3), transparent); }
+        .hero-card { display: flex; flex-direction: column; align-items: center; max-width: 900px; width: 100%; }
 
-/* ── BOUTONS ── */
-.btn-gold { background: var(--gold); border: none; color: var(--black); padding: 13px 36px; font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; cursor: none; transition: all 0.3s; display: inline-block; }
-.btn-gold:hover { background: var(--gold-l); }
-.btn-outline { background: none; border: 1px solid rgba(197,160,89,0.25); color: var(--gold); padding: 11px 28px; font-family: 'Outfit', sans-serif; font-size: 0.65rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; cursor: none; transition: all 0.3s; opacity: 0.35; pointer-events: none; }
-.btn-outline.on { opacity: 1; pointer-events: all; }
-.btn-outline.on:hover { background: var(--gold); color: var(--black); }
-.btn-ghost { background: none; border: none; color: var(--gray); font-family: 'Outfit', sans-serif; font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; cursor: none; transition: color 0.3s; padding: 8px 0; }
-.btn-ghost:hover { color: var(--gold); }
+        /* Hero top — photo | identité | casque */
+        .hero-top { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 48px; width: 100%; margin-bottom: 32px; animation: fadeIn 0.8s ease both; }
+        .photo-circle { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); box-shadow: 0 0 0 6px rgba(197,160,89,0.1), 0 0 30px rgba(197,160,89,0.12); flex-shrink: 0; }
+        .photo-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(15%) contrast(1.05); }
+        .hero-identity { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
+        .hero-phrase { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-style: italic; color: var(--soft); font-weight: 300; text-align: center; width: 100%; margin-top: 12px; opacity: 0.8; }
+        .hero-tag { font-size: 0.55rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(197,160,89,0.3); padding: 4px 10px; display: inline-block; white-space: nowrap; margin-top: 10px; }
+        .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 4.5rem); font-weight: 300; line-height: 1.0; letter-spacing: -1px; text-align: center; }
+        .hero-name span { color: var(--gold); font-style: italic; }
+        /* Colonne — texte sur colonne, pas de base */
+        .col-base { display: none; }
+        .col-content { padding: 20px 16px; text-align: center; width: 100%; background: rgba(0,0,0,0.5); margin-top: -2px; }
+        .col-letter { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; color: var(--gold); font-weight: 300; font-style: italic; line-height: 1; margin-bottom: 6px; }
+        .col-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--white); margin-bottom: 12px; }
+        .col-desc { font-size: 0.78rem; color: var(--soft); line-height: 1.7; font-weight: 300; }
 
-/* ── PROGRESSION ── */
-.prog-wrap { width: 100%; max-width: 660px; margin-bottom: 36px; }
-.prog-top { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: baseline; }
-.prog-lbl { font-family: 'Outfit', sans-serif; font-size: 0.56rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
-.prog-count { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.95rem; color: var(--gold); }
-.prog-bar { width: 100%; height: 1px; background: rgba(197,160,89,0.1); }
-.prog-bar-fill { height: 1px; background: var(--gold); width: 8.33%; transition: width 0.5s ease; }
+        /* Casque — fondu dans le noir */
+        .casque-wrap { width: 200px; height: 200px; flex-shrink: 0; position: relative; }
+        .casque-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 45%, black 40%, transparent 75%); mask-image: radial-gradient(ellipse 80% 80% at 50% 45%, black 40%, transparent 75%); filter: brightness(1.05) contrast(1.05); }
 
-/* ── DOTS SECTIONS ── */
-.dots-wrap { width: 100%; max-width: 660px; display: flex; gap: 4px; margin-bottom: 20px; }
-.dot { flex: 1; height: 2px; background: rgba(197,160,89,0.08); transition: background 0.4s; }
-.dot.done { background: rgba(197,160,89,0.35); }
-.dot.active { background: var(--gold); }
+        .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 1.8vw, 1.35rem); font-style: italic; color: var(--soft); font-weight: 300; line-height: 1.6; margin-bottom: 28px; padding: 14px 28px; text-align: center; width: 100%; border-top: 1px solid rgba(197,160,89,0.2); border-bottom: 1px solid rgba(197,160,89,0.2); animation: fadeUp 0.8s 0.2s ease both; }
+        .hero-contacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; margin-bottom: 28px; animation: fadeUp 0.8s 0.3s ease both; }
+        .contact-line { display: flex; align-items: center; gap: 10px; color: var(--gray); font-size: 0.82rem; text-decoration: none; transition: color 0.3s; }
+        .contact-line:hover { color: var(--gold); }
+        .contact-icon { width: 28px; height: 28px; border: 1px solid rgba(197,160,89,0.2); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; transition: all 0.3s; }
+        .contact-line:hover .contact-icon { background: var(--gold-dim); border-color: var(--gold); }
+        .hero-btn { display: inline-flex; align-items: center; gap: 12px; padding: 13px 32px; background: var(--gold); color: var(--black); text-decoration: none; font-size: 0.72rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.3s; animation: fadeUp 0.8s 0.4s ease both; }
+        .hero-btn:hover { background: var(--gold-light); transform: translateX(4px); }
+        .hero-btn-sec { display: inline-flex; align-items: center; gap: 12px; padding: 13px 32px; border: 1px solid rgba(197,160,89,0.4); color: var(--gold); text-decoration: none; font-size: 0.72rem; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.3s; animation: fadeUp 0.8s 0.5s ease both; }
+        .hero-btn-sec:hover { background: var(--gold-dim); }
+        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
-/* ── CARTE QUESTION ── */
-.q-card { background: var(--dark); border: 1px solid var(--border); max-width: 660px; width: 100%; padding: 46px 42px; }
-.q-dim { font-family: 'Outfit', sans-serif; font-size: 0.5rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(197,160,89,0.45); margin-bottom: 6px; }
-.q-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.82rem; color: var(--gray); margin-bottom: 16px; }
-.q-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.15rem,2vw,1.6rem); font-weight: 300; line-height: 1.55; color: var(--white); margin-bottom: 34px; }
+        /* ─── SECTIONS ─── */
+        .section-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: 50px; }
+        .section-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: rgba(197,160,89,0.12); font-weight: 300; line-height: 1; }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--white); }
+        .section-title span { color: var(--gold); font-style: italic; }
 
-/* ── OPTIONS ── */
-.opts { display: flex; flex-direction: column; gap: 8px; }
-.opt { display: flex; align-items: flex-start; gap: 14px; padding: 13px 18px; border: 1px solid rgba(197,160,89,0.08); cursor: none; transition: all 0.22s; }
-.opt:hover { border-color: rgba(197,160,89,0.28); background: rgba(197,160,89,0.04); }
-.opt.sel { border-color: var(--gold); background: var(--gold-dim); }
-.opt-letter { width: 26px; height: 26px; border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Outfit', sans-serif; font-size: 0.58rem; font-weight: 600; color: var(--gold); transition: all 0.22s; }
-.opt.sel .opt-letter { background: var(--gold); color: var(--black); border-color: var(--gold); }
-.opt-text { font-family: 'Outfit', Arial, sans-serif; font-size: 0.84rem; color: var(--soft); line-height: 1.65; font-weight: 300; padding-top: 3px; }
+        /* ─── PARCOURS ─── */
+        #parcours { padding: 90px 60px; background: var(--darker); }
+        .parcours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .parcours-text { font-size: 0.92rem; color: var(--gray); line-height: 1.9; font-weight: 300; margin-bottom: 18px; }
+        .parcours-text strong { color: var(--soft); font-weight: 500; }
+        .parcours-atouts { display: flex; flex-direction: column; gap: 14px; }
+        .atout { display: flex; gap: 18px; align-items: flex-start; padding: 18px 22px; border: 1px solid rgba(197,160,89,0.1); transition: all 0.3s; }
+        .atout:hover { border-color: rgba(197,160,89,0.3); background: var(--gold-dim); }
+        .atout-icon { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold); font-style: italic; line-height: 1; flex-shrink: 0; }
+        .atout-content h4 { color: var(--soft); font-size: 0.86rem; font-weight: 600; margin-bottom: 4px; }
+        .atout-content p { color: var(--gray); font-size: 0.8rem; line-height: 1.7; font-weight: 300; }
 
-/* ── NAV QUIZ ── */
-.q-nav { display: flex; justify-content: space-between; align-items: center; max-width: 660px; width: 100%; margin-top: 26px; }
+        /* ─── MA MÉTHODE 4P ─── */
+        #methode { padding: 90px 60px; overflow: hidden; }
+        .methode-intro { font-size: 0.92rem; color: var(--gray); line-height: 1.9; max-width: 680px; margin-bottom: 40px; }
+        .methode-intro strong { color: var(--soft); }
 
-/* ── RÉSULTATS ── */
-.res-wrap { max-width: 760px; width: 100%; }
-.res-top { text-align: center; margin-bottom: 48px; }
-.res-top h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300; margin-bottom: 8px; }
-.res-top h2 em { color: var(--gold); font-style: italic; }
-.res-top p { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; color: var(--gray); font-size: 0.95rem; }
+        /* Vidéo */
+        .methode-video-wrap { display: flex; align-items: center; gap: 40px; margin-bottom: 60px; }
+        .methode-video { width: 110px; flex-shrink: 0; }
+        .methode-video iframe { width: 110px; height: 196px; border: 1px solid rgba(197,160,89,0.2); display: block; }
+        .methode-video-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-top: 8px; text-align: center; }
+        .methode-video-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--gray); line-height: 1.8; }
 
-/* Radar */
-.radar-box { display: flex; justify-content: center; margin-bottom: 40px; }
-.radar-box svg { max-width: 360px; width: 100%; }
+        /* Colonnes antiques */
+        .methode-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+        .methode-col { display: flex; flex-direction: column; align-items: center; position: relative; }
 
-/* Score cards */
-.sc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-bottom: 36px; }
-.sc { background: var(--dark); border: 1px solid var(--border); padding: 22px 14px; text-align: center; }
-.sc.prio { border-color: var(--gold); background: rgba(197,160,89,0.03); }
-.sc-letter { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.2rem; color: var(--gold); font-style: italic; font-weight: 300; line-height: 1; margin-bottom: 3px; }
-.sc-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.88rem; color: var(--soft); margin-bottom: 12px; }
-.sc-bar-bg { height: 2px; background: rgba(197,160,89,0.1); margin-bottom: 7px; }
-.sc-bar { height: 2px; background: var(--gold); width: 0; transition: width 1.2s ease; display: block; }
-.sc-pct { font-family: 'Outfit', sans-serif; font-size: 0.62rem; color: var(--gray); letter-spacing: 1px; }
-.sc-badge { font-family: 'Outfit', sans-serif; font-size: 0.45rem; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid; padding: 2px 5px; display: inline-block; margin-top: 6px; }
-.badge-low { color: #e07070; border-color: rgba(224,112,112,0.3); }
-.badge-mid { color: var(--gold); border-color: rgba(197,160,89,0.3); }
-.badge-high { color: #70b870; border-color: rgba(112,184,112,0.3); }
+        /* Chapiteau SVG */
+        .col-capital { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .col-capital svg { width: 100%; height: auto; display: block; }
 
-/* Synthèse */
-.syn-box { background: var(--dark); border: 1px solid var(--border); padding: 38px 42px; margin-bottom: 24px; }
-.syn-intro-txt { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; font-style: italic; color: var(--soft); line-height: 1.75; margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid var(--border); }
-.ps { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(197,160,89,0.05); }
-.ps:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.ps.prio { background: rgba(197,160,89,0.03); border: 1px solid rgba(197,160,89,0.15); padding: 24px; margin-bottom: 24px; }
-.ps-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.ps-letter { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; color: var(--gold); font-style: italic; font-weight: 300; line-height: 1; }
-.ps-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.95rem; color: var(--white); }
-.ps-score { font-family: 'Outfit', sans-serif; font-size: 0.55rem; letter-spacing: 1.5px; color: var(--gray); margin-left: auto; }
-.ps-txt { font-family: 'Outfit', Arial, sans-serif; font-size: 0.83rem; color: var(--gray); line-height: 1.85; font-weight: 300; }
-.ps-txt strong { color: var(--soft); font-weight: 500; }
+        /* Fût de la colonne */
+        .col-shaft {
+            width: 48px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, rgba(197,160,89,0.12) 20%, rgba(197,160,89,0.2) 50%, rgba(197,160,89,0.12) 80%, rgba(0,0,0,0.3) 100%);
+            flex: 1;
+            min-height: 80px;
+            position: relative;
+        }
+        .col-shaft::before, .col-shaft::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 1px;
+        }
+        .col-shaft::before { left: 6px; background: rgba(197,160,89,0.2); }
+        .col-shaft::after { right: 6px; background: rgba(197,160,89,0.2); }
 
-/* Formulaire */
-.form-box { background: var(--dark); border: 1px solid var(--border); border-top: 2px solid var(--gold); padding: 42px; margin-bottom: 24px; }
-.form-h { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.7rem; font-weight: 300; color: var(--white); margin-bottom: 6px; }
-.form-sh { font-family: 'Outfit', sans-serif; font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-.form-intro-p { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; color: var(--gray); font-size: 0.92rem; line-height: 1.7; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-.fg { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.fg label { font-family: 'Outfit', sans-serif; font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
-.fg label span { color: var(--gold); }
-.fg input, .fg textarea {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(197,160,89,0.12);
-  color: var(--white);
-  padding: 11px 14px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.84rem;
-  font-weight: 300;
-  outline: none;
-  width: 100%;
-  transition: border-color 0.3s;
-  cursor: text;
-}
-.fg input:focus, .fg textarea:focus { border-color: rgba(197,160,89,0.4); }
-.fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.16); }
-.fg textarea { resize: vertical; min-height: 88px; }
-.form-note { font-family: 'Outfit', sans-serif; font-size: 0.65rem; color: var(--gray); margin-bottom: 22px; opacity: 0.7; }
-.form-ok { display: none; text-align: center; padding: 20px 0; }
-.form-ok p { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-style: italic; color: var(--soft); line-height: 1.7; }
-.form-ok em { color: var(--gold); font-style: normal; }
+        /* Base colonne */
+        /* col-base hidden, col-content on column */
+        /* Colonnes SVG background */
+        .methode-bg {
+            position: relative;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCI+CiAgPGRlZnM+CiAgICA8IS0tIEJhY2tncm91bmQgZ3JhZGllbnQgLS0+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMGEwYTBhIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMTExMTA4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFhMTUwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KCiAgICA8IS0tIENvbHVtbiBib2R5IGdyYWRpZW50IChnb2xkIHNoaW1tZXIpIC0tPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJjb2xHb2xkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiICAgc3R5bGU9InN0b3AtY29sb3I6IzNhMmEwMCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjE4JSIgIHN0eWxlPSJzdG9wLWNvbG9yOiM3YTVjMTAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIzNSUiICBzdHlsZT0ic3RvcC1jb2xvcjojZDRhNTIwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiAgc3R5bGU9InN0b3AtY29sb3I6I2Y1ZDA2MCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjY1JSIgIHN0eWxlPSJzdG9wLWNvbG9yOiNkNGE1MjAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI4MiUiICBzdHlsZT0ic3RvcC1jb2xvcjojN2E1YzEwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzNhMmEwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KCiAgICA8IS0tIENhcGl0YWwgZ3JhZGllbnQgLS0+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImNhcEdvbGQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgICBzdHlsZT0ic3RvcC1jb2xvcjojMmExZTAwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMjAlIiAgc3R5bGU9InN0b3AtY29sb3I6IzhhNjgxMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjQ1JSIgIHN0eWxlPSJzdG9wLWNvbG9yOiNlOGMwNDAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1NSUiICBzdHlsZT0ic3RvcC1jb2xvcjojZmNlODcwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iODAlIiAgc3R5bGU9InN0b3AtY29sb3I6IzhhNjgxMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMyYTFlMDAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CgogICAgPCEtLSBGbHV0ZSBzaGFkb3cgZm9yIGNvbHVtbnMgLS0+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImZsdXRlU2hhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiAgIHN0eWxlPSJzdG9wLWNvbG9yOiMwMDAwMDA7c3RvcC1vcGFjaXR5OjAuNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgIHN0eWxlPSJzdG9wLWNvbG9yOiMwMDAwMDA7c3RvcC1vcGFjaXR5OjAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDAwMDAwO3N0b3Atb3BhY2l0eTowLjYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CgogICAgPCEtLSBTdG9uZSBiYXNlIGdyYWRpZW50IC0tPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiYXNlR29sZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiAgIHN0eWxlPSJzdG9wLWNvbG9yOiNjODkyMWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0MCUiICBzdHlsZT0ic3RvcC1jb2xvcjojOGE2MDEwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzNhMmEwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KCiAgICA8IS0tIEVudGFibGF0dXJlIGdyYWRpZW50IC0tPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJlbnRhYkdvbGQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgICBzdHlsZT0ic3RvcC1jb2xvcjojZmNlMDYwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMzAlIiAgc3R5bGU9InN0b3AtY29sb3I6I2M4OTIwYSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjcwJSIgIHN0eWxlPSJzdG9wLWNvbG9yOiM4YTYwMDgiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2EyODAwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgoKICAgIDwhLS0gR2xvdyBmaWx0ZXIgLS0+CiAgICA8ZmlsdGVyIGlkPSJnbG93IiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIj4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNCIgcmVzdWx0PSJjb2xvcmVkQmx1ciIvPgogICAgICA8ZmVNZXJnZT4KICAgICAgICA8ZmVNZXJnZU5vZGUgaW49ImNvbG9yZWRCbHVyIi8+CiAgICAgICAgPGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+CiAgICAgIDwvZmVNZXJnZT4KICAgIDwvZmlsdGVyPgoKICAgIDwhLS0gU3VidGxlIGFtYmllbnQgZ2xvdyAtLT4KICAgIDxmaWx0ZXIgaWQ9InNvZnRHbG93IiB4PSItMzAlIiB5PSItMzAlIiB3aWR0aD0iMTYwJSIgaGVpZ2h0PSIxNjAlIj4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIHJlc3VsdD0iYmx1ciIvPgogICAgICA8ZmVDb2xvck1hdHJpeCBpbj0iYmx1ciIgdHlwZT0ibWF0cml4IgogICAgICAgIHZhbHVlcz0iMSAwLjYgMCAwIDAgIDAuNiAwLjQgMCAwIDAgIDAgMCAwIDAgMCAgMCAwIDAgMC41IDAiIHJlc3VsdD0iZ29sZGVuIi8+CiAgICAgIDxmZU1lcmdlPgogICAgICAgIDxmZU1lcmdlTm9kZSBpbj0iZ29sZGVuIi8+CiAgICAgICAgPGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+CiAgICAgIDwvZmVNZXJnZT4KICAgIDwvZmlsdGVyPgoKICAgIDwhLS0gTm9pc2UgdGV4dHVyZSAtLT4KICAgIDxmaWx0ZXIgaWQ9Im5vaXNlIj4KICAgICAgPGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz4KICAgICAgPGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPgogICAgICA8ZmVCbGVuZCBpbj0iU291cmNlR3JhcGhpYyIgbW9kZT0ib3ZlcmxheSIgcmVzdWx0PSJibGVuZCIvPgogICAgICA8ZmVDb21wb3NpdGUgaW49ImJsZW5kIiBpbjI9IlNvdXJjZUdyYXBoaWMiIG9wZXJhdG9yPSJpbiIvPgogICAgPC9maWx0ZXI+CgogICAgPCEtLSBDb2x1bW4gY2xpcCAtLT4KICAgIDxjbGlwUGF0aCBpZD0iY29sQ2xpcDEiPjxyZWN0IHg9IjEwMCIgeT0iMTE1IiB3aWR0aD0iOTAiIGhlaWdodD0iMzgwIi8+PC9jbGlwUGF0aD4KICAgIDxjbGlwUGF0aCBpZD0iY29sQ2xpcDIiPjxyZWN0IHg9IjI3MCIgeT0iMTE1IiB3aWR0aD0iOTAiIGhlaWdodD0iMzgwIi8+PC9jbGlwUGF0aD4KICAgIDxjbGlwUGF0aCBpZD0iY29sQ2xpcDMiPjxyZWN0IHg9IjU0MCIgeT0iMTE1IiB3aWR0aD0iOTAiIGhlaWdodD0iMzgwIi8+PC9jbGlwUGF0aD4KICAgIDxjbGlwUGF0aCBpZD0iY29sQ2xpcDQiPjxyZWN0IHg9IjcxMCIgeT0iMTE1IiB3aWR0aD0iOTAiIGhlaWdodD0iMzgwIi8+PC9jbGlwUGF0aD4KICA8L2RlZnM+CgogIDwhLS0g4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQIEJBQ0tHUk9VTkQg4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQIC0tPgogIDxyZWN0IHdpZHRoPSI5MDAiIGhlaWdodD0iNjAwIiBmaWxsPSJ1cmwoI2JnR3JhZCkiLz4KCiAgPCEtLSBTdGFycyAvIGdyYWluIC0tPgogIDxyZWN0IHdpZHRoPSI5MDAiIGhlaWdodD0iNjAwIiBmaWxsPSJub25lIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjA4Ii8+CgogIDwhLS0gU3VidGxlIGdvbGRlbiBmbG9vciBnbG93IC0tPgogIDxlbGxpcHNlIGN4PSI0NTAiIGN5PSI1NDAiIHJ4PSIzODAiIHJ5PSI2MCIgZmlsbD0iI2M4ODIwYSIgb3BhY2l0eT0iMC4xMiIvPgoKICA8IS0tIOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkCBFTlRBQkxBVFVSRSAodG9wIGJlYW0pIOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkCAtLT4KICA8IS0tIENvcm5pY2UgKHRvcCkgLS0+CiAgPHJlY3QgeD0iNzAiIHk9IjU1IiB3aWR0aD0iNzYwIiBoZWlnaHQ9IjIyIiBmaWxsPSJ1cmwoI2VudGFiR29sZCkiIHJ4PSIyIiBmaWx0ZXI9InVybCgjZ2xvdykiLz4KICA8cmVjdCB4PSI3MCIgeT0iNTUiIHdpZHRoPSI3NjAiIGhlaWdodD0iNCIgZmlsbD0iI2ZjZTg3OCIgb3BhY2l0eT0iMC42Ii8+CiAgPCEtLSBTaGFkb3cgdW5kZXIgY29ybmljZSAtLT4KICA8cmVjdCB4PSI3MCIgeT0iNzUiIHdpZHRoPSI3NjAiIGhlaWdodD0iNiIgZmlsbD0iIzAwMCIgb3BhY2l0eT0iMC41Ii8+CgogIDwhLS0gRnJpZXplIHdpdGggdHJpZ2x5cGhzIC0tPgogIDxyZWN0IHg9IjcwIiB5PSI3NyIgd2lkdGg9Ijc2MCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzFhMTIwMCIvPgogIDxyZWN0IHg9IjcwIiB5PSI3NyIgd2lkdGg9Ijc2MCIgaGVpZ2h0PSIyIiBmaWxsPSIjYzg5MjBhIiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI3MCIgeT0iMTE1IiB3aWR0aD0iNzYwIiBoZWlnaHQ9IjIiIGZpbGw9IiNjODkyMGEiIG9wYWNpdHk9IjAuNSIvPgoKICA8IS0tIFRyaWdseXBocyAtLT4KICA8ZyBmaWxsPSIjYjg4MjBhIiBvcGFjaXR5PSIwLjkiPgogICAgPCEtLSBUcmlnbHlwaCBncm91cHMgYXQgZWFjaCBjb2x1bW4gcG9zaXRpb24gYW5kIGJldHdlZW4gLS0+CiAgICA8cmVjdCB4PSIxMTgiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CiAgICA8cmVjdCB4PSIxMzYiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CiAgICA8cmVjdCB4PSIxNTQiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CgogICAgPHJlY3QgeD0iMjA4IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgogICAgPHJlY3QgeD0iMjI2IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgogICAgPHJlY3QgeD0iMjQ0IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgoKICAgIDxyZWN0IHg9IjI4OCIgeT0iODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMyIgcng9IjEiLz4KICAgIDxyZWN0IHg9IjMwNiIgeT0iODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMyIgcng9IjEiLz4KICAgIDxyZWN0IHg9IjMyNCIgeT0iODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMyIgcng9IjEiLz4KCiAgICA8cmVjdCB4PSIzODgiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CiAgICA8cmVjdCB4PSI0MDYiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CiAgICA8cmVjdCB4PSI0MjQiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CgogICAgPHJlY3QgeD0iNDg4IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgogICAgPHJlY3QgeD0iNTA2IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgogICAgPHJlY3QgeD0iNTI0IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgoKICAgIDxyZWN0IHg9IjU1OCIgeT0iODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMyIgcng9IjEiLz4KICAgIDxyZWN0IHg9IjU3NiIgeT0iODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMyIgcng9IjEiLz4KICAgIDxyZWN0IHg9IjU5NCIgeT0iODAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMyIgcng9IjEiLz4KCiAgICA8cmVjdCB4PSI2NTgiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CiAgICA8cmVjdCB4PSI2NzYiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CiAgICA8cmVjdCB4PSI2OTQiIHk9IjgwIiB3aWR0aD0iMTQiIGhlaWdodD0iMzMiIHJ4PSIxIi8+CgogICAgPHJlY3QgeD0iNzI4IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgogICAgPHJlY3QgeD0iNzQ2IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgogICAgPHJlY3QgeD0iNzY0IiB5PSI4MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMzIiByeD0iMSIvPgogIDwvZz4KCiAgPCEtLSBBcmNoaXRyYXZlIChsb3dlciBiZWFtKSAtLT4KICA8cmVjdCB4PSI3MCIgeT0iMTE3IiB3aWR0aD0iNzYwIiBoZWlnaHQ9IjM0IiBmaWxsPSJ1cmwoI2Jhc2VHb2xkKSIgcng9IjEiLz4KICA8cmVjdCB4PSI3MCIgeT0iMTE3IiB3aWR0aD0iNzYwIiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2QwNTAiIG9wYWNpdHk9IjAuNSIvPgoKICA8IS0tIOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkCBIRUxQRVIgTUFDUk86IENPTFVNTiDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAgLS0+CiAgPCEtLSBDT0xVTU4gMSAgKHggY2VudGVyID0gMTQ1KSAtLT4KICA8ZyBpZD0iY29sMSI+CiAgICA8IS0tID09PSBDQVBJVEFMIENPUklOVEhJQU4gPT09IC0tPgogICAgPCEtLSBBYmFjdXMgKHRvcCBzbGFiKSAtLT4KICAgIDxyZWN0IHg9Ijk2IiB5PSIxNTEiIHdpZHRoPSI5OCIgaGVpZ2h0PSIxNCIgZmlsbD0idXJsKCNjYXBHb2xkKSIgcng9IjEiIGZpbHRlcj0idXJsKCNnbG93KSIvPgogICAgPHJlY3QgeD0iOTYiIHk9IjE1MSIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2U4NzgiIG9wYWNpdHk9IjAuNyIvPgoKICAgIDwhLS0gQmVsbCAoa2FsYXRob3MpIC0tPgogICAgPHBhdGggZD0iTTEwMCwxNjUgUTExMCwxNzUgMTIwLDE2OCBRMTM1LDIwMCAxNDUsMjA1IFExNTUsMjAwIDE3MCwxNjggUTE4MCwxNzUgMTkwLDE2NSBMMTg4LDIwMCBRMTcwLDIyMCAxNDUsMjIyIFExMjAsMjIwIDEwMiwyMDAgWiIKICAgICAgICAgIGZpbGw9InVybCgjY2FwR29sZCkiIGZpbHRlcj0idXJsKCNnbG93KSIvPgoKICAgIDwhLS0gQWNhbnRodXMgbGVhdmVzIC0gbGFyZ2UgLS0+CiAgICA8cGF0aCBkPSJNMTA4LDIwMCBRMTAzLDE4NSAxMTAsMTcyIFExMTgsMTc4IDExMiwxOTMgUTExOCwxODggMTIyLDE3OCBRMTMwLDE5NSAxMjUsMjA4IFoiIGZpbGw9IiNjODkyMGEiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTE4MiwyMDAgUTE4NywxODUgMTgwLDE3MiBRMTcyLDE3OCAxNzgsMTkzIFExNzIsMTg4IDE2OCwxNzggUTE2MCwxOTUgMTY1LDIwOCBaIiBmaWxsPSIjYzg5MjBhIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0xMjgsMTk1IFExMjMsMTc4IDEzMCwxNjUgUTEzOCwxNzIgMTMzLDE4OCBRMTM4LDE4MyAxNDIsMTczIFExNDgsMTkwIDE0MywyMDIgWiIgZmlsbD0iI2Q0YTgyMCIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNMTYyLDE5NSBRMTY3LDE3OCAxNjAsMTY1IFExNTIsMTcyIDE1NywxODggUTE1MiwxODMgMTQ4LDE3MyBRMTQyLDE5MCAxNDcsMjAyIFoiIGZpbGw9IiNkNGE4MjAiIG9wYWNpdHk9IjAuOSIvPgoKICAgIDwhLS0gVm9sdXRlIHNjcm9sbHMgLS0+CiAgICA8cGF0aCBkPSJNMTAyLDE2OCBROTYsMTYwIDEwMCwxNTQgUTEwNywxNTAgMTEyLDE1NiBRMTEwLDE2MyAxMDUsMTYyIFExMDMsMTU5IDEwNiwxNTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2U4YzAzMCIgc3Ryb2tlLXdpZHRoPSIyLjUiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTE4OCwxNjggUTE5NCwxNjAgMTkwLDE1NCBRMTgzLDE1MCAxNzgsMTU2IFExODAsMTYzIDE4NSwxNjIgUTE4NywxNTkgMTg0LDE1NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjMDMwIiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iMC45Ii8+CgogICAgPCEtLSBOZWNrIG1vdWxkaW5nIC0tPgogICAgPHJlY3QgeD0iMTA0IiB5PSIyMjAiIHdpZHRoPSI4MiIgaGVpZ2h0PSI4IiBmaWxsPSIjYjg4MDEwIiByeD0iMSIvPgogICAgPHJlY3QgeD0iMTA0IiB5PSIyMjAiIHdpZHRoPSI4MiIgaGVpZ2h0PSIyIiBmaWxsPSIjZmNkMDUwIiBvcGFjaXR5PSIwLjYiLz4KCiAgICA8IS0tID09PSBTSEFGVCB3aXRoIGZsdXRlcyA9PT0gLS0+CiAgICA8cmVjdCB4PSIxMDgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNjb2xHb2xkKSIvPgogICAgPCEtLSBGbHV0ZXMgKHZlcnRpY2FsIGdyb292ZXMpIC0tPgogICAgPGcgb3BhY2l0eT0iMC41NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuNCI+CiAgICAgIDxsaW5lIHgxPSIxMTYiIHkxPSIyMjgiIHgyPSIxMTYiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjEyMyIgeTE9IjIyOCIgeDI9IjEyMyIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iMTMwIiB5MT0iMjI4IiB4Mj0iMTMwIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSIxMzciIHkxPSIyMjgiIHgyPSIxMzciIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjE0NCIgeTE9IjIyOCIgeDI9IjE0NCIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iMTUxIiB5MT0iMjI4IiB4Mj0iMTUxIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSIxNTgiIHkxPSIyMjgiIHgyPSIxNTgiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjE2NSIgeTE9IjIyOCIgeDI9IjE2NSIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iMTcyIiB5MT0iMjI4IiB4Mj0iMTcyIiB5Mj0iNDQ4Ii8+CiAgICA8L2c+CiAgICA8cmVjdCB4PSIxMDgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNmbHV0ZVNoYWQpIi8+CiAgICA8IS0tIEVudGFzaXMgKHNsaWdodCB0YXBlcikgLS0+CiAgICA8cGF0aCBkPSJNMTA4LDIyOCBRMTA1LDMzOCAxMDgsNDQ4IEwxODIsNDQ4IFExODUsMzM4IDE4MiwyMjggWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJub25lIi8+CgogICAgPCEtLSA9PT0gQkFTRSA9PT0gLS0+CiAgICA8IS0tIFRvcnVzICh0b3Agcm91bmQpIC0tPgogICAgPHJlY3QgeD0iMTA0IiB5PSI0NDgiIHdpZHRoPSI4MiIgaGVpZ2h0PSIxMiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgcng9IjQiLz4KICAgIDxyZWN0IHg9IjEwNCIgeT0iNDQ4IiB3aWR0aD0iODIiIGhlaWdodD0iMyIgZmlsbD0iI2ZjZDA1MCIgb3BhY2l0eT0iMC41Ii8+CiAgICA8IS0tIFNjb3RpYSAtLT4KICAgIDxyZWN0IHg9IjEwMCIgeT0iNDYwIiB3aWR0aD0iOTAiIGhlaWdodD0iOCIgZmlsbD0iIzdhNTgwOCIvPgogICAgPCEtLSBUb3J1cyAoYm90dG9tIHJvdW5kKSAtLT4KICAgIDxyZWN0IHg9Ijk4IiB5PSI0NjgiIHdpZHRoPSI5NCIgaGVpZ2h0PSIxMiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgcng9IjMiLz4KICAgIDwhLS0gUGxpbnRoIC0tPgogICAgPHJlY3QgeD0iOTQiIHk9IjQ4MCIgd2lkdGg9IjEwMiIgaGVpZ2h0PSIxOCIgZmlsbD0idXJsKCNiYXNlR29sZCkiIHJ4PSIyIi8+CiAgICA8cmVjdCB4PSI5NCIgeT0iNDgwIiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2QwNTAiIG9wYWNpdHk9IjAuNCIvPgogIDwvZz4KCiAgPCEtLSBDT0xVTU4gMiAgKHggY2VudGVyID0gMzE1KSAtLT4KICA8ZyBpZD0iY29sMiI+CiAgICA8cmVjdCB4PSIyNjYiIHk9IjE1MSIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjE0IiBmaWxsPSJ1cmwoI2NhcEdvbGQpIiByeD0iMSIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+CiAgICA8cmVjdCB4PSIyNjYiIHk9IjE1MSIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2U4NzgiIG9wYWNpdHk9IjAuNyIvPgogICAgPHBhdGggZD0iTTI3MCwxNjUgUTI4MCwxNzUgMjkwLDE2OCBRMzA1LDIwMCAzMTUsMjA1IFEzMjUsMjAwIDM0MCwxNjggUTM1MCwxNzUgMzYwLDE2NSBMMzU4LDIwMCBRMzQwLDIyMCAzMTUsMjIyIFEyOTAsMjIwIDI3MiwyMDAgWiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+CiAgICA8cGF0aCBkPSJNMjc4LDIwMCBRMjczLDE4NSAyODAsMTcyIFEyODgsMTc4IDI4MiwxOTMgUTI4OCwxODggMjkyLDE3OCBRMzAwLDE5NSAyOTUsMjA4IFoiIGZpbGw9IiNjODkyMGEiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTM1MiwyMDAgUTM1NywxODUgMzUwLDE3MiBRMzQyLDE3OCAzNDgsMTkzIFEzNDIsMTg4IDMzOCwxNzggUTMzMCwxOTUgMzM1LDIwOCBaIiBmaWxsPSIjYzg5MjBhIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik0yOTgsMTk1IFEyOTMsMTc4IDMwMCwxNjUgUTMwOCwxNzIgMzAzLDE4OCBRMzA4LDE4MyAzMTIsMTczIFEzMTgsMTkwIDMxMywyMDIgWiIgZmlsbD0iI2Q0YTgyMCIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNMzMyLDE5NSBRMzM3LDE3OCAzMzAsMTY1IFEzMjIsMTcyIDMyNywxODggUTMyMiwxODMgMzE4LDE3MyBRMzEyLDE5MCAzMTcsMjAyIFoiIGZpbGw9IiNkNGE4MjAiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTI3MiwxNjggUTI2NiwxNjAgMjcwLDE1NCBRMjc3LDE1MCAyODIsMTU2IFEyODAsMTYzIDI3NSwxNjIgUTI3MywxNTkgMjc2LDE1NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjMDMwIiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNMzU4LDE2OCBRMzY0LDE2MCAzNjAsMTU0IFEzNTMsMTUwIDM0OCwxNTYgUTM1MCwxNjMgMzU1LDE2MiBRMzU3LDE1OSAzNTQsMTU3IiBmaWxsPSJub25lIiBzdHJva2U9IiNlOGMwMzAiIHN0cm9rZS13aWR0aD0iMi41IiBvcGFjaXR5PSIwLjkiLz4KICAgIDxyZWN0IHg9IjI3NCIgeT0iMjIwIiB3aWR0aD0iODIiIGhlaWdodD0iOCIgZmlsbD0iI2I4ODAxMCIgcng9IjEiLz4KICAgIDxyZWN0IHg9IjI3NCIgeT0iMjIwIiB3aWR0aD0iODIiIGhlaWdodD0iMiIgZmlsbD0iI2ZjZDA1MCIgb3BhY2l0eT0iMC42Ii8+CiAgICA8cmVjdCB4PSIyNzgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNjb2xHb2xkKSIvPgogICAgPGcgb3BhY2l0eT0iMC41NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuNCI+CiAgICAgIDxsaW5lIHgxPSIyODYiIHkxPSIyMjgiIHgyPSIyODYiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjI5MyIgeTE9IjIyOCIgeDI9IjI5MyIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iMzAwIiB5MT0iMjI4IiB4Mj0iMzAwIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSIzMDciIHkxPSIyMjgiIHgyPSIzMDciIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjMxNCIgeTE9IjIyOCIgeDI9IjMxNCIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iMzIxIiB5MT0iMjI4IiB4Mj0iMzIxIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSIzMjgiIHkxPSIyMjgiIHgyPSIzMjgiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjMzNSIgeTE9IjIyOCIgeDI9IjMzNSIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iMzQyIiB5MT0iMjI4IiB4Mj0iMzQyIiB5Mj0iNDQ4Ii8+CiAgICA8L2c+CiAgICA8cmVjdCB4PSIyNzgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNmbHV0ZVNoYWQpIi8+CiAgICA8cmVjdCB4PSIyNzQiIHk9IjQ0OCIgd2lkdGg9IjgyIiBoZWlnaHQ9IjEyIiBmaWxsPSJ1cmwoI2NhcEdvbGQpIiByeD0iNCIvPgogICAgPHJlY3QgeD0iMjc0IiB5PSI0NDgiIHdpZHRoPSI4MiIgaGVpZ2h0PSIzIiBmaWxsPSIjZmNkMDUwIiBvcGFjaXR5PSIwLjUiLz4KICAgIDxyZWN0IHg9IjI3MCIgeT0iNDYwIiB3aWR0aD0iOTAiIGhlaWdodD0iOCIgZmlsbD0iIzdhNTgwOCIvPgogICAgPHJlY3QgeD0iMjY4IiB5PSI0NjgiIHdpZHRoPSI5NCIgaGVpZ2h0PSIxMiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgcng9IjMiLz4KICAgIDxyZWN0IHg9IjI2NCIgeT0iNDgwIiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjE4IiBmaWxsPSJ1cmwoI2Jhc2VHb2xkKSIgcng9IjIiLz4KICAgIDxyZWN0IHg9IjI2NCIgeT0iNDgwIiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2QwNTAiIG9wYWNpdHk9IjAuNCIvPgogIDwvZz4KCiAgPCEtLSBDT0xVTU4gMyAgKHggY2VudGVyID0gNTg1KSAtLT4KICA8ZyBpZD0iY29sMyI+CiAgICA8cmVjdCB4PSI1MzYiIHk9IjE1MSIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjE0IiBmaWxsPSJ1cmwoI2NhcEdvbGQpIiByeD0iMSIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+CiAgICA8cmVjdCB4PSI1MzYiIHk9IjE1MSIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2U4NzgiIG9wYWNpdHk9IjAuNyIvPgogICAgPHBhdGggZD0iTTU0MCwxNjUgUTU1MCwxNzUgNTYwLDE2OCBRNTc1LDIwMCA1ODUsMjA1IFE1OTUsMjAwIDYxMCwxNjggUTYyMCwxNzUgNjMwLDE2NSBMNjI4LDIwMCBRNjEwLDIyMCA1ODUsMjIyIFE1NjAsMjIwIDU0MiwyMDAgWiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+CiAgICA8cGF0aCBkPSJNNTQ4LDIwMCBRNTQzLDE4NSA1NTAsMTcyIFE1NTgsMTc4IDU1MiwxOTMgUTU1OCwxODggNTYyLDE3OCBRNTcwLDE5NSA1NjUsMjA4IFoiIGZpbGw9IiNjODkyMGEiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTYyMiwyMDAgUTYyNywxODUgNjIwLDE3MiBRNjEyLDE3OCA2MTgsMTkzIFE2MTIsMTg4IDYwOCwxNzggUTYwMCwxOTUgNjA1LDIwOCBaIiBmaWxsPSIjYzg5MjBhIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik01NjgsMTk1IFE1NjMsMTc4IDU3MCwxNjUgUTU3OCwxNzIgNTczLDE4OCBRNTc4LDE4MyA1ODIsMTczIFE1ODgsMTkwIDU4MywyMDIgWiIgZmlsbD0iI2Q0YTgyMCIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNNjAyLDE5NSBRNjA3LDE3OCA2MDAsMTY1IFE1OTIsMTcyIDU5NywxODggUTU5MiwxODMgNTg4LDE3MyBRNTgyLDE5MCA1ODcsMjAyIFoiIGZpbGw9IiNkNGE4MjAiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTU0MiwxNjggUTUzNiwxNjAgNTQwLDE1NCBRNTQ3LDE1MCA1NTIsMTU2IFE1NTAsMTYzIDU0NSwxNjIgUTU0MywxNTkgNTQ2LDE1NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjMDMwIiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNNjI4LDE2OCBRNjM0LDE2MCA2MzAsMTU0IFE2MjMsMTUwIDYxOCwxNTYgUTYyMCwxNjMgNjI1LDE2MiBRNjI3LDE1OSA2MjQsMTU3IiBmaWxsPSJub25lIiBzdHJva2U9IiNlOGMwMzAiIHN0cm9rZS13aWR0aD0iMi41IiBvcGFjaXR5PSIwLjkiLz4KICAgIDxyZWN0IHg9IjU0NCIgeT0iMjIwIiB3aWR0aD0iODIiIGhlaWdodD0iOCIgZmlsbD0iI2I4ODAxMCIgcng9IjEiLz4KICAgIDxyZWN0IHg9IjU0NCIgeT0iMjIwIiB3aWR0aD0iODIiIGhlaWdodD0iMiIgZmlsbD0iI2ZjZDA1MCIgb3BhY2l0eT0iMC42Ii8+CiAgICA8cmVjdCB4PSI1NDgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNjb2xHb2xkKSIvPgogICAgPGcgb3BhY2l0eT0iMC41NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuNCI+CiAgICAgIDxsaW5lIHgxPSI1NTYiIHkxPSIyMjgiIHgyPSI1NTYiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjU2MyIgeTE9IjIyOCIgeDI9IjU2MyIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iNTcwIiB5MT0iMjI4IiB4Mj0iNTcwIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSI1NzciIHkxPSIyMjgiIHgyPSI1NzciIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjU4NCIgeTE9IjIyOCIgeDI9IjU4NCIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iNTkxIiB5MT0iMjI4IiB4Mj0iNTkxIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSI1OTgiIHkxPSIyMjgiIHgyPSI1OTgiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjYwNSIgeTE9IjIyOCIgeDI9IjYwNSIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iNjEyIiB5MT0iMjI4IiB4Mj0iNjEyIiB5Mj0iNDQ4Ii8+CiAgICA8L2c+CiAgICA8cmVjdCB4PSI1NDgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNmbHV0ZVNoYWQpIi8+CiAgICA8cmVjdCB4PSI1NDQiIHk9IjQ0OCIgd2lkdGg9IjgyIiBoZWlnaHQ9IjEyIiBmaWxsPSJ1cmwoI2NhcEdvbGQpIiByeD0iNCIvPgogICAgPHJlY3QgeD0iNTQ0IiB5PSI0NDgiIHdpZHRoPSI4MiIgaGVpZ2h0PSIzIiBmaWxsPSIjZmNkMDUwIiBvcGFjaXR5PSIwLjUiLz4KICAgIDxyZWN0IHg9IjU0MCIgeT0iNDYwIiB3aWR0aD0iOTAiIGhlaWdodD0iOCIgZmlsbD0iIzdhNTgwOCIvPgogICAgPHJlY3QgeD0iNTM4IiB5PSI0NjgiIHdpZHRoPSI5NCIgaGVpZ2h0PSIxMiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgcng9IjMiLz4KICAgIDxyZWN0IHg9IjUzNCIgeT0iNDgwIiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjE4IiBmaWxsPSJ1cmwoI2Jhc2VHb2xkKSIgcng9IjIiLz4KICAgIDxyZWN0IHg9IjUzNCIgeT0iNDgwIiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2QwNTAiIG9wYWNpdHk9IjAuNCIvPgogIDwvZz4KCiAgPCEtLSBDT0xVTU4gNCAgKHggY2VudGVyID0gNzU1KSAtLT4KICA8ZyBpZD0iY29sNCI+CiAgICA8cmVjdCB4PSI3MDYiIHk9IjE1MSIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjE0IiBmaWxsPSJ1cmwoI2NhcEdvbGQpIiByeD0iMSIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+CiAgICA8cmVjdCB4PSI3MDYiIHk9IjE1MSIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2U4NzgiIG9wYWNpdHk9IjAuNyIvPgogICAgPHBhdGggZD0iTTcxMCwxNjUgUTcyMCwxNzUgNzMwLDE2OCBRNzQ1LDIwMCA3NTUsMjA1IFE3NjUsMjAwIDc4MCwxNjggUTc5MCwxNzUgODAwLDE2NSBMNzk4LDIwMCBRNzgwLDIyMCA3NTUsMjIyIFE3MzAsMjIwIDcxMiwyMDAgWiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+CiAgICA8cGF0aCBkPSJNNzE4LDIwMCBRNzEzLDE4NSA3MjAsMTcyIFE3MjgsMTc4IDcyMiwxOTMgUTcyOCwxODggNzMyLDE3OCBRNzQwLDE5NSA3MzUsMjA4IFoiIGZpbGw9IiNjODkyMGEiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTc5MiwyMDAgUTc5NywxODUgNzkwLDE3MiBRNzgyLDE3OCA3ODgsMTkzIFE3ODIsMTg4IDc3OCwxNzggUTc3MCwxOTUgNzc1LDIwOCBaIiBmaWxsPSIjYzg5MjBhIiBvcGFjaXR5PSIwLjkiLz4KICAgIDxwYXRoIGQ9Ik03MzgsMTk1IFE3MzMsMTc4IDc0MCwxNjUgUTc0OCwxNzIgNzQzLDE4OCBRNzQ4LDE4MyA3NTIsMTczIFE3NTgsMTkwIDc1MywyMDIgWiIgZmlsbD0iI2Q0YTgyMCIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNNzcyLDE5NSBRNzc3LDE3OCA3NzAsMTY1IFE3NjIsMTcyIDc2NywxODggUTc2MiwxODMgNzU4LDE3MyBRNzUyLDE5MCA3NTcsMjAyIFoiIGZpbGw9IiNkNGE4MjAiIG9wYWNpdHk9IjAuOSIvPgogICAgPHBhdGggZD0iTTcxMiwxNjggUTcwNiwxNjAgNzEwLDE1NCBRNzE3LDE1MCA3MjIsMTU2IFE3MjAsMTYzIDcxNSwxNjIgUTcxMywxNTkgNzE2LDE1NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjMDMwIiBzdHJva2Utd2lkdGg9IjIuNSIgb3BhY2l0eT0iMC45Ii8+CiAgICA8cGF0aCBkPSJNNzk4LDE2OCBRODA0LDE2MCA4MDAsMTU0IFE3OTMsMTUwIDc4OCwxNTYgUTc5MCwxNjMgNzk1LDE2MiBRNzk3LDE1OSA3OTQsMTU3IiBmaWxsPSJub25lIiBzdHJva2U9IiNlOGMwMzAiIHN0cm9rZS13aWR0aD0iMi41IiBvcGFjaXR5PSIwLjkiLz4KICAgIDxyZWN0IHg9IjcxNCIgeT0iMjIwIiB3aWR0aD0iODIiIGhlaWdodD0iOCIgZmlsbD0iI2I4ODAxMCIgcng9IjEiLz4KICAgIDxyZWN0IHg9IjcxNCIgeT0iMjIwIiB3aWR0aD0iODIiIGhlaWdodD0iMiIgZmlsbD0iI2ZjZDA1MCIgb3BhY2l0eT0iMC42Ii8+CiAgICA8cmVjdCB4PSI3MTgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNjb2xHb2xkKSIvPgogICAgPGcgb3BhY2l0eT0iMC41NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuNCI+CiAgICAgIDxsaW5lIHgxPSI3MjYiIHkxPSIyMjgiIHgyPSI3MjYiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9IjczMyIgeTE9IjIyOCIgeDI9IjczMyIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iNzQwIiB5MT0iMjI4IiB4Mj0iNzQwIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSI3NDciIHkxPSIyMjgiIHgyPSI3NDciIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9Ijc1NCIgeTE9IjIyOCIgeDI9Ijc1NCIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iNzYxIiB5MT0iMjI4IiB4Mj0iNzYxIiB5Mj0iNDQ4Ii8+CiAgICAgIDxsaW5lIHgxPSI3NjgiIHkxPSIyMjgiIHgyPSI3NjgiIHkyPSI0NDgiLz4KICAgICAgPGxpbmUgeDE9Ijc3NSIgeTE9IjIyOCIgeDI9Ijc3NSIgeTI9IjQ0OCIvPgogICAgICA8bGluZSB4MT0iNzgyIiB5MT0iMjI4IiB4Mj0iNzgyIiB5Mj0iNDQ4Ii8+CiAgICA8L2c+CiAgICA8cmVjdCB4PSI3MTgiIHk9IjIyOCIgd2lkdGg9Ijc0IiBoZWlnaHQ9IjIyMCIgZmlsbD0idXJsKCNmbHV0ZVNoYWQpIi8+CiAgICA8cmVjdCB4PSI3MTQiIHk9IjQ0OCIgd2lkdGg9IjgyIiBoZWlnaHQ9IjEyIiBmaWxsPSJ1cmwoI2NhcEdvbGQpIiByeD0iNCIvPgogICAgPHJlY3QgeD0iNzE0IiB5PSI0NDgiIHdpZHRoPSI4MiIgaGVpZ2h0PSIzIiBmaWxsPSIjZmNkMDUwIiBvcGFjaXR5PSIwLjUiLz4KICAgIDxyZWN0IHg9IjcxMCIgeT0iNDYwIiB3aWR0aD0iOTAiIGhlaWdodD0iOCIgZmlsbD0iIzdhNTgwOCIvPgogICAgPHJlY3QgeD0iNzA4IiB5PSI0NjgiIHdpZHRoPSI5NCIgaGVpZ2h0PSIxMiIgZmlsbD0idXJsKCNjYXBHb2xkKSIgcng9IjMiLz4KICAgIDxyZWN0IHg9IjcwNCIgeT0iNDgwIiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjE4IiBmaWxsPSJ1cmwoI2Jhc2VHb2xkKSIgcng9IjIiLz4KICAgIDxyZWN0IHg9IjcwNCIgeT0iNDgwIiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjMiIGZpbGw9IiNmY2QwNTAiIG9wYWNpdHk9IjAuNCIvPgogIDwvZz4KCiAgPCEtLSDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAgU1RZTE9CQVRFIChzdGVwcGVkIHBsYXRmb3JtKSDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAgLS0+CiAgPHJlY3QgeD0iNjAiIHk9IjQ5OCIgd2lkdGg9Ijc4MCIgaGVpZ2h0PSIyMiIgZmlsbD0idXJsKCNlbnRhYkdvbGQpIiByeD0iMiIvPgogIDxyZWN0IHg9IjYwIiB5PSI0OTgiIHdpZHRoPSI3ODAiIGhlaWdodD0iMyIgZmlsbD0iI2ZjZTA2MCIgb3BhY2l0eT0iMC41Ii8+CgogIDxyZWN0IHg9IjQwIiB5PSI1MjAiIHdpZHRoPSI4MjAiIGhlaWdodD0iMjAiIGZpbGw9IiM1YTNlMDYiIHJ4PSIyIi8+CiAgPHJlY3QgeD0iNDAiIHk9IjUyMCIgd2lkdGg9IjgyMCIgaGVpZ2h0PSIzIiBmaWxsPSIjYzg5MjBhIiBvcGFjaXR5PSIwLjQiLz4KCiAgPHJlY3QgeD0iMjAiIHk9IjU0MCIgd2lkdGg9Ijg2MCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzNhMjgwMCIgcng9IjIiLz4KICA8cmVjdCB4PSIyMCIgeT0iNTQwIiB3aWR0aD0iODYwIiBoZWlnaHQ9IjMiIGZpbGw9IiM4YTYwMTAiIG9wYWNpdHk9IjAuNCIvPgoKICA8IS0tIEdyb3VuZCBzaGFkb3cgLS0+CiAgPGVsbGlwc2UgY3g9IjQ1MCIgY3k9IjU2OCIgcng9IjQyMCIgcnk9IjE4IiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjYiLz4KCiAgPCEtLSDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAgREVDT1JBVElWRSBCT1JERVIg4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQIC0tPgogIDwhLS0gR3JlZWsga2V5IC8gbWVhbmRlciBib3JkZXIgdG9wIC0tPgogIDxnIHN0cm9rZT0iI2M4OTIwYSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuNSI+CiAgICA8cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI4ODAiIGhlaWdodD0iNTgwIiByeD0iNCIvPgogICAgPHJlY3QgeD0iMTYiIHk9IjE2IiB3aWR0aD0iODY4IiBoZWlnaHQ9IjU2OCIgcng9IjMiLz4KICA8L2c+CgogIDwhLS0gQ29ybmVyIG9ybmFtZW50cyAtLT4KICA8ZyBmaWxsPSIjYzg5MjBhIiBvcGFjaXR5PSIwLjciPgogICAgPHBhdGggZD0iTTE4LDE4IEw0MCwxOCBMNDAsMjIgTDIyLDIyIEwyMiw0MCBMMTgsNDAgWiIvPgogICAgPHBhdGggZD0iTTg4MiwxOCBMODYwLDE4IEw4NjAsMjIgTDg3OCwyMiBMODc4LDQwIEw4ODIsNDAgWiIvPgogICAgPHBhdGggZD0iTTE4LDU4MiBMNDAsNTgyIEw0MCw1NzggTDIyLDU3OCBMMjIsNTYwIEwxOCw1NjAgWiIvPgogICAgPHBhdGggZD0iTTg4Miw1ODIgTDg2MCw1ODIgTDg2MCw1NzggTDg3OCw1NzggTDg3OCw1NjAgTDg4Miw1NjAgWiIvPgogIDwvZz4KCiAgPCEtLSDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAgVElUTEUgVEVYVCDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAgLS0+CiAgPHRleHQgeD0iNDUwIiB5PSI1OTAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIxMyIgZmlsbD0iI2M4OTIwYSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjgiIG9wYWNpdHk9IjAuOCI+CiAgICDOn86hzpTOnyAgzprOn86hzpnOnc6YzpnOkc6azp/OowogIDwvdGV4dD4KPC9zdmc+Cg==");
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            padding: 40px 0 60px;
+            margin-bottom: 0;
+        }
+        .methode-bg::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0; top: 0;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.5) 60%, rgba(8,8,8,0.9) 100%);
+            pointer-events: none;
+        }
+        .methode-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+        .methode-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px 30px;
+            text-align: center;
+        }
+        .col-letter {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: #f5d060;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1;
+            margin-bottom: 6px;
+            text-shadow: 0 0 20px rgba(197,160,89,0.8);
+        }
+        .col-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 12px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        }
+        .col-desc {
+            font-size: 0.78rem;
+            color: var(--soft);
+            line-height: 1.7;
+            font-weight: 300;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+        }
 
-.footer-sig { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; color: rgba(197,160,89,0.3); font-size: 0.82rem; text-align: center; padding-top: 24px; border-top: 1px solid var(--border); }
+        /* ─── PRESTATIONS ─── */
+        #prestations { padding: 90px 60px; background: var(--darker); }
+        .presta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+        .presta-card { background: var(--black); padding: 44px 34px; border: 1px solid rgba(197,160,89,0.06); position: relative; overflow: hidden; transition: all 0.4s; display: flex; flex-direction: column; }
+        .presta-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+        .presta-card:hover { background: #0e0e0e; }
+        .presta-card:hover::before { transform: scaleX(1); }
+        .presta-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; color: rgba(197,160,89,0.07); font-weight: 300; line-height: 1; margin-bottom: 18px; }
+        .presta-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--gold); margin-bottom: 6px; line-height: 1.2; }
+        .presta-subtitle { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-bottom: 18px; }
+        .presta-line { width: 28px; height: 1px; background: var(--gold); margin-bottom: 18px; transition: width 0.4s; }
+        .presta-card:hover .presta-line { width: 52px; }
+        .presta-text { font-size: 0.84rem; color: var(--gray); line-height: 1.8; font-weight: 300; flex: 1; }
+        .presta-items { list-style: none; margin: 14px 0; }
+        .presta-items li { font-size: 0.8rem; color: var(--gray); padding: 5px 0; border-bottom: 1px solid rgba(197,160,89,0.06); display: flex; align-items: center; gap: 10px; }
+        .presta-items li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+        .presta-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 11px 22px; border: 1px solid rgba(197,160,89,0.4); color: var(--gold); font-family: 'Outfit', sans-serif; background: none; font-size: 0.68rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; align-self: flex-start; }
+        .presta-btn:hover { background: var(--gold); color: var(--black); }
 
-@media (max-width: 620px) {
-  .q-card, .syn-box, .form-box { padding: 26px 20px; }
-  .sc-grid { grid-template-columns: repeat(2,1fr); }
-  .form-row { grid-template-columns: 1fr; }
-}
-</style>
+        /* ─── MODAL FORMULAIRE ─── */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--darker); border: 1px solid rgba(197,160,89,0.2); max-width: 540px; width: 100%; padding: 44px 40px; position: relative; }
+        .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--gray); font-size: 1.3rem; line-height: 1; padding: 4px 8px; transition: color 0.3s; }
+        .modal-close:hover { color: var(--gold); }
+        .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; color: var(--white); margin-bottom: 4px; }
+        .modal-subtitle { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+        .modal-line { width: 28px; height: 1px; background: var(--gold); margin-bottom: 28px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+        .form-group label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+        .form-group input, .form-group textarea, .form-group select { background: rgba(255,255,255,0.04); border: 1px solid rgba(197,160,89,0.15); color: var(--white); padding: 11px 14px; font-family: 'Outfit', sans-serif; font-size: 0.86rem; font-weight: 300; outline: none; width: 100%; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: rgba(197,160,89,0.5); }
+        .form-group select option { background: var(--darker); }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+        .form-submit { width: 100%; padding: 13px; background: var(--gold); color: var(--black); border: none; font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; transition: all 0.3s; margin-top: 6px; }
+        .form-submit:hover { background: var(--gold-light); }
+        .form-success { display: none; text-align: center; padding: 20px 0; }
+        .form-success p { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--soft); line-height: 1.6; }
+        .form-success span { color: var(--gold); }
+
+        /* ─── CITATIONS CARROUSEL ─── */
+        #citations { padding: 80px 60px; background: var(--darker); }
+        .citations-header { text-align: center; margin-bottom: 50px; }
+        .carousel-wrap { max-width: 860px; margin: 0 auto; }
+        .carousel-track { overflow: hidden; }
+        .carousel-slides { display: flex; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .citation-slide { min-width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 30px; }
+        .citation-img { width: 100%; max-width: 580px; height: 220px; overflow: hidden; margin-bottom: 30px; border-top: 1px solid rgba(197,160,89,0.2); border-bottom: 1px solid rgba(197,160,89,0.2); }
+        .citation-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(35%) contrast(1.1) brightness(0.85); object-position: center 20%; }
+        #img-ma1 { object-position: center 25%; }
+        #img-ma3 { object-position: center 20%; }
+        #img-ep  { object-position: center 15%; }
+        #img-s1  { object-position: center 30%; }
+        #img-s3  { object-position: center 20%; }
+        .citation-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-style: italic; font-weight: 300; color: var(--white); line-height: 1.6; margin-bottom: 20px; max-width: 660px; position: relative; }
+        .citation-text::before { content: '"'; font-size: 4.5rem; color: rgba(197,160,89,0.15); position: absolute; top: -24px; left: -16px; font-family: 'Cormorant Garamond', serif; line-height: 1; }
+        .citation-author { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+        .carousel-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 36px; }
+        .carousel-btn { width: 42px; height: 42px; border: 1px solid rgba(197,160,89,0.3); background: transparent; color: var(--gold); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .carousel-btn:hover { background: var(--gold); color: var(--black); }
+        .carousel-dots { display: flex; gap: 8px; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(197,160,89,0.3); transition: all 0.3s; }
+        .dot.active { background: var(--gold); width: 20px; border-radius: 3px; }
+
+        /* ─── CONTACT ─── */
+        #contact { padding: 90px 60px; }
+        .contact-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 70px; align-items: start; }
+        .contact-info { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+        .contact-item { display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; border: 1px solid rgba(197,160,89,0.1); transition: all 0.3s; }
+        .contact-item:hover { border-color: rgba(197,160,89,0.3); background: var(--gold-dim); }
+        .contact-item-icon { width: 34px; height: 34px; border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0; }
+        .contact-item-label { font-size: 0.63rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-bottom: 3px; }
+        .contact-item-value { font-size: 0.86rem; color: var(--soft); }
+        .contact-item-value a { color: var(--soft); text-decoration: none; transition: color 0.3s; }
+        .contact-item-value a:hover { color: var(--gold); }
+        .social-row { display: flex; gap: 12px; margin-top: 24px; }
+        .social-btn { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border: 1px solid rgba(197,160,89,0.2); color: var(--gray); text-decoration: none; transition: all 0.3s; font-size: 0.75rem; }
+        .social-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+        .calendar-wrap { background: var(--white); padding: 4px; border: 1px solid rgba(197,160,89,0.2); }
+        .calendar-wrap iframe { width: 100%; height: 600px; border: none; display: block; }
+
+        /* ─── RGPD ─── */
+        .rgpd-banner { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(8,8,8,0.97); border-top: 1px solid rgba(197,160,89,0.2); padding: 18px 60px; display: flex; align-items: center; justify-content: space-between; gap: 30px; z-index: 5000; backdrop-filter: blur(12px); }
+        .rgpd-text { font-size: 0.78rem; color: var(--gray); line-height: 1.6; flex: 1; }
+        .rgpd-text strong { color: var(--soft); }
+        .rgpd-text a { color: var(--gold); text-decoration: none; }
+        .rgpd-buttons { display: flex; gap: 12px; flex-shrink: 0; }
+        .rgpd-accept { padding: 9px 22px; background: var(--gold); color: var(--black); border: none; font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; }
+        .rgpd-accept:hover { background: var(--gold-light); }
+        .rgpd-refuse { padding: 9px 22px; background: transparent; border: 1px solid rgba(197,160,89,0.3); color: var(--gray); font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; }
+        .rgpd-refuse:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ─── FOOTER ─── */
+        footer { padding: 40px 60px; border-top: 1px solid rgba(197,160,89,0.12); display: flex; justify-content: space-between; align-items: center; }
+        .footer-logo { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+        .footer-links { display: flex; gap: 26px; }
+        .footer-links a { color: var(--gray); text-decoration: none; font-size: 0.68rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-copy { font-size: 0.68rem; color: rgba(255,255,255,0.2); }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ─── MOBILE ─── */
+        @media (max-width: 900px) {
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            .hero { padding: 80px 24px 50px; }
+            .hero-top { flex-direction: column; gap: 20px; text-align: center; }
+            .hero-identity { align-items: center; text-align: center; }
+            .casque-wrap { display: none; }
+            .divider { margin: 0 24px; }
+            #parcours, #methode, #prestations, #citations, #contact { padding: 60px 24px; }
+            .parcours-grid { grid-template-columns: 1fr; gap: 36px; }
+            .methode-grid { grid-template-columns: repeat(2,1fr); }
+            .presta-grid { grid-template-columns: 1fr; }
+            .contact-inner { grid-template-columns: 1fr; gap: 36px; }
+            .citation-slide { padding: 0 10px; }
+            .citation-img { height: 160px; }
+            .rgpd-banner { flex-direction: column; padding: 16px 24px; text-align: center; }
+            .rgpd-buttons { width: 100%; justify-content: center; }
+            footer { padding: 30px 24px; flex-direction: column; gap: 16px; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+            * { cursor: auto; }
+            .cursor, .cursor-ring { display: none; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- CURSEUR -->
-<div id="cur"></div>
-<div id="cur-ring"></div>
+    <!-- CURSEUR -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- ═══ INTRO ═══ -->
-<div id="screen-intro">
-  <div class="intro-wrap">
-    <div class="i-tag">Diagnostic Professionnel · Méthode des 4P</div>
-    <h1 class="i-h1">Quel est votre profil<br><em>de transformation ?</em></h1>
-    <p class="i-sub">Un diagnostic pour identifier vos leviers de développement — et les axes qui méritent votre attention prioritaire.</p>
-    <p class="i-method">"Ce diagnostic est fondé sur la Méthode des 4P — une approche développée sur 30 ans de terrain, ancrée dans la philosophie stoïcienne et les sciences humaines. Il ne se substitue pas à un bilan clinique — il est un outil de lecture et d'orientation."</p>
-    <div class="i-stats">
-      <div><span class="stat-n">12</span><span class="stat-l">Questions</span></div>
-      <div><span class="stat-n">4</span><span class="stat-l">Dimensions</span></div>
-      <div><span class="stat-n">8'</span><span class="stat-l">Environ</span></div>
-    </div>
-    <div class="i-divider"></div>
-    <button class="btn-gold" id="btn-start">Commencer →</button>
-  </div>
-</div>
-
-<!-- ═══ QUIZ ═══ -->
-<div id="screen-quiz">
-  <div class="prog-wrap">
-    <div class="prog-top">
-      <span class="prog-lbl">Progression</span>
-      <span class="prog-count" id="prog-count">1 / 12</span>
-    </div>
-    <div class="prog-bar"><div class="prog-bar-fill" id="prog-fill"></div></div>
-  </div>
-  <div class="dots-wrap" id="dots-wrap">
-    <div class="dot" id="dot0"></div>
-    <div class="dot" id="dot1"></div>
-    <div class="dot" id="dot2"></div>
-    <div class="dot" id="dot3"></div>
-  </div>
-  <div class="q-card" id="q-card">
-    <div class="q-dim" id="q-dim"></div>
-    <div class="q-num" id="q-num"></div>
-    <div class="q-text" id="q-text"></div>
-    <div class="opts" id="q-opts"></div>
-  </div>
-  <div class="q-nav">
-    <button class="btn-ghost" id="btn-prev" style="visibility:hidden">← Précédent</button>
-    <button class="btn-outline" id="btn-next">Suivant →</button>
-  </div>
-</div>
-
-<!-- ═══ RÉSULTATS ═══ -->
-<div id="screen-result">
-  <div class="res-wrap">
-    <div class="res-top">
-      <h2>Votre profil <em>des 4P</em></h2>
-      <p>Résultats établis sur la base de vos 12 réponses.</p>
-    </div>
-    <div class="radar-box"><svg id="radar-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg"></svg></div>
-    <div class="sc-grid" id="sc-grid"></div>
-    <div class="syn-box" id="syn-box"></div>
-    <div class="form-box">
-      <h3 class="form-h">Votre profil mérite un échange.</h3>
-      <p class="form-sh">Premier entretien offert · 30 minutes</p>
-      <p class="form-intro-p">Votre profil est établi. Si vous souhaitez en explorer les implications concrètes — pour vous, votre équipe ou votre organisation — Denis Deblevid vous offre un premier échange de 30 minutes, sans engagement. Complétez le formulaire ci-dessous pour réserver votre créneau.</p>
-      <div id="form-fields">
-        <div class="form-row">
-          <div class="fg"><label>Prénom <span>*</span></label><input type="text" id="f-prenom" placeholder="Votre prénom"></div>
-          <div class="fg"><label>Nom <span>*</span></label><input type="text" id="f-nom" placeholder="Votre nom"></div>
+    <!-- RGPD -->
+    <div class="rgpd-banner" id="rgpd-banner">
+        <p class="rgpd-text"><strong>Ce site respecte votre vie privée.</strong> Nous utilisons uniquement des cookies techniques nécessaires au bon fonctionnement du site. Aucune donnée n'est transmise à des tiers. <a href="#contact">En savoir plus</a></p>
+        <div class="rgpd-buttons">
+            <button class="rgpd-refuse" id="rgpd-refuse">Refuser</button>
+            <button class="rgpd-accept" id="rgpd-accept">Accepter</button>
         </div>
-        <div class="form-row">
-          <div class="fg"><label>Âge <span>*</span></label><input type="number" id="f-age" placeholder="Votre âge" min="18" max="99"></div>
-          <div class="fg"><label>Email <span>*</span></label><input type="email" id="f-email" placeholder="votre@email.com"></div>
-        </div>
-        <div class="form-row">
-          <div class="fg"><label>Entreprise</label><input type="text" id="f-ent" placeholder="Votre structure"></div>
-          <div class="fg"><label>Poste</label><input type="text" id="f-poste" placeholder="Votre fonction"></div>
-        </div>
-        <div class="fg"><label>Téléphone <span style="color:var(--gray);font-size:0.52rem;">(optionnel)</span></label><input type="tel" id="f-tel" placeholder="+33 6 ..."></div>
-        <div class="fg"><label>Votre besoin ou question principale</label><textarea id="f-besoin" placeholder="Décrivez ce qui vous a amené à faire ce diagnostic..."></textarea></div>
-        <p class="form-note">* Champs obligatoires. Vos données sont strictement confidentielles.</p>
-        <button class="btn-gold" id="btn-send" style="width:100%;text-align:center;">Réserver mon échange de 30 minutes →</button>
-      </div>
-      <div class="form-ok" id="form-ok">
-        <p>Merci <em id="ok-name"></em> —<br>Denis vous contactera dans les 48 heures<br>pour confirmer votre créneau.</p>
-      </div>
     </div>
-    <p class="footer-sig">Denis Deblevid · Consultant · Formateur &amp; Coach · Marseille · "Je pose les bonnes questions. Vous trouvez vos réponses."</p>
-  </div>
-</div>
 
-<script>
-/* ══════════════════════════════════════════
-   QUESTIONS — 12 au total, 3 par pilier
-══════════════════════════════════════════ */
-var Q = [
-  { p:'P', d:'Dimension Psychologique',
-    t:"Lorsqu'une situation professionnelle génère une réaction émotionnelle forte, quelle est votre posture la plus fréquente ?",
-    o:[{t:"Je réagis immédiatement — l'émotion prend le dessus avant que je puisse l'analyser",s:1},
-       {t:"Je contiens la réaction sur le moment, mais elle ressort différemment plus tard",s:2},
-       {t:"Je prends du recul avant de répondre, même si c'est difficile dans l'instant",s:3},
-       {t:"Je suis capable d'observer ma réaction sans en être le jouet",s:4}]},
-  { p:'Ph', d:'Dimension Philosophique',
-    t:"Face à un obstacle majeur dans votre vie professionnelle, votre tendance naturelle est de :",
-    o:[{t:"Chercher des responsables extérieurs — les circonstances, les autres, le contexte",s:1},
-       {t:"Me décourager et douter de ma capacité à surmonter",s:1},
-       {t:"Résister et persévérer, mais avec un coût énergétique important",s:3},
-       {t:"Analyser ce qui dépend de moi et agir sur ces leviers uniquement",s:4}]},
-  { p:'Phy', d:'Dimension Physique',
-    t:"Votre rapport à votre corps, votre énergie et votre hygiène de vie en ce moment :",
-    o:[{t:"Je fonctionne en mode dégradé depuis longtemps — fatigue chronique, peu de soin de moi",s:1},
-       {t:"J'ai des intentions mais peu de régularité — je sais ce que je devrais faire",s:2},
-       {t:"J'ai une pratique, mais elle est fragile et disparaît au premier stress",s:3},
-       {t:"J'ai des rituels stables qui structurent mes journées et préservent mon énergie",s:4}]},
-  { p:'Pn', d:'Dimension Pneuma',
-    t:"Lorsque vous évaluez le sens de votre activité professionnelle, vous constatez que :",
-    o:[{t:"Je ne sais plus vraiment pourquoi je fais ce que je fais",s:1},
-       {t:"Il y a un décalage entre mes valeurs profondes et ce que je vis au quotidien",s:2},
-       {t:"Je m'y retrouve globalement, mais quelque chose manque que je n'arrive pas à nommer",s:3},
-       {t:"Mon activité est alignée avec ce qui a du sens pour moi",s:4}]},
-  { p:'Phy', d:'Dimension Physique',
-    t:"Votre niveau de présence mentale et de disponibilité dans vos journées :",
-    o:[{t:"Je suis physiquement là mais mentalement absent — dispersé, difficile à concentrer",s:1},
-       {t:"Mon attention est très variable — je ne contrôle pas facilement ma concentration",s:2},
-       {t:"Je peux me concentrer mais ça demande un effort que je n'ai pas toujours",s:3},
-       {t:"J'ai développé des pratiques qui me permettent de rester focalisé et disponible",s:4}]},
-  { p:'P', d:'Dimension Psychologique',
-    t:"Dans vos relations professionnelles, les conflits ou les tensions :",
-    o:[{t:"Se répètent avec les mêmes types de personnes — j'attire ou génère toujours les mêmes dynamiques",s:1},
-       {t:"Me coûtent énormément — je préfère éviter plutôt qu'affronter",s:2},
-       {t:"Je gère, mais rarement avec la clarté que je voudrais",s:3},
-       {t:"Sont des occasions d'apprendre quelque chose sur moi ou sur la situation",s:4}]},
-  { p:'Ph', d:'Dimension Philosophique',
-    t:"Votre rapport aux décisions difficiles — celles qui engagent sur le long terme :",
-    o:[{t:"Je reporte, je procrastine — la décision me paralyse",s:1},
-       {t:"Je décide, mais souvent sous la pression de l'urgence ou de l'opinion des autres",s:2},
-       {t:"Je réfléchis, mais je manque d'un cadre clair pour choisir avec confiance",s:3},
-       {t:"Je distingue ce qui dépend de moi et j'avance avec ce que j'ai",s:4}]},
-  { p:'Pn', d:'Dimension Pneuma',
-    t:"Votre sentiment de cohérence entre qui vous êtes et ce que vous faites professionnellement :",
-    o:[{t:"Il n'y a pas de cohérence — je joue un rôle qui n'est pas le mien",s:1},
-       {t:"Il y a des zones d'alignement et des zones de dissonance importantes",s:2},
-       {t:"Je travaille cette cohérence, mais c'est un effort constant",s:3},
-       {t:"Ce que je fais reflète globalement qui je suis et ce en quoi je crois",s:4}]},
-  { p:'P', d:'Dimension Psychologique',
-    t:"Votre capacité à exprimer clairement vos besoins et vos limites en contexte professionnel :",
-    o:[{t:"Je n'y arrive pas — j'accumule jusqu'à l'explosion ou la rupture",s:1},
-       {t:"J'essaie, mais mes mots ne reflètent pas ce que je ressens vraiment",s:2},
-       {t:"Je peux le faire dans des conditions favorables, mais pas sous pression",s:3},
-       {t:"Je communique avec clarté même dans les situations inconfortables",s:4}]},
-  { p:'Phy', d:'Dimension Physique',
-    t:"Votre discipline personnelle — la capacité à tenir vos engagements envers vous-même :",
-    o:[{t:"Je n'arrive pas à maintenir une discipline — les bonnes résolutions ne tiennent pas",s:1},
-       {t:"Je commence, mais j'abandonne dès que la motivation baisse",s:2},
-       {t:"Je maintiens une discipline dans certains domaines, mais pas dans d'autres",s:3},
-       {t:"J'ai construit une discipline stable qui ne repose pas uniquement sur la motivation",s:4}]},
-  { p:'Ph', d:'Dimension Philosophique',
-    t:"Votre capacité à rester stable et lucide dans un environnement incertain ou sous pression :",
-    o:[{t:"L'incertitude me déstabilise profondément — j'ai besoin de contrôle pour fonctionner",s:1},
-       {t:"Je tiens, mais au prix d'un effort épuisant et d'une tension permanente",s:2},
-       {t:"J'ai développé une certaine stabilité, mais elle reste fragile face aux imprévus",s:3},
-       {t:"J'ai appris à trouver un ancrage intérieur qui ne dépend pas des circonstances",s:4}]},
-  { p:'Pn', d:'Dimension Pneuma',
-    t:"La question qui résume le mieux votre situation professionnelle actuelle est :",
-    o:[{t:"Pourquoi est-ce que je continue à faire cela alors que ça ne me nourrit plus ?",s:1},
-       {t:"Comment faire pour que ce que je vis corresponde à ce que je veux vraiment ?",s:2},
-       {t:"Qu'est-ce qui m'empêche d'aller là où je sens que je devrais être ?",s:3},
-       {t:"Comment amplifier ce que je construis et l'aligner encore davantage avec qui je suis ?",s:4}]}
-];
+    <!-- MODAL FORMULAIRE -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">✕</button>
+            <h2 class="modal-title">Demande de devis</h2>
+            <p class="modal-subtitle" id="modal-prestation">Prestation</p>
+            <div class="modal-line"></div>
+            <div id="form-content">
+                <div class="form-row">
+                    <div class="form-group"><label>Prénom</label><input type="text" id="f-prenom" placeholder="Votre prénom"></div>
+                    <div class="form-group"><label>Nom</label><input type="text" id="f-nom" placeholder="Votre nom"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Email</label><input type="email" id="f-email" placeholder="votre@email.com"></div>
+                    <div class="form-group"><label>Téléphone</label><input type="tel" id="f-tel" placeholder="+33 6 ..."></div>
+                </div>
+                <div class="form-group">
+                    <label>Prestation souhaitée</label>
+                    <select id="f-presta">
+                        <option value="Formation & Coaching">Formation & Coaching</option>
+                        <option value="Consultant & Stratégie">Consultant & Stratégie</option>
+                        <option value="Mise en Relation & Développement">Mise en Relation & Développement</option>
+                        <option value="Accompagnement par la Philosophie \& le Sens">Accompagnement par la Philosophie \& le Sens</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Votre besoin</label><textarea id="f-message" placeholder="Décrivez brièvement votre situation..."></textarea></div>
+                <div class="form-group"><label>Vos disponibilités</label><input type="text" id="f-dispo" placeholder="Ex : semaine, matin, week-end..."></div>
+                <button class="form-submit" id="form-submit">Envoyer ma demande</button>
+            </div>
+            <div class="form-success" id="form-success">
+                <p>Merci <span id="success-name"></span> —<br>votre demande a bien été transmise.<br>Je vous recontacte rapidement.</p>
+            </div>
+        </div>
+    </div>
 
-/* ══════════════════════════════════════════
-   PILIERS & TEXTES
-══════════════════════════════════════════ */
-var PIL = {
-  P:  { name:'Psychologique' },
-  Ph: { name:'Philosophique' },
-  Phy:{ name:'Physique' },
-  Pn: { name:'Pneuma' }
-};
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="logo">Denis Deblevid</a>
+        <div class="nav-links">
+            <a href="#parcours">Parcours</a>
+            <a href="#methode">Méthode</a>
+            <a href="#prestations">Prestations</a>
+            <a href="#citations">Citations</a>
+            <a href="questionnaire-b2b.html" class="nav-diag">Diagnostic 4P</a>
+            <a href="#contact" class="nav-cta">Prendre RDV</a>
+        </div>
+    </nav>
 
-var TXT = {
-  P:{
-    low:{ badge:'Axe prioritaire', cls:'badge-low',
-      short:"Votre dimension psychologique révèle des schémas relationnels et émotionnels qui limitent aujourd'hui votre efficacité et votre qualité de vie au travail.",
-      long:"<strong>La dimension Psychologique est votre axe de travail prioritaire.</strong> Les mécanismes que vous avez mis en place pour fonctionner dans des environnements exigeants vous ont protégé — mais ils vous coûtent aujourd'hui plus qu'ils ne vous servent. Comprendre comment vos réactions se construisent, comment vos besoins s'expriment ou ne s'expriment pas, comment les dynamiques relationnelles se répètent — c'est là que se trouve votre premier levier de transformation durable. Le travail en maïeutique avec Denis vous sera des plus utile si vous acceptez d'entrer dans une relation sincère et honnête. Les questions posées ne seront pas des jugements — ce seront des miroirs. Ce que vous y verrez vous appartiendra entièrement."},
-    mid:{ badge:'En développement', cls:'badge-mid',
-      short:"Votre dimension psychologique est en mouvement. Vous avez les ressources — il s'agit maintenant de les consolider dans les situations qui résistent encore.",
-      long:""},
-    high:{ badge:'Dimension solide', cls:'badge-high',
-      short:"Votre dimension psychologique est un atout réel. Vous lisez les situations et les dynamiques avec une maturité qui vous distingue. Ce capital mérite d'être approfondi.",
-      long:""}
-  },
-  Ph:{
-    low:{ badge:'Axe prioritaire', cls:'badge-low',
-      short:"Votre dimension philosophique révèle un besoin de clarté dans vos critères de décision et votre rapport aux événements que vous ne contrôlez pas.",
-      long:"<strong>La dimension Philosophique est votre axe de travail prioritaire.</strong> Vous avez les ressources nécessaires. Ce qui manque, c'est un cadre — une boussole intérieure qui ne se laisse pas dérégler par le bruit du monde et la pression des urgences. La capacité à distinguer ce qui dépend de vous de ce qui n'en dépend pas n'est pas une compétence innée : c'est une pratique. Un entraînement quotidien de la lucidité. Le travail en maïeutique vous permettra de construire ce cadre à partir de ce que vous êtes vraiment — pas de ce qu'on vous a dit que vous devriez être. Denis ne vous donnera pas les réponses. Il vous aidera à formuler les bonnes questions — celles qui, une fois posées, rendent les décisions bien plus claires."},
-    mid:{ badge:'En développement', cls:'badge-mid',
-      short:"Votre dimension philosophique est en construction. Vous avez des ressources solides mais cherchez encore un cadre plus stable pour décider et avancer avec confiance.",
-      long:""},
-    high:{ badge:'Dimension solide', cls:'badge-high',
-      short:"Votre dimension philosophique est une force. Vous avez développé une boussole intérieure fiable. Cette lucidité face aux événements est rare — et précieuse sous pression.",
-      long:""}
-  },
-  Phy:{
-    low:{ badge:'Axe prioritaire', cls:'badge-low',
-      short:"Votre dimension physique révèle une relation au corps et à l'énergie fragilisée — qui impacte directement votre performance et votre disponibilité mentale.",
-      long:"<strong>La dimension Physique est votre axe de travail prioritaire.</strong> Le corps est le premier territoire. Tout ce que vous construisez professionnellement, il le porte. Quand il cède, tout cède. Ce que vos réponses révèlent n'est pas un manque de volonté — c'est un manque de méthode et d'ancrage. Repartir du corps par des gestes simples, répétés, conscients, c'est souvent là que tout recommence. Le travail proposé ne passe pas par des programmes intensifs mais par la reconstruction d'une relation juste avec ce que votre corps vous dit. Denis a lui-même vécu ce retour au corps comme le point de départ de sa propre transformation. Il sait que ça ne commence pas par l'effort — ça commence par l'écoute."},
-    mid:{ badge:'En développement', cls:'badge-mid',
-      short:"Votre dimension physique est présente mais fragile. Vous avez des intuitions justes — il s'agit maintenant de les transformer en pratiques stables et ancrées.",
-      long:""},
-    high:{ badge:'Dimension solide', cls:'badge-high',
-      short:"Votre dimension physique est une fondation solide. Votre rapport au corps et à l'énergie vous donne une présence, une endurance et une disponibilité que beaucoup cherchent.",
-      long:""}
-  },
-  Pn:{
-    low:{ badge:'Axe prioritaire', cls:'badge-low',
-      short:"Votre dimension Pneuma révèle une tension profonde autour du sens et de la direction — qui affecte l'ensemble de votre engagement professionnel.",
-      long:"<strong>La dimension Pneuma est votre axe de travail prioritaire.</strong> C'est la dimension la plus difficile à aborder — et souvent la plus urgente. Quand le sens manque, les trois autres piliers deviennent des techniques sans âme. On peut être relationnellement habile, philosophiquement rigoureux, physiquement discipliné — et se sentir profondément vide. Ce que vos réponses pointent, c'est un décalage entre ce que vous faites et ce à quoi vous vous reliez intérieurement. Ce travail ne passe pas par des réponses toutes faites. Il passe par des questions que peu de personnes osent poser à voix haute. Denis les posera. Et dans cet espace-là, quelque chose peut se remettre en mouvement."},
-    mid:{ badge:'En développement', cls:'badge-mid',
-      short:"Votre dimension Pneuma est en recherche. Vous percevez un sens à votre action, mais il est encore fragile ou partiel. Ce travail de fond mérite d'être approfondi.",
-      long:""},
-    high:{ badge:'Dimension solide', cls:'badge-high',
-      short:"Votre dimension Pneuma est une boussole. Vous avez trouvé un ancrage dans le sens de ce que vous faites — ce qui vous donne une stabilité et une cohérence rares.",
-      long:""}
-  }
-};
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-card">
+            <div class="hero-top">
+                <div class="photo-circle">
+                    <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/6869282c30c23b6a92e4caf6fa110a766cfe5e15/denis-deblevid.jpg" alt="Denis Deblevid">
+                </div>
+                <div class="hero-identity">
+                    <h1 class="hero-name">Denis<br><span>Deblevid</span></h1>
+                    <div class="hero-tag">Consultant · Formateur & Coach · Relations Humaines & Business</div>
+                    <p class="hero-phrase">L'humain au cœur de tout ce que j'entreprends</p>
+                </div>
+                <div class="casque-wrap">
+                    <img src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/Final-Casque.png" alt="Casque Stoïcien">
+                </div>
+            </div>
+            <p class="hero-tagline">Je pose les bonnes questions.<br>Vous trouvez vos réponses.</p>
+            <div class="hero-contacts">
+                <a href="tel:+33783038800" class="contact-line">
+                    <div class="contact-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg></div>
+                    +33 7 83 03 88 00
+                </a>
+                <a href="#" id="email-link" class="contact-line">
+                    <div class="contact-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                    <span id="email-display"></span>
+                </a>
+                <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank" class="contact-line">
+                    <div class="contact-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+                    linkedin.com/in/denisdeblevid
+                </a>
+            </div>
+            <div class="hero-btns">
+                <a href="#contact" class="hero-btn">Planifier un échange <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+                <a href="questionnaire-b2b.html" class="hero-btn-sec">Faire mon diagnostic gratuit <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></a>
+            </div>
+        </div>
+    </header>
 
-/* ══════════════════════════════════════════
-   ÉTAT & SHUFFLE
-══════════════════════════════════════════ */
-function shuffle(arr) {
-  var a = arr.slice();
-  for (var i = a.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
-  }
-  return a;
-}
+    <div class="divider"></div>
 
-// SHUFFLED[q] = tableau de 4 indices originaux dans l'ordre d'affichage
-var SHUFFLED = Q.map(function() { return shuffle([0,1,2,3]); });
-// ans[q] = index ORIGINAL sélectionné (pour scoring correct)
-var ans = new Array(Q.length).fill(null);
-var cur = 0;
+    <!-- PARCOURS -->
+    <section id="parcours">
+        <div class="section-header">
+            <span class="section-num">01</span>
+            <h2 class="section-title">Parcours & <span>Valeur</span></h2>
+        </div>
+        <div class="parcours-grid">
+            <div>
+                <p class="parcours-text"><strong>Trente ans de terrain réel.</strong> Pas de parcours linéaire — une vie dense, construite par les expériences, les chutes et les reconstructions. De l'hôtellerie de luxe à Marseille aux scènes de prestidigitation, des tatamis aux salles de formation, chaque étape a forgé une compréhension profonde et incarnée de l'être humain.</p>
+                <p class="parcours-text">Ce que la vie m'a appris sur les autres — et que les formations seules ne peuvent pas enseigner. Je connais vos problématiques de l'intérieur, parce que j'en ai traversé l'essentiel.</p>
+                <p class="parcours-text">Ancré dans la <strong>philosophie stoïcienne</strong> et l'<strong>Analyse Transactionnelle</strong>, ma pratique est celle du prokoptôn — celui qui progresse, qui transmet ce qu'il vit, et non ce qu'il a lu.</p>
+            </div>
+            <div class="parcours-atouts">
+                <div class="atout">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>Arts martiaux — discipline du combat & efficacité</h4>
+                        <p>Professeur d'arts martiaux dès 18 ans — deux clubs, 120 élèves, un club ouvert à Tahiti, compétitions au niveau national. Aujourd'hui cette discipline est mise au service de l'efficacité — pas de la performance sportive, mais de l'action juste dans la vie et le travail.</p>
+                    </div>
+                </div>
+                <div class="atout">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>L'art de la magie — psychologie de l'attention</h4>
+                        <p>Ancien prestidigitateur professionnel (10 à 500 personnes). Cette expertise rare permet de capter, lever les résistances et faciliter la décision là où les méthodes classiques échouent.</p>
+                    </div>
+                </div>
+                <div class="atout">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>La rigueur stoïcienne — stabilité décisionnelle</h4>
+                        <p>La philosophie du Portique comme outil concret de discernement. Dans les environnements sous pression, cette discipline intérieure apporte une clarté que ni la motivation ni l'enthousiasme ne peuvent garantir durablement.</p>
+                    </div>
+                </div>
+                <div class="atout">
+                    <div class="atout-icon">✦</div>
+                    <div class="atout-content">
+                        <h4>La maïeutique — faire émerger vos réponses</h4>
+                        <p>Je ne donne pas de réponses. Je pose les bonnes questions. Héritée de Socrate, enrichie par l'Analyse Transactionnelle et l'Erotesis grec, cette approche transforme durablement les individus et les collectifs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-/* ══════════════════════════════════════════
-   LEVEL & DOTS
-══════════════════════════════════════════ */
-function getLevel(pct) { return pct < 45 ? 'low' : pct <= 72 ? 'mid' : 'high'; }
+    <div class="divider"></div>
 
-function updateDots() {
-  var cnt = { P:0, Ph:0, Phy:0, Pn:0 };
-  Q.forEach(function(q, i) { if (ans[i] !== null) cnt[q.p]++; });
-  ['P','Ph','Phy','Pn'].forEach(function(p, i) {
-    var total = Q.filter(function(q) { return q.p === p; }).length;
-    var el = document.getElementById('dot' + i);
-    if (!el) return;
-    el.className = cnt[p] === total ? 'dot done' : cnt[p] > 0 ? 'dot active' : 'dot';
-  });
-}
+    <!-- MA MÉTHODE 4P -->
+    <section id="methode">
+        <div class="section-header">
+            <span class="section-num">02</span>
+            <h2 class="section-title">Ma méthode : <span>les 4P</span></h2>
+        </div>
+        <p class="methode-intro"><strong>Quatre dimensions indissociables</strong> de l'être humain — développées au fil de trente ans de terrain, ancrées dans la sagesse grecque antique. Une approche globale et incarnée pour retrouver son équilibre, sa clarté et sa puissance d'action.</p>
 
-/* ══════════════════════════════════════════
-   RENDU QUESTION
-══════════════════════════════════════════ */
-function renderQ() {
-  var q = Q[cur];
-  document.getElementById('q-dim').textContent = q.d;
-  document.getElementById('q-num').textContent = 'Question ' + (cur < 9 ? '0' : '') + (cur + 1) + ' sur ' + Q.length;
-  document.getElementById('q-text').textContent = q.t;
-  document.getElementById('prog-count').textContent = (cur + 1) + ' / ' + Q.length;
-  document.getElementById('prog-fill').style.width = ((cur + 1) / Q.length * 100) + '%';
-  document.getElementById('btn-prev').style.visibility = cur === 0 ? 'hidden' : 'visible';
+        <!-- Colonnes avec fond SVG -->
+        <div class="methode-bg">
+        <div class="methode-grid">
 
-  var bn = document.getElementById('btn-next');
-  bn.textContent = cur === Q.length - 1 ? 'Voir mes résultats →' : 'Suivant →';
-  bn.className = ans[cur] !== null ? 'btn-outline on' : 'btn-outline';
+            <!-- P1 Psychologique -->
+            <div class="methode-col">
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Psychologique</div>
+                    <p class="col-desc">Comprendre ses mécanismes intérieurs, décoder les dynamiques relationnelles, maîtriser ses émotions. L'Analyse Transactionnelle et la CNV comme outils de transformation durable.</p>
+                </div>
+            </div>
 
-  var letters = ['A','B','C','D'];
-  var wrap = document.getElementById('q-opts');
-  wrap.innerHTML = '';
-  var shuf = SHUFFLED[cur];
+            <!-- P2 Physique -->
+            <div class="methode-col">
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Physique</div>
+                    <p class="col-desc">Le corps comme premier espace de discipline et de présence. La maîtrise intérieure commence par la maîtrise du corps — sous pression, dans l'effort quotidien.</p>
+                </div>
+            </div>
 
-  shuf.forEach(function(origIdx, displayPos) {
-    var opt = q.o[origIdx];
-    var isSel = (ans[cur] === origIdx);
-    var d = document.createElement('div');
-    d.className = 'opt' + (isSel ? ' sel' : '');
-    d.innerHTML = '<div class="opt-letter">' + letters[displayPos] + '</div><div class="opt-text">' + opt.t + '</div>';
-    (function(oi) { d.onclick = function() { selectOpt(oi); }; })(origIdx);
-    wrap.appendChild(d);
-  });
+            <!-- P3 Philosophique -->
+            <div class="methode-col">
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Philosophique</div>
+                    <p class="col-desc">La rigueur stoïcienne comme boussole de vie. Distinguer ce qui dépend de soi, cultiver la vertu dans l'action, faire de l'obstacle un chemin. Une philosophie vivante.</p>
+                </div>
+            </div>
 
-  updateDots();
-}
+            <!-- P4 Pneuma -->
+            <div class="methode-col">
+                <div class="col-content">
+                    <div class="col-letter">P</div>
+                    <div class="col-name">Pneuma</div>
+                    <p class="col-desc">Le souffle vital — dimension philosophique et spirituelle qui englobe l'intelligence et l'intellect. Ce qui donne sens à l'action et relie l'individu à quelque chose de plus grand.</p>
+                </div>
+            </div>
 
-/* ══════════════════════════════════════════
-   SÉLECTION — stocke l'index original
-══════════════════════════════════════════ */
-function selectOpt(origIdx) {
-  ans[cur] = origIdx;
-  var shuf = SHUFFLED[cur];
-  document.querySelectorAll('.opt').forEach(function(el, displayPos) {
-    var isThis = (shuf[displayPos] === origIdx);
-    el.className = 'opt' + (isThis ? ' sel' : '');
-  });
-  document.getElementById('btn-next').className = 'btn-outline on';
-}
+        </div>
+        </div><!-- end methode-bg -->
+    </section>
 
-/* ══════════════════════════════════════════
-   NAVIGATION
-══════════════════════════════════════════ */
-document.getElementById('btn-start').onclick = function() {
-  document.getElementById('screen-intro').style.display = 'none';
-  document.getElementById('screen-quiz').style.display = 'flex';
-  renderQ();
-};
+    <div class="divider"></div>
 
-document.getElementById('btn-next').onclick = function() {
-  if (ans[cur] === null) return;
-  if (cur < Q.length - 1) {
-    cur++;
-    renderQ();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else {
-    showResults();
-  }
-};
+    <!-- PRESTATIONS -->
+    <section id="prestations">
+        <div class="section-header">
+            <span class="section-num">03</span>
+            <h2 class="section-title">Mes <span>Prestations</span></h2>
+        </div>
+        <div class="presta-grid">
+            <div class="presta-card">
+                <div class="presta-num">01</div>
+                <h3 class="presta-title">Formation<br>& Coaching</h3>
+                <p class="presta-subtitle">Individuel · Groupe · Présentiel · Distanciel</p>
+                <div class="presta-line"></div>
+                <p class="presta-text">Des formations concrètes, adaptées à chaque public, ancrées dans la réalité du terrain.</p>
+                <ul class="presta-items">
+                    <li>Communication relationnelle & interpersonnelle</li>
+                    <li>Prévention & gestion des conflits</li>
+                    <li>Leadership & cohésion d'équipe</li>
+                    <li>Développement personnel & professionnel</li>
+                    <li>Coaching individuel sur mesure</li>
+                </ul>
+                <button class="presta-btn" onclick="openModal('Formation & Coaching')">Demander un devis <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+            </div>
+            <div class="presta-card">
+                <div class="presta-num">02</div>
+                <h3 class="presta-title">Consultant<br>& Stratégie</h3>
+                <p class="presta-subtitle">Communication · Management · Business</p>
+                <div class="presta-line"></div>
+                <p class="presta-text">Voir là où personne ne regarde. Diagnostiquer les enjeux cachés, aligner l'humain avec la stratégie.</p>
+                <ul class="presta-items">
+                    <li>Diagnostic organisationnel & humain</li>
+                    <li>Stratégie de communication</li>
+                    <li>Accompagnement au changement</li>
+                    <li>Conseil en management & leadership</li>
+                    <li>Connecteur stratégique</li>
+                </ul>
+                <button class="presta-btn" onclick="openModal('Consultant & Stratégie')">Demander un devis <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+            </div>
+            <div class="presta-card">
+                <div class="presta-num">03</div>
+                <h3 class="presta-title">Mise en Relation<br>& Développement</h3>
+                <p class="presta-subtitle">Personnes · Entreprises · Partenariats</p>
+                <div class="presta-line"></div>
+                <p class="presta-text">Créer des connexions utiles, durables et alignées. Transformer vos relations en actifs stratégiques.</p>
+                <ul class="presta-items">
+                    <li>Apporteur d'affaires & connecteur</li>
+                    <li>Identification de synergies</li>
+                    <li>Création de partenariats durables</li>
+                    <li>Accompagnement réseau & développement</li>
+                    <li>Mise en relation ciblée B2B & B2C</li>
+                </ul>
+                <button class="presta-btn" onclick="openModal('Mise en Relation & Développement')">Demander un devis <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+            </div>
+            <div class="presta-card">
+                <div class="presta-num">04</div>
+                <h3 class="presta-title">Accompagnement par la<br>Philosophie \& le Sens</h3>
+                <p class="presta-subtitle">Individuel · Ateliers · Retraites</p>
+                <div class="presta-line"></div>
+                <p class="presta-text">Pour ceux qui se posent des questions — ou qui n'arrivent plus à s'en poser.</p>
+                <ul class="presta-items">
+                    <li>Séance "one-shot" — déblocage en urgence</li>
+                    <li>Suivi sur période — rééducation intérieure</li>
+                    <li>Ateliers & retraites — format collectif</li>
+                    <li>Sagesse stoïcienne & biblique</li>
+                    <li>Méthode des 4P</li>
+                </ul>
+                <button class="presta-btn" onclick="openModal('Accompagnement par la Philosophie \& le Sens')">Demander un devis <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg></button>
+            </div>
+        </div>
+    </section>
 
-document.getElementById('btn-prev').onclick = function() {
-  if (cur > 0) {
-    cur--;
-    renderQ();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-};
+    <div class="divider"></div>
 
-/* ══════════════════════════════════════════
-   SCORES
-══════════════════════════════════════════ */
-function computeScores() {
-  var raw = { P:0, Ph:0, Phy:0, Pn:0 };
-  var mx  = { P:0, Ph:0, Phy:0, Pn:0 };
-  Q.forEach(function(q, i) {
-    if (ans[i] !== null) { raw[q.p] += q.o[ans[i]].s; mx[q.p] += 4; }
-  });
-  var pct = {};
-  Object.keys(raw).forEach(function(k) { pct[k] = Math.round((raw[k] / mx[k]) * 100); });
-  return pct;
-}
+    <!-- CITATIONS -->
+    <section id="citations">
+        <div class="citations-header">
+            <h2 class="section-title">Sagesse <span>Stoïcienne</span></h2>
+        </div>
+        <div class="carousel-wrap">
+            <div class="carousel-track">
+                <div class="carousel-slides" id="slides">
+                    <div class="citation-slide">
+                        <div class="citation-img"><img id="img-ma1" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le1.jpg" alt="Marc Aurèle"></div>
+                        <p class="citation-text">L'obstacle sur le chemin devient le chemin. Jamais oublier cela dans les domaines qui nous résistent.</p>
+                        <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
+                    </div>
+                    <div class="citation-slide">
+                        <div class="citation-img"><img id="img-s1" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien1.jpg" alt="Sénèque"></div>
+                        <p class="citation-text">Ce n'est pas parce que les choses sont difficiles que nous n'osons pas — c'est parce que nous n'osons pas qu'elles sont difficiles.</p>
+                        <p class="citation-author">Sénèque · Lettres à Lucilius</p>
+                    </div>
+                    <div class="citation-slide">
+                        <div class="citation-img"><img id="img-ep" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoEpict%C3%A8te.jpg" alt="Épictète"></div>
+                        <p class="citation-text">Ce qui trouble les hommes, ce ne sont pas les choses, mais les opinions qu'ils ont des choses.</p>
+                        <p class="citation-author">Épictète · Manuel</p>
+                    </div>
+                    <div class="citation-slide">
+                        <div class="citation-img"><img id="img-s3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoStoicien3.jpg" alt="Sénèque"></div>
+                        <p class="citation-text">Retire-toi en toi-même autant que tu peux. Fréquente ceux qui sont susceptibles de te rendre meilleur.</p>
+                        <p class="citation-author">Sénèque · Lettres à Lucilius</p>
+                    </div>
+                    <div class="citation-slide">
+                        <div class="citation-img"><img id="img-ma3" src="https://raw.githubusercontent.com/DenisDeblevid/mon-cv/main/PhotoMarcAur%C3%A8le2.jpg" alt="Marc Aurèle"></div>
+                        <p class="citation-text">Commence le matin en te disant : aujourd'hui je rencontrerai des gens difficiles — mais ils sont ainsi par ignorance du bien et du mal.</p>
+                        <p class="citation-author">Marc Aurèle · Pensées pour moi-même</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="prev"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg></button>
+                <div class="carousel-dots" id="dots"></div>
+                <button class="carousel-btn" id="next"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg></button>
+            </div>
+        </div>
+    </section>
 
-/* ══════════════════════════════════════════
-   RADAR
-══════════════════════════════════════════ */
-function drawRadar(scores, weakest) {
-  var svg = document.getElementById('radar-svg');
-  var cx = 180, cy = 180, r = 130;
-  var keys    = ['P','Ph','Phy','Pn'];
-  var names   = ['Psychologique','Philosophique','Physique','Pneuma'];
-  var angles  = [270, 0, 90, 180];
-  svg.innerHTML = '';
+    <div class="divider"></div>
 
-  function pt(cx, cy, r, angle) {
-    var rad = angle * Math.PI / 180;
-    return [cx + Math.cos(rad) * r, cy + Math.sin(rad) * r];
-  }
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="section-header">
+            <span class="section-num">04</span>
+            <h2 class="section-title">Entrer en <span>Contact</span></h2>
+        </div>
+        <div class="contact-inner">
+            <div>
+                <p class="parcours-text">Un échange suffit souvent pour savoir si nous pouvons avancer ensemble. Choisissez un créneau ou contactez-moi directement.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.04 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg></div>
+                        <div><div class="contact-item-label">Téléphone</div><div class="contact-item-value"><a href="tel:+33783038800">+33 7 83 03 88 00</a></div></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                        <div><div class="contact-item-label">Email</div><div class="contact-item-value" id="contact-email-value"></div></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <div><div class="contact-item-label">Localisation</div><div class="contact-item-value">Marseille · France<br><span style="font-size:0.76rem;color:var(--gray)">Présentiel & Distanciel</span></div></div>
+                    </div>
+                </div>
+                <div class="social-row">
+                    <a href="https://www.linkedin.com/in/denisdeblevid/" target="_blank" class="social-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        linkedin.com/in/denisdeblevid
+                    </a>
+                </div>
+            </div>
+            <div class="calendar-wrap">
+                <iframe src="https://koalendar.com/e/rencontrer-denis?embed=true" width="100%" height="600" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
 
-  // Cercles de fond
-  [0.25, 0.5, 0.75, 1].forEach(function(f) {
-    var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r * f);
-    c.setAttribute('fill', 'none'); c.setAttribute('stroke', 'rgba(197,160,89,0.07)'); c.setAttribute('stroke-width', '1');
-    svg.appendChild(c);
-  });
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">Denis Deblevid</div>
+        <div class="footer-links">
+            <a href="#parcours">Parcours</a>
+            <a href="#methode">Méthode</a>
+            <a href="#prestations">Prestations</a>
+            <a href="#citations">Citations</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-copy">© 2026 Denis Deblevid · Marseille</div>
+    </footer>
 
-  // Axes
-  angles.forEach(function(a) {
-    var p = pt(cx, cy, r, a);
-    var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    l.setAttribute('x1', cx); l.setAttribute('y1', cy);
-    l.setAttribute('x2', p[0]); l.setAttribute('y2', p[1]);
-    l.setAttribute('stroke', 'rgba(197,160,89,0.09)'); l.setAttribute('stroke-width', '1');
-    svg.appendChild(l);
-  });
+    <script>
+        // ─── RGPD ───
+        const rgpdBanner = document.getElementById('rgpd-banner');
+        try {
+            if (localStorage.getItem('rgpd') === 'done') rgpdBanner.style.display = 'none';
+        } catch(e) {}
+        document.getElementById('rgpd-accept').onclick = function() {
+            try { localStorage.setItem('rgpd','done'); } catch(e) {}
+            rgpdBanner.style.display = 'none';
+        };
+        document.getElementById('rgpd-refuse').onclick = function() {
+            try { localStorage.setItem('rgpd','done'); } catch(e) {}
+            rgpdBanner.style.display = 'none';
+        };
 
-  // Polygone données
-  var pts = keys.map(function(k, i) {
-    return pt(cx, cy, r * (scores[k] || 0) / 100, angles[i]);
-  });
-  var poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-  poly.setAttribute('points', pts.map(function(p) { return p[0] + ',' + p[1]; }).join(' '));
-  poly.setAttribute('fill', 'rgba(197,160,89,0.1)');
-  poly.setAttribute('stroke', 'rgba(197,160,89,0.45)');
-  poly.setAttribute('stroke-width', '1.5');
-  svg.appendChild(poly);
+        // ─── EMAIL ───
+        var u = 'denisdeblevidcontact', d = 'gmail.com', email = u+'@'+d;
+        var el = document.getElementById('email-display');
+        var lk = document.getElementById('email-link');
+        var cv = document.getElementById('contact-email-value');
+        if(el && lk){ el.textContent = email; lk.href = 'mailto:'+email; }
+        if(cv){ cv.innerHTML = '<a href="mailto:'+email+'">'+email+'</a>'; }
 
-  // Axe prioritaire en surbrillance
-  var wi = keys.indexOf(weakest);
-  var wp = pt(cx, cy, r * (scores[weakest] || 0) / 100, angles[wi]);
-  var wl = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  wl.setAttribute('x1', cx); wl.setAttribute('y1', cy);
-  wl.setAttribute('x2', wp[0]); wl.setAttribute('y2', wp[1]);
-  wl.setAttribute('stroke', 'rgba(197,160,89,0.9)'); wl.setAttribute('stroke-width', '3');
-  svg.appendChild(wl);
+        // ─── CURSEUR ───
+        var cursor = document.getElementById('cursor');
+        var ring = document.getElementById('cursorRing');
+        var mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', function(e){
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = (mx-4)+'px';
+            cursor.style.top = (my-4)+'px';
+        });
+        function animRing(){
+            rx += (mx-rx)*0.12;
+            ry += (my-ry)*0.12;
+            ring.style.left = rx+'px';
+            ring.style.top = ry+'px';
+            requestAnimationFrame(animRing);
+        }
+        animRing();
+        document.querySelectorAll('a,button').forEach(function(el){
+            el.addEventListener('mouseenter',function(){ cursor.style.transform='scale(2.5)'; });
+            el.addEventListener('mouseleave',function(){ cursor.style.transform='scale(1)'; });
+        });
 
-  // Points
-  pts.forEach(function(p, i) {
-    var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('cx', p[0]); c.setAttribute('cy', p[1]);
-    c.setAttribute('r', keys[i] === weakest ? '7' : '4');
-    c.setAttribute('fill', keys[i] === weakest ? 'var(--gold)' : 'rgba(197,160,89,0.55)');
-    svg.appendChild(c);
-  });
+        // ─── CARROUSEL ───
+        var slides = document.getElementById('slides');
+        var dotsC = document.getElementById('dots');
+        var total = document.querySelectorAll('.citation-slide').length;
+        var cur = 0;
+        for(var i=0; i<total; i++){
+            var dot = document.createElement('div');
+            dot.className = 'dot'+(i===0?' active':'');
+            dot.setAttribute('data-i', i);
+            dot.onclick = function(){ goTo(parseInt(this.getAttribute('data-i'))); };
+            dotsC.appendChild(dot);
+        }
+        function goTo(n){
+            cur = (n+total)%total;
+            slides.style.transform = 'translateX(-'+cur*100+'%)';
+            document.querySelectorAll('.dot').forEach(function(d,i){ d.classList.toggle('active',i===cur); });
+        }
+        document.getElementById('prev').onclick = function(){ goTo(cur-1); };
+        document.getElementById('next').onclick = function(){ goTo(cur+1); };
+        setInterval(function(){ goTo(cur+1); }, 6000);
 
-  // Labels
-  names.forEach(function(name, i) {
-    var k = keys[i];
-    var lp = pt(cx, cy, r + 24, angles[i]);
-    var t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    t.setAttribute('x', lp[0]); t.setAttribute('y', lp[1]);
-    t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
-    t.setAttribute('font-family', 'Cormorant Garamond, Georgia, serif');
-    t.setAttribute('font-size', k === weakest ? '14' : '12');
-    t.setAttribute('font-style', 'italic');
-    t.setAttribute('fill', k === weakest ? 'rgba(197,160,89,1)' : 'rgba(197,160,89,0.5)');
-    t.textContent = name;
-    svg.appendChild(t);
-    // Score
-    var sp = pt(cx, cy, r * (scores[k] || 0) / 100 + 16, angles[i]);
-    var st = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    st.setAttribute('x', sp[0]); st.setAttribute('y', sp[1]);
-    st.setAttribute('text-anchor', 'middle'); st.setAttribute('dominant-baseline', 'middle');
-    st.setAttribute('font-family', 'Outfit, Arial, sans-serif');
-    st.setAttribute('font-size', '9');
-    st.setAttribute('fill', 'rgba(197,160,89,0.65)');
-    st.textContent = (scores[k] || 0) + '%';
-    svg.appendChild(st);
-  });
-}
-
-/* ══════════════════════════════════════════
-   AFFICHAGE RÉSULTATS
-══════════════════════════════════════════ */
-function showResults() {
-  document.getElementById('screen-quiz').style.display = 'none';
-  document.getElementById('screen-result').style.display = 'flex';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  var scores = computeScores();
-  var weakest = Object.keys(scores).sort(function(a, b) { return scores[a] - scores[b]; })[0];
-
-  drawRadar(scores, weakest);
-
-  // Score cards
-  var grid = document.getElementById('sc-grid');
-  grid.innerHTML = '';
-  ['P','Phy','Ph','Pn'].forEach(function(k) {
-    var s = scores[k] || 0;
-    var lvl = getLevel(s);
-    var isPrio = (k === weakest);
-    var tx = TXT[k][isPrio ? 'low' : lvl];
-    var card = document.createElement('div');
-    card.className = 'sc' + (isPrio ? ' prio' : '');
-    card.innerHTML =
-      '<div class="sc-letter">P</div>' +
-      '<div class="sc-name">' + PIL[k].name + '</div>' +
-      '<div class="sc-bar-bg"><div class="sc-bar" id="bar-' + k + '" style="width:0"></div></div>' +
-      '<div class="sc-pct">' + s + '%</div>' +
-      '<div class="sc-badge ' + tx.cls + '">' + tx.badge + '</div>';
-    grid.appendChild(card);
-  });
-
-  // Anime les barres
-  setTimeout(function() {
-    ['P','Phy','Ph','Pn'].forEach(function(k) {
-      var b = document.getElementById('bar-' + k);
-      if (b) b.style.width = (scores[k] || 0) + '%';
-    });
-  }, 200);
-
-  // Synthèse
-  var syn = document.getElementById('syn-box');
-  var html = '<p class="syn-intro-txt">Votre profil des 4P dessine une configuration singulière — à la fois un portrait de vos ressources actuelles et un indicateur précis des zones où votre développement peut s\'accélérer.</p>';
-
-  // Pilier prioritaire en premier
-  var pw = TXT[weakest].low;
-  html += '<div class="ps prio"><div class="ps-head"><div class="ps-letter">P</div><div class="ps-name">' + PIL[weakest].name + '</div><div class="ps-score">' + (scores[weakest] || 0) + '%</div></div><p class="ps-txt">' + pw.long + '</p></div>';
-
-  // Autres piliers
-  ['P','Ph','Phy','Pn'].filter(function(k) { return k !== weakest; }).forEach(function(k) {
-    var s = scores[k] || 0;
-    var tx = TXT[k][getLevel(s)];
-    html += '<div class="ps"><div class="ps-head"><div class="ps-letter">P</div><div class="ps-name">' + PIL[k].name + '</div><div class="ps-score">' + s + '%</div></div><p class="ps-txt">' + tx.short + '</p></div>';
-  });
-
-  syn.innerHTML = html;
-}
-
-/* ══════════════════════════════════════════
-   FORMULAIRE
-══════════════════════════════════════════ */
-document.getElementById('btn-send').onclick = function() {
-  var p = document.getElementById('f-prenom').value.trim();
-  var n = document.getElementById('f-nom').value.trim();
-  var a = document.getElementById('f-age').value.trim();
-  var e = document.getElementById('f-email').value.trim();
-  if (!p || !n || !a || !e) { alert('Merci de remplir les champs obligatoires.'); return; }
-
-  var scores = computeScores();
-  var weakest = Object.keys(scores).sort(function(a, b) { return scores[a] - scores[b]; })[0];
-  var scoreStr = Object.keys(scores).map(function(k) { return PIL[k].name + ': ' + scores[k] + '%'; }).join(' | ');
-  var body =
-    'Prénom: ' + p + '\nNom: ' + n + '\nÂge: ' + a + '\nEmail: ' + e +
-    '\nEntreprise: ' + document.getElementById('f-ent').value +
-    '\nPoste: ' + document.getElementById('f-poste').value +
-    '\nTél: ' + document.getElementById('f-tel').value +
-    '\n\nRésultats 4P:\n' + scoreStr +
-    '\nAxe prioritaire: ' + PIL[weakest].name +
-    '\n\nBesoin:\n' + document.getElementById('f-besoin').value;
-
-  window.location.href = 'mailto:denisdeblevidcontact@gmail.com?subject=' +
-    encodeURIComponent('Diagnostic 4P — ' + p + ' ' + n) +
-    '&body=' + encodeURIComponent(body);
-
-  document.getElementById('form-fields').style.display = 'none';
-  document.getElementById('ok-name').textContent = p;
-  document.getElementById('form-ok').style.display = 'block';
-};
-
-/* ══════════════════════════════════════════
-   CURSEUR DORÉ
-══════════════════════════════════════════ */
-var curEl = document.getElementById('cur');
-var ringEl = document.getElementById('cur-ring');
-var mx = 0, my = 0, rx = 0, ry = 0;
-
-document.addEventListener('mousemove', function(e) {
-  mx = e.clientX; my = e.clientY;
-  curEl.style.left = (mx - 4) + 'px';
-  curEl.style.top  = (my - 4) + 'px';
-});
-
-(function animRing() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ringEl.style.left = rx + 'px';
-  ringEl.style.top  = ry + 'px';
-  requestAnimationFrame(animRing);
-})();
-
-document.addEventListener('mouseover', function(e) {
-  if (e.target.matches('button, .opt, a')) curEl.style.transform = 'scale(2.5)';
-  else curEl.style.transform = 'scale(1)';
-});
-</script>
+        // ─── MODAL ───
+        function openModal(presta){
+            document.getElementById('modal-prestation').textContent = presta;
+            document.getElementById('f-presta').value = presta;
+            document.getElementById('form-content').style.display = 'block';
+            document.getElementById('form-success').style.display = 'none';
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        document.getElementById('modal-close').onclick = function(){
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        document.getElementById('modal').onclick = function(e){
+            if(e.target === this){ this.classList.remove('active'); document.body.style.overflow=''; }
+        };
+        document.getElementById('form-submit').onclick = function(){
+            var prenom = document.getElementById('f-prenom').value.trim();
+            var nom = document.getElementById('f-nom').value.trim();
+            var em = document.getElementById('f-email').value.trim();
+            if(!prenom||!nom||!em){ alert('Merci de remplir prénom, nom et email.'); return; }
+            var presta = document.getElementById('f-presta').value;
+            var tel = document.getElementById('f-tel').value;
+            var msg = document.getElementById('f-message').value;
+            var dispo = document.getElementById('f-dispo').value;
+            var mailto = 'mailto:'+email+'?subject=Demande devis — '+encodeURIComponent(presta)+'&body='+encodeURIComponent('Prénom : '+prenom+'\nNom : '+nom+'\nEmail : '+em+'\nTél : '+tel+'\nPrestation : '+presta+'\nBesoin : '+msg+'\nDispos : '+dispo);
+            window.location.href = mailto;
+            document.getElementById('form-content').style.display = 'none';
+            document.getElementById('success-name').textContent = prenom;
+            document.getElementById('form-success').style.display = 'block';
+        };
+    </script>
 </body>
 </html>
