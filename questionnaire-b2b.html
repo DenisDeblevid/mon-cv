@@ -74,13 +74,10 @@ body {
 .prog-bar-fill { height: 1px; background: var(--gold); width: 8.33%; transition: width 0.5s ease; }
 
 /* ── DOTS SECTIONS ── */
-.dots-wrap { width: 100%; max-width: 660px; display: flex; gap: 4px; margin-bottom: 20px; }
-.dot { flex: 1; height: 2px; background: rgba(197,160,89,0.08); transition: background 0.4s; }
-.dot.done { background: rgba(197,160,89,0.35); }
-.dot.active { background: var(--gold); }
+.dots-wrap { display: none; }
 
 /* ── CARTE QUESTION ── */
-.q-card { background: var(--dark); border: 1px solid var(--border); max-width: 660px; width: 100%; padding: 46px 42px; }
+.q-card { background: var(--dark); border: 1px solid var(--border); max-width: 660px; width: 100%; padding: 46px 42px; margin-bottom: 80px; }
 .q-dim { font-family: 'Outfit', sans-serif; font-size: 0.5rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(197,160,89,0.45); margin-bottom: 6px; }
 .q-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.82rem; color: var(--gray); margin-bottom: 16px; }
 .q-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.15rem,2vw,1.6rem); font-weight: 300; line-height: 1.55; color: var(--white); margin-bottom: 34px; }
@@ -94,8 +91,15 @@ body {
 .opt.sel .opt-letter { background: var(--gold); color: var(--black); border-color: var(--gold); }
 .opt-text { font-family: 'Outfit', Arial, sans-serif; font-size: 0.84rem; color: var(--soft); line-height: 1.65; font-weight: 300; padding-top: 3px; }
 
-/* ── NAV QUIZ ── */
-.q-nav { display: flex; justify-content: space-between; align-items: center; max-width: 660px; width: 100%; margin-top: 26px; }
+/* ── NAV QUIZ — fixe en bas ── */
+.q-nav { 
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 28px;
+  background: rgba(8,8,8,0.97);
+  border-top: 1px solid rgba(197,160,89,0.12);
+  z-index: 100;
+}
 
 /* ── RÉSULTATS ── */
 .res-wrap { max-width: 760px; width: 100%; }
@@ -207,10 +211,10 @@ body {
     <div class="prog-bar"><div class="prog-bar-fill" id="prog-fill"></div></div>
   </div>
   <div class="dots-wrap" id="dots-wrap">
-    <div class="dot" id="dot0"></div>
-    <div class="dot" id="dot1"></div>
-    <div class="dot" id="dot2"></div>
-    <div class="dot" id="dot3"></div>
+    <div class="dot" id="dot0" title="Psychologique"></div>
+    <div class="dot" id="dot1" title="Philosophique"></div>
+    <div class="dot" id="dot2" title="Physique"></div>
+    <div class="dot" id="dot3" title="Pneuma"></div>
   </div>
   <div class="q-card" id="q-card">
     <div class="q-dim" id="q-dim"></div>
