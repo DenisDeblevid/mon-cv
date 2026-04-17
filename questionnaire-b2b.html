@@ -6,615 +6,726 @@
 <title>Diagnostic 4P — Denis Deblevid</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ── VARIABLES ── */
 :root {
-    --gold:#c5a059; --gold-l:#d4b97a; --gold-dim:rgba(197,160,89,0.1);
-    --black:#080808; --dark:#0d0d0d; --dark2:#111;
-    --white:#fff; --gray:#888; --soft:#ccc;
-    --border:rgba(197,160,89,0.12);
+  --gold: #c5a059;
+  --gold-l: #d4b97a;
+  --gold-dim: rgba(197,160,89,0.1);
+  --black: #080808;
+  --dark: #0d0d0d;
+  --white: #ffffff;
+  --gray: #888888;
+  --soft: #cccccc;
+  --border: rgba(197,160,89,0.12);
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Outfit',sans-serif; background:var(--black); color:var(--white); min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:60px 20px 80px; }
-input, textarea, select { cursor:default !important; }@media(max-width:620px){
-    
 
-/* INTRO */
-.intro{max-width:660px;width:100%;text-align:center;margin-bottom:60px;animation:fadeUp .8s ease both;}
-.i-tag{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(197,160,89,.28);padding:5px 16px;display:inline-block;margin-bottom:22px;}
-.i-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.1;margin-bottom:14px;}
-.i-h1 span{color:var(--gold);font-style:italic;}
-.i-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--gray);line-height:1.8;max-width:480px;margin:0 auto 10px;}
-.i-method{font-size:.75rem;color:rgba(197,160,89,.55);line-height:1.7;max-width:500px;margin:0 auto 28px;padding:14px 20px;border:1px solid rgba(197,160,89,.1);font-style:italic;}
-.i-stats{display:flex;justify-content:center;gap:40px;margin-bottom:32px;}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);font-weight:300;line-height:1;display:block;}
-.stat-l{font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:3px;display:block;}
-.i-divider{width:36px;height:1px;background:rgba(197,160,89,.3);margin:0 auto 32px;}
-.btn-start{background:var(--gold);border:none;color:var(--black);padding:13px 36px;font-family:'Outfit',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
-.btn-start:hover{background:var(--gold-l);}
+/* ── RESET ── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { cursor: none; }
+body {
+  font-family: 'Outfit', Arial, sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px 80px;
+}
 
-/* PROGRESS */
-.prog-wrap{width:100%;max-width:660px;margin-bottom:36px;}
-.prog-top{display:flex;justify-content:space-between;margin-bottom:8px;align-items:baseline;}
-.prog-lbl{font-size:.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
-.prog-n{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--gold);}
-.prog-bar{height:1px;background:rgba(197,160,89,.1);position:relative;}
-.prog-fill{height:1px;background:var(--gold);position:absolute;top:0;left:0;transition:width .5s ease;}
+/* ── CURSEUR ── */
+#cur { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; top: -20px; left: -20px; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; }
+#cur-ring { width: 32px; height: 32px; border: 1.5px solid var(--gold); border-radius: 50%; position: fixed; top: -20px; left: -20px; pointer-events: none; z-index: 9998; opacity: 0.7; }
+@media (max-width: 620px) { html, body { cursor: auto; } #cur, #cur-ring { display: none; } }
 
-/* SECTION DOTS */
-.sec-dots{width:100%;max-width:660px;display:flex;gap:3px;margin-bottom:18px;}
-.sdot{flex:1;height:2px;background:rgba(197,160,89,.08);transition:background .4s;}
-.sdot.done{background:rgba(197,160,89,.35);}
-.sdot.active{background:var(--gold);}
+/* ── ÉCRANS ── */
+#screen-intro { width: 100%; display: flex; flex-direction: column; align-items: center; }
+#screen-quiz  { width: 100%; display: none; flex-direction: column; align-items: center; }
+#screen-result{ width: 100%; display: none; flex-direction: column; align-items: center; }
 
-/* CARD */
-.qcard{background:var(--dark);border:1px solid var(--border);max-width:660px;width:100%;padding:46px 42px;animation:fadeUp .3s ease both;}
-.q-dim{font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:rgba(197,160,89,.45);margin-bottom:6px;}
-.q-n{font-family:'Cormorant Garamond',serif;font-size:.82rem;color:var(--gray);margin-bottom:16px;}
-.q-txt{font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,2vw,1.6rem);font-weight:300;line-height:1.55;color:var(--white);margin-bottom:34px;}
+/* ── INTRO ── */
+.intro-wrap { max-width: 660px; width: 100%; text-align: center; }
+.i-tag { font-family: 'Outfit', sans-serif; font-size: 0.58rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(197,160,89,0.28); padding: 5px 16px; display: inline-block; margin-bottom: 24px; }
+.i-h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2rem,4vw,3rem); font-weight: 300; line-height: 1.1; margin-bottom: 14px; }
+.i-h1 em { color: var(--gold); font-style: italic; }
+.i-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1rem; font-style: italic; color: var(--gray); line-height: 1.8; max-width: 480px; margin: 0 auto 14px; }
+.i-method { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.75rem; color: rgba(197,160,89,0.55); line-height: 1.7; max-width: 500px; margin: 0 auto 28px; padding: 14px 20px; border: 1px solid rgba(197,160,89,0.1); font-style: italic; }
+.i-stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 32px; }
+.i-stats > div { text-align: center; }
+.stat-n { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; color: var(--gold); font-weight: 300; line-height: 1; display: block; }
+.stat-l { font-family: 'Outfit', Arial, sans-serif; font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-top: 4px; display: block; }
+.i-divider { width: 36px; height: 1px; background: rgba(197,160,89,0.3); margin: 0 auto 32px; }
 
-/* OPTIONS */
-.opts{display:flex;flex-direction:column;gap:8px;}
-.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 18px;border:1px solid rgba(197,160,89,.08);cursor:pointer;transition:all .22s;}
-.opt:hover{border-color:rgba(197,160,89,.28);background:rgba(197,160,89,.04);}
-.opt.sel{border-color:var(--gold);background:var(--gold-dim);}
-.opt.sel .om{background:var(--gold);border-color:var(--gold);color:var(--black);}
-.om{width:26px;height:26px;border:1px solid rgba(197,160,89,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.58rem;font-weight:600;color:var(--gold);transition:all .22s;letter-spacing:.5px;}
-.ot{font-size:.84rem;color:var(--soft);line-height:1.65;font-weight:300;padding-top:3px;}
+/* ── BOUTONS ── */
+.btn-gold { background: var(--gold); border: none; color: var(--black); padding: 13px 36px; font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; cursor: none; transition: all 0.3s; display: inline-block; }
+.btn-gold:hover { background: var(--gold-l); }
+.btn-outline { background: none; border: 1px solid rgba(197,160,89,0.25); color: var(--gold); padding: 11px 28px; font-family: 'Outfit', sans-serif; font-size: 0.65rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; cursor: none; transition: all 0.3s; opacity: 0.35; pointer-events: none; }
+.btn-outline.on { opacity: 1; pointer-events: all; }
+.btn-outline.on:hover { background: var(--gold); color: var(--black); }
+.btn-ghost { background: none; border: none; color: var(--gray); font-family: 'Outfit', sans-serif; font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; cursor: none; transition: color 0.3s; padding: 8px 0; }
+.btn-ghost:hover { color: var(--gold); }
 
-/* NAV */
-.qnav{display:flex;justify-content:space-between;align-items:center;max-width:660px;width:100%;margin-top:26px;}
-.btn-prev{background:none;border:none;color:var(--gray);font-family:'Outfit',sans-serif;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:color .3s;padding:8px 0;}
-.btn-prev:hover{color:var(--gold);}
-.btn-next{background:var(--gold);border:none;color:var(--black);padding:11px 28px;font-family:'Outfit',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;opacity:.3;pointer-events:none;}
-.btn-next.on{opacity:1;pointer-events:all;}
-.btn-next.on:hover{background:var(--gold-l);}
+/* ── PROGRESSION ── */
+.prog-wrap { width: 100%; max-width: 660px; margin-bottom: 36px; }
+.prog-top { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: baseline; }
+.prog-lbl { font-family: 'Outfit', sans-serif; font-size: 0.56rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+.prog-count { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.95rem; color: var(--gold); }
+.prog-bar { width: 100%; height: 1px; background: rgba(197,160,89,0.1); }
+.prog-bar-fill { height: 1px; background: var(--gold); width: 8.33%; transition: width 0.5s ease; }
 
-/* RESULTS */
-.results{max-width:760px;width:100%;display:none;animation:fadeUp .6s ease both;}
-.res-top{text-align:center;margin-bottom:48px;}
-.res-top h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;margin-bottom:8px;}
-.res-top h2 span{color:var(--gold);font-style:italic;}
-.res-top p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gray);font-size:.95rem;}
+/* ── DOTS SECTIONS ── */
+.dots-wrap { width: 100%; max-width: 660px; display: flex; gap: 4px; margin-bottom: 20px; }
+.dot { flex: 1; height: 2px; background: rgba(197,160,89,0.08); transition: background 0.4s; }
+.dot.done { background: rgba(197,160,89,0.35); }
+.dot.active { background: var(--gold); }
+
+/* ── CARTE QUESTION ── */
+.q-card { background: var(--dark); border: 1px solid var(--border); max-width: 660px; width: 100%; padding: 46px 42px; }
+.q-dim { font-family: 'Outfit', sans-serif; font-size: 0.5rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(197,160,89,0.45); margin-bottom: 6px; }
+.q-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.82rem; color: var(--gray); margin-bottom: 16px; }
+.q-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.15rem,2vw,1.6rem); font-weight: 300; line-height: 1.55; color: var(--white); margin-bottom: 34px; }
+
+/* ── OPTIONS ── */
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opt { display: flex; align-items: flex-start; gap: 14px; padding: 13px 18px; border: 1px solid rgba(197,160,89,0.08); cursor: none; transition: all 0.22s; }
+.opt:hover { border-color: rgba(197,160,89,0.28); background: rgba(197,160,89,0.04); }
+.opt.sel { border-color: var(--gold); background: var(--gold-dim); }
+.opt-letter { width: 26px; height: 26px; border: 1px solid rgba(197,160,89,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Outfit', sans-serif; font-size: 0.58rem; font-weight: 600; color: var(--gold); transition: all 0.22s; }
+.opt.sel .opt-letter { background: var(--gold); color: var(--black); border-color: var(--gold); }
+.opt-text { font-family: 'Outfit', Arial, sans-serif; font-size: 0.84rem; color: var(--soft); line-height: 1.65; font-weight: 300; padding-top: 3px; }
+
+/* ── NAV QUIZ ── */
+.q-nav { display: flex; justify-content: space-between; align-items: center; max-width: 660px; width: 100%; margin-top: 26px; }
+
+/* ── RÉSULTATS ── */
+.res-wrap { max-width: 760px; width: 100%; }
+.res-top { text-align: center; margin-bottom: 48px; }
+.res-top h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300; margin-bottom: 8px; }
+.res-top h2 em { color: var(--gold); font-style: italic; }
+.res-top p { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; color: var(--gray); font-size: 0.95rem; }
 
 /* Radar */
-.radar-wrap{display:flex;justify-content:center;margin-bottom:40px;}
-.radar-wrap svg{max-width:360px;width:100%;}
+.radar-box { display: flex; justify-content: center; margin-bottom: 40px; }
+.radar-box svg { max-width: 360px; width: 100%; }
 
 /* Score cards */
-.sc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:36px;}
-.sc{background:var(--dark);border:1px solid var(--border);padding:22px 14px;text-align:center;}
-.sc.prio{border-color:var(--gold);background:rgba(197,160,89,.03);}
-.sc-l{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gold);font-style:italic;font-weight:300;line-height:1;margin-bottom:3px;}
-.sc-n{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--soft);margin-bottom:12px;}
-.sc-bg{height:2px;background:rgba(197,160,89,.1);margin-bottom:7px;}
-.sc-fill{height:100%;background:var(--gold);transition:width 1.2s ease;width:0;}
-.sc-pct{font-size:.62rem;color:var(--gray);letter-spacing:1px;}
-.sc-badge{font-size:.45rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(197,160,89,.3);padding:2px 5px;display:inline-block;margin-top:5px;}
+.sc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-bottom: 36px; }
+.sc { background: var(--dark); border: 1px solid var(--border); padding: 22px 14px; text-align: center; }
+.sc.prio { border-color: var(--gold); background: rgba(197,160,89,0.03); }
+.sc-letter { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.2rem; color: var(--gold); font-style: italic; font-weight: 300; line-height: 1; margin-bottom: 3px; }
+.sc-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.88rem; color: var(--soft); margin-bottom: 12px; }
+.sc-bar-bg { height: 2px; background: rgba(197,160,89,0.1); margin-bottom: 7px; }
+.sc-bar { height: 2px; background: var(--gold); width: 0; transition: width 1.2s ease; display: block; }
+.sc-pct { font-family: 'Outfit', sans-serif; font-size: 0.62rem; color: var(--gray); letter-spacing: 1px; }
+.sc-badge { font-family: 'Outfit', sans-serif; font-size: 0.45rem; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid; padding: 2px 5px; display: inline-block; margin-top: 6px; }
+.badge-low { color: #e07070; border-color: rgba(224,112,112,0.3); }
+.badge-mid { color: var(--gold); border-color: rgba(197,160,89,0.3); }
+.badge-high { color: #70b870; border-color: rgba(112,184,112,0.3); }
 
-/* Synthesis */
-.syn{background:var(--dark);border:1px solid var(--border);padding:38px 42px;margin-bottom:24px;}
-.syn-intro{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--soft);line-height:1.75;margin-bottom:26px;padding-bottom:26px;border-bottom:1px solid var(--border);}
-.ps{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(197,160,89,.05);}
-.ps:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-.ps.prio-block{background:rgba(197,160,89,.03);border:1px solid rgba(197,160,89,.15);padding:24px;margin-bottom:24px;}
-.ps-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.ps-l{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);font-style:italic;font-weight:300;line-height:1;}
-.ps-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--white);}
-.ps-lvl{font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border:1px solid;margin-left:auto;}
-.ps-lvl.low{color:#e07070;border-color:rgba(224,112,112,.3);}
-.ps-lvl.mid{color:var(--gold);border-color:rgba(197,160,89,.3);}
-.ps-lvl.high{color:#70b870;border-color:rgba(112,184,112,.3);}
-.ps-txt{font-size:.83rem;color:var(--gray);line-height:1.85;font-weight:300;}
-.ps-txt strong{color:var(--soft);font-weight:500;}
+/* Synthèse */
+.syn-box { background: var(--dark); border: 1px solid var(--border); padding: 38px 42px; margin-bottom: 24px; }
+.syn-intro-txt { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; font-style: italic; color: var(--soft); line-height: 1.75; margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid var(--border); }
+.ps { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(197,160,89,0.05); }
+.ps:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.ps.prio { background: rgba(197,160,89,0.03); border: 1px solid rgba(197,160,89,0.15); padding: 24px; margin-bottom: 24px; }
+.ps-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.ps-letter { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; color: var(--gold); font-style: italic; font-weight: 300; line-height: 1; }
+.ps-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.95rem; color: var(--white); }
+.ps-score { font-family: 'Outfit', sans-serif; font-size: 0.55rem; letter-spacing: 1.5px; color: var(--gray); margin-left: auto; }
+.ps-txt { font-family: 'Outfit', Arial, sans-serif; font-size: 0.83rem; color: var(--gray); line-height: 1.85; font-weight: 300; }
+.ps-txt strong { color: var(--soft); font-weight: 500; }
 
-/* Form */
-.form-section{background:var(--dark);border:1px solid var(--border);border-top:2px solid var(--gold);padding:42px;margin-bottom:24px;}
-.form-hed{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;color:var(--white);margin-bottom:6px;}
-.form-sub{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.form-intro{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gray);font-size:.92rem;line-height:1.7;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border);}
-.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
-.fg label{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
-.fg label span{color:var(--gold);}
-.fg input,.fg textarea,.fg select{background:rgba(255,255,255,.03);border:1px solid rgba(197,160,89,.1);color:var(--white);padding:11px 14px;font-family:'Outfit',sans-serif;font-size:.84rem;font-weight:300;outline:none;width:100%;transition:border-color .3s;}
-.fg input:focus,.fg textarea:focus{border-color:rgba(197,160,89,.4);}
-.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.16);}
-.fg textarea{resize:vertical;min-height:88px;}
-.form-note{font-size:.65rem;color:var(--gray);margin-bottom:22px;opacity:.7;}
-.form-btn{width:100%;padding:14px;background:var(--gold);color:var(--black);border:none;font-family:'Outfit',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
-.form-btn:hover{background:var(--gold-l);}
-.form-ok{display:none;text-align:center;padding:20px 0;}
-.form-ok p{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--soft);line-height:1.7;}
-.form-ok span{color:var(--gold);}
+/* Formulaire */
+.form-box { background: var(--dark); border: 1px solid var(--border); border-top: 2px solid var(--gold); padding: 42px; margin-bottom: 24px; }
+.form-h { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.7rem; font-weight: 300; color: var(--white); margin-bottom: 6px; }
+.form-sh { font-family: 'Outfit', sans-serif; font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.form-intro-p { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; color: var(--gray); font-size: 0.92rem; line-height: 1.7; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.fg { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.fg label { font-family: 'Outfit', sans-serif; font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+.fg label span { color: var(--gold); }
+.fg input, .fg textarea {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(197,160,89,0.12);
+  color: var(--white);
+  padding: 11px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 300;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.3s;
+  cursor: text;
+}
+.fg input:focus, .fg textarea:focus { border-color: rgba(197,160,89,0.4); }
+.fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.16); }
+.fg textarea { resize: vertical; min-height: 88px; }
+.form-note { font-family: 'Outfit', sans-serif; font-size: 0.65rem; color: var(--gray); margin-bottom: 22px; opacity: 0.7; }
+.form-ok { display: none; text-align: center; padding: 20px 0; }
+.form-ok p { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-style: italic; color: var(--soft); line-height: 1.7; }
+.form-ok em { color: var(--gold); font-style: normal; }
 
-.footer-sig{text-align:center;padding-top:24px;border-top:1px solid var(--border);font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(197,160,89,.3);font-size:.82rem;}
+.footer-sig { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; color: rgba(197,160,89,0.3); font-size: 0.82rem; text-align: center; padding-top: 24px; border-top: 1px solid var(--border); }
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:620px){
-    .qcard,.syn,.form-section{padding:26px 20px;}
-    .sc-grid{grid-template-columns:repeat(2,1fr);}
-    .fr{grid-template-columns:1fr;}
+@media (max-width: 620px) {
+  .q-card, .syn-box, .form-box { padding: 26px 20px; }
+  .sc-grid { grid-template-columns: repeat(2,1fr); }
+  .form-row { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- INTRO -->
-<div id="intro" style="width:100%;display:flex;flex-direction:column;align-items:center;">
-<div class="intro">
+<!-- CURSEUR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- ═══ INTRO ═══ -->
+<div id="screen-intro">
+  <div class="intro-wrap">
     <div class="i-tag">Diagnostic Professionnel · Méthode des 4P</div>
-    <h1 class="i-h1">Quel est votre profil<br><span>de transformation ?</span></h1>
+    <h1 class="i-h1">Quel est votre profil<br><em>de transformation ?</em></h1>
     <p class="i-sub">Un diagnostic pour identifier vos leviers de développement — et les axes qui méritent votre attention prioritaire.</p>
     <p class="i-method">"Ce diagnostic est fondé sur la Méthode des 4P — une approche développée sur 30 ans de terrain, ancrée dans la philosophie stoïcienne et les sciences humaines. Il ne se substitue pas à un bilan clinique — il est un outil de lecture et d'orientation."</p>
     <div class="i-stats">
-        <div><span class="stat-n">12</span><span class="stat-l">Questions</span></div>
-        <div><span class="stat-n">4</span><span class="stat-l">Dimensions</span></div>
-        <div><span class="stat-n">8'</span><span class="stat-l">Environ</span></div>
+      <div><span class="stat-n">12</span><span class="stat-l">Questions</span></div>
+      <div><span class="stat-n">4</span><span class="stat-l">Dimensions</span></div>
+      <div><span class="stat-n">8'</span><span class="stat-l">Environ</span></div>
     </div>
     <div class="i-divider"></div>
-    <button class="btn-start" id="btn-start">Commencer →</button>
-</div>
-</div>
-
-<!-- QUIZ -->
-<div id="quiz" style="display:none;width:100%;flex-direction:column;align-items:center;">
-    <div class="prog-wrap">
-        <div class="prog-top"><span class="prog-lbl">Progression</span><span class="prog-n" id="prog-n">1 / 12</span></div>
-        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:8.3%"></div></div>
-    </div>
-    <div class="sec-dots" id="sec-dots">
-        <div class="sdot" id="sd0"></div><div class="sdot" id="sd1"></div>
-        <div class="sdot" id="sd2"></div><div class="sdot" id="sd3"></div>
-    </div>
-    <div class="qcard" id="qcard">
-        <div class="q-dim" id="qdim"></div>
-        <div class="q-n" id="qnum"></div>
-        <div class="q-txt" id="qtxt"></div>
-        <div class="opts" id="qopts"></div>
-    </div>
-    <div class="qnav">
-        <button class="btn-prev" id="btn-prev" style="visibility:hidden">← Précédent</button>
-        <button class="btn-next" id="btn-next">Suivant →</button>
-    </div>
+    <button class="btn-gold" id="btn-start">Commencer →</button>
+  </div>
 </div>
 
-<!-- RESULTS -->
-<div id="results" class="results">
+<!-- ═══ QUIZ ═══ -->
+<div id="screen-quiz">
+  <div class="prog-wrap">
+    <div class="prog-top">
+      <span class="prog-lbl">Progression</span>
+      <span class="prog-count" id="prog-count">1 / 12</span>
+    </div>
+    <div class="prog-bar"><div class="prog-bar-fill" id="prog-fill"></div></div>
+  </div>
+  <div class="dots-wrap" id="dots-wrap">
+    <div class="dot" id="dot0"></div>
+    <div class="dot" id="dot1"></div>
+    <div class="dot" id="dot2"></div>
+    <div class="dot" id="dot3"></div>
+  </div>
+  <div class="q-card" id="q-card">
+    <div class="q-dim" id="q-dim"></div>
+    <div class="q-num" id="q-num"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opts" id="q-opts"></div>
+  </div>
+  <div class="q-nav">
+    <button class="btn-ghost" id="btn-prev" style="visibility:hidden">← Précédent</button>
+    <button class="btn-outline" id="btn-next">Suivant →</button>
+  </div>
+</div>
+
+<!-- ═══ RÉSULTATS ═══ -->
+<div id="screen-result">
+  <div class="res-wrap">
     <div class="res-top">
-        <h2>Votre profil <span>des 4P</span></h2>
-        <p>Résultats établis sur la base de vos 12 réponses.</p>
+      <h2>Votre profil <em>des 4P</em></h2>
+      <p>Résultats établis sur la base de vos 12 réponses.</p>
     </div>
-    <div class="radar-wrap"><svg id="radar" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg"></svg></div>
+    <div class="radar-box"><svg id="radar-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg"></svg></div>
     <div class="sc-grid" id="sc-grid"></div>
-    <div class="syn" id="syn"></div>
-    <div class="form-section">
-        <h3 class="form-hed">Votre profil mérite un échange.</h3>
-        <p class="form-sub">Premier entretien offert · 30 minutes</p>
-        <p class="form-intro">Votre profil est établi. Si vous souhaitez en explorer les implications concrètes — pour vous, votre équipe ou votre organisation — Denis Deblevid vous offre un premier échange de 30 minutes, sans engagement. Complétez le formulaire ci-dessous pour réserver votre créneau.</p>
-        <div id="form-body">
-            <div class="fr">
-                <div class="fg"><label>Prénom <span>*</span></label><input type="text" id="f-prenom" placeholder="Votre prénom"></div>
-                <div class="fg"><label>Nom <span>*</span></label><input type="text" id="f-nom" placeholder="Votre nom"></div>
-            </div>
-            <div class="fr">
-                <div class="fg"><label>Âge <span>*</span></label><input type="number" id="f-age" placeholder="Votre âge" min="18" max="99"></div>
-                <div class="fg"><label>Email <span>*</span></label><input type="email" id="f-email" placeholder="votre@email.com"></div>
-            </div>
-            <div class="fr">
-                <div class="fg"><label>Entreprise / Organisation</label><input type="text" id="f-ent" placeholder="Nom de votre structure"></div>
-                <div class="fg"><label>Poste / Fonction</label><input type="text" id="f-poste" placeholder="Votre rôle"></div>
-            </div>
-            <div class="fg"><label>Téléphone <span style="color:var(--gray);font-size:.52rem;">(optionnel)</span></label><input type="tel" id="f-tel" placeholder="+33 6 ..."></div>
-            <div class="fg"><label>Votre besoin ou votre question principale</label><textarea id="f-besoin" placeholder="Décrivez librement ce qui vous a amené à faire ce diagnostic..."></textarea></div>
-            <p class="form-note">* Champs obligatoires. Vos données sont strictement confidentielles.</p>
-            <button class="form-btn" id="form-btn">Réserver mon échange de 30 minutes →</button>
+    <div class="syn-box" id="syn-box"></div>
+    <div class="form-box">
+      <h3 class="form-h">Votre profil mérite un échange.</h3>
+      <p class="form-sh">Premier entretien offert · 30 minutes</p>
+      <p class="form-intro-p">Votre profil est établi. Si vous souhaitez en explorer les implications concrètes — pour vous, votre équipe ou votre organisation — Denis Deblevid vous offre un premier échange de 30 minutes, sans engagement. Complétez le formulaire ci-dessous pour réserver votre créneau.</p>
+      <div id="form-fields">
+        <div class="form-row">
+          <div class="fg"><label>Prénom <span>*</span></label><input type="text" id="f-prenom" placeholder="Votre prénom"></div>
+          <div class="fg"><label>Nom <span>*</span></label><input type="text" id="f-nom" placeholder="Votre nom"></div>
         </div>
-        <div class="form-ok" id="form-ok">
-            <p>Merci <span id="ok-name"></span> —<br>Denis vous contactera dans les 48 heures<br>pour confirmer votre créneau.</p>
+        <div class="form-row">
+          <div class="fg"><label>Âge <span>*</span></label><input type="number" id="f-age" placeholder="Votre âge" min="18" max="99"></div>
+          <div class="fg"><label>Email <span>*</span></label><input type="email" id="f-email" placeholder="votre@email.com"></div>
         </div>
+        <div class="form-row">
+          <div class="fg"><label>Entreprise</label><input type="text" id="f-ent" placeholder="Votre structure"></div>
+          <div class="fg"><label>Poste</label><input type="text" id="f-poste" placeholder="Votre fonction"></div>
+        </div>
+        <div class="fg"><label>Téléphone <span style="color:var(--gray);font-size:0.52rem;">(optionnel)</span></label><input type="tel" id="f-tel" placeholder="+33 6 ..."></div>
+        <div class="fg"><label>Votre besoin ou question principale</label><textarea id="f-besoin" placeholder="Décrivez ce qui vous a amené à faire ce diagnostic..."></textarea></div>
+        <p class="form-note">* Champs obligatoires. Vos données sont strictement confidentielles.</p>
+        <button class="btn-gold" id="btn-send" style="width:100%;text-align:center;">Réserver mon échange de 30 minutes →</button>
+      </div>
+      <div class="form-ok" id="form-ok">
+        <p>Merci <em id="ok-name"></em> —<br>Denis vous contactera dans les 48 heures<br>pour confirmer votre créneau.</p>
+      </div>
     </div>
-    <p class="footer-sig">Denis Deblevid · Consultant · Formateur & Coach · Marseille · "Je pose les bonnes questions. Vous trouvez vos réponses."</p>
+    <p class="footer-sig">Denis Deblevid · Consultant · Formateur &amp; Coach · Marseille · "Je pose les bonnes questions. Vous trouvez vos réponses."</p>
+  </div>
 </div>
 
 <script>
-// ─── QUESTIONS — 12 au total, 3 par pilier, ordre mélangé ───
-var Q=[
-    {p:'P',  d:'Dimension Psychologique',
-     t:"Lorsqu'une situation professionnelle génère une réaction émotionnelle forte, quelle est votre posture la plus fréquente ?",
-     o:[{t:"Je réagis immédiatement — l'émotion prend le dessus avant que je puisse l'analyser",s:1},
-        {t:"Je contiens la réaction sur le moment, mais elle ressort différemment plus tard",s:2},
-        {t:"Je prends du recul avant de répondre, même si c'est difficile dans l'instant",s:3},
-        {t:"Je suis capable d'observer ma réaction sans en être le jouet",s:4}]},
-    {p:'Ph', d:'Dimension Philosophique',
-     t:"Face à un obstacle majeur dans votre vie professionnelle, votre tendance naturelle est de :",
-     o:[{t:"Chercher des responsables extérieurs — les circonstances, les autres, le contexte",s:1},
-        {t:"Me décourager et douter de ma capacité à surmonter",s:1},
-        {t:"Résister et persévérer, mais avec un coût énergétique important",s:3},
-        {t:"Analyser ce qui dépend de moi et agir sur ces leviers uniquement",s:4}]},
-    {p:'Phy',d:'Dimension Physique',
-     t:"Votre rapport à votre corps, votre énergie et votre hygiène de vie en ce moment :",
-     o:[{t:"Je fonctionne en mode dégradé depuis longtemps — fatigue chronique, peu de soin de moi",s:1},
-        {t:"J'ai des intentions mais peu de régularité — je sais ce que je devrais faire",s:2},
-        {t:"J'ai une pratique, mais elle est fragile et disparaît au premier stress",s:3},
-        {t:"J'ai des rituels stables qui structurent mes journées et préservent mon énergie",s:4}]},
-    {p:'Pn', d:'Dimension Pneuma',
-     t:"Lorsque vous évaluez le sens de votre activité professionnelle, vous constatez que :",
-     o:[{t:"Je ne sais plus vraiment pourquoi je fais ce que je fais",s:1},
-        {t:"Il y a un décalage entre mes valeurs profondes et ce que je vis au quotidien",s:2},
-        {t:"Je m'y retrouve globalement, mais quelque chose manque que je n'arrive pas à nommer",s:3},
-        {t:"Mon activité est alignée avec ce qui a du sens pour moi",s:4}]},
-    {p:'Phy',d:'Dimension Physique',
-     t:"Votre niveau de présence mentale et de disponibilité dans vos journées :",
-     o:[{t:"Je suis physiquement là mais mentalement absent — dispersé, difficile à concentrer",s:1},
-        {t:"Mon attention est très variable — je ne contrôle pas facilement ma concentration",s:2},
-        {t:"Je peux me concentrer mais ça demande un effort que je n'ai pas toujours",s:3},
-        {t:"J'ai développé des pratiques qui me permettent de rester focalisé et disponible",s:4}]},
-    {p:'P',  d:'Dimension Psychologique',
-     t:"Dans vos relations professionnelles, les conflits ou les tensions :",
-     o:[{t:"Se répètent avec les mêmes types de personnes — je génère ou j'attire toujours les mêmes dynamiques",s:1},
-        {t:"Me coûtent énormément — je préfère éviter plutôt qu'affronter",s:2},
-        {t:"Je gère, mais rarement avec la clarté que je voudrais",s:3},
-        {t:"Sont des occasions d'apprendre quelque chose sur moi ou sur la situation",s:4}]},
-    {p:'Ph', d:'Dimension Philosophique',
-     t:"Votre rapport aux décisions difficiles — celles qui engagent sur le long terme :",
-     o:[{t:"Je reporte, je procrastine — la décision me paralyse",s:1},
-        {t:"Je décide, mais souvent sous la pression de l'urgence ou de l'opinion des autres",s:2},
-        {t:"Je réfléchis, mais je manque d'un cadre clair pour choisir avec confiance",s:3},
-        {t:"Je distingue ce qui dépend de moi et j'avance avec ce que j'ai",s:4}]},
-    {p:'Pn', d:'Dimension Pneuma',
-     t:"Votre sentiment de cohérence entre qui vous êtes et ce que vous faites professionnellement :",
-     o:[{t:"Il n'y a pas de cohérence — je joue un rôle qui n'est pas le mien",s:1},
-        {t:"Il y a des zones d'alignement et des zones de dissonance importantes",s:2},
-        {t:"Je travaille cette cohérence, mais c'est un effort constant",s:3},
-        {t:"Ce que je fais reflète globalement qui je suis et ce en quoi je crois",s:4}]},
-    {p:'P',  d:'Dimension Psychologique',
-     t:"Votre capacité à exprimer clairement vos besoins et vos limites en contexte professionnel :",
-     o:[{t:"Je n'y arrive pas — j'accumule jusqu'à l'explosion ou la rupture",s:1},
-        {t:"J'essaie, mais mes mots ne reflètent pas ce que je ressens vraiment",s:2},
-        {t:"Je peux le faire dans des conditions favorables, mais pas sous pression",s:3},
-        {t:"Je communique avec clarté même dans les situations inconfortables",s:4}]},
-    {p:'Phy',d:'Dimension Physique',
-     t:"Votre discipline personnelle — la capacité à tenir vos engagements envers vous-même :",
-     o:[{t:"Je n'arrive pas à maintenir une discipline — les bonnes résolutions ne tiennent pas",s:1},
-        {t:"Je commence, mais j'abandonne dès que la motivation baisse",s:2},
-        {t:"Je maintiens une discipline dans certains domaines, mais pas dans d'autres",s:3},
-        {t:"J'ai construit une discipline stable qui ne repose pas uniquement sur la motivation",s:4}]},
-    {p:'Ph', d:'Dimension Philosophique',
-     t:"Votre capacité à rester stable et lucide dans un environnement incertain ou sous pression :",
-     o:[{t:"L'incertitude me déstabilise profondément — j'ai besoin de contrôle pour fonctionner",s:1},
-        {t:"Je tiens, mais au prix d'un effort épuisant et d'une tension permanente",s:2},
-        {t:"J'ai développé une certaine stabilité, mais elle reste fragile face aux imprévus",s:3},
-        {t:"J'ai appris à trouver un ancrage intérieur qui ne dépend pas des circonstances",s:4}]},
-    {p:'Pn', d:'Dimension Pneuma',
-     t:"La question qui résume le mieux votre situation professionnelle actuelle est :",
-     o:[{t:"Pourquoi est-ce que je continue à faire cela alors que ça ne me nourrit plus ?",s:1},
-        {t:"Comment est-ce que je fais pour que ce que je vis corresponde à ce que je veux vraiment ?",s:2},
-        {t:"Qu'est-ce qui m'empêche d'aller là où je sens que je devrais être ?",s:3},
-        {t:"Comment amplifier ce que je construis et l'aligner encore davantage avec qui je suis ?",s:4}]}
+/* ══════════════════════════════════════════
+   QUESTIONS — 12 au total, 3 par pilier
+══════════════════════════════════════════ */
+var Q = [
+  { p:'P', d:'Dimension Psychologique',
+    t:"Lorsqu'une situation professionnelle génère une réaction émotionnelle forte, quelle est votre posture la plus fréquente ?",
+    o:[{t:"Je réagis immédiatement — l'émotion prend le dessus avant que je puisse l'analyser",s:1},
+       {t:"Je contiens la réaction sur le moment, mais elle ressort différemment plus tard",s:2},
+       {t:"Je prends du recul avant de répondre, même si c'est difficile dans l'instant",s:3},
+       {t:"Je suis capable d'observer ma réaction sans en être le jouet",s:4}]},
+  { p:'Ph', d:'Dimension Philosophique',
+    t:"Face à un obstacle majeur dans votre vie professionnelle, votre tendance naturelle est de :",
+    o:[{t:"Chercher des responsables extérieurs — les circonstances, les autres, le contexte",s:1},
+       {t:"Me décourager et douter de ma capacité à surmonter",s:1},
+       {t:"Résister et persévérer, mais avec un coût énergétique important",s:3},
+       {t:"Analyser ce qui dépend de moi et agir sur ces leviers uniquement",s:4}]},
+  { p:'Phy', d:'Dimension Physique',
+    t:"Votre rapport à votre corps, votre énergie et votre hygiène de vie en ce moment :",
+    o:[{t:"Je fonctionne en mode dégradé depuis longtemps — fatigue chronique, peu de soin de moi",s:1},
+       {t:"J'ai des intentions mais peu de régularité — je sais ce que je devrais faire",s:2},
+       {t:"J'ai une pratique, mais elle est fragile et disparaît au premier stress",s:3},
+       {t:"J'ai des rituels stables qui structurent mes journées et préservent mon énergie",s:4}]},
+  { p:'Pn', d:'Dimension Pneuma',
+    t:"Lorsque vous évaluez le sens de votre activité professionnelle, vous constatez que :",
+    o:[{t:"Je ne sais plus vraiment pourquoi je fais ce que je fais",s:1},
+       {t:"Il y a un décalage entre mes valeurs profondes et ce que je vis au quotidien",s:2},
+       {t:"Je m'y retrouve globalement, mais quelque chose manque que je n'arrive pas à nommer",s:3},
+       {t:"Mon activité est alignée avec ce qui a du sens pour moi",s:4}]},
+  { p:'Phy', d:'Dimension Physique',
+    t:"Votre niveau de présence mentale et de disponibilité dans vos journées :",
+    o:[{t:"Je suis physiquement là mais mentalement absent — dispersé, difficile à concentrer",s:1},
+       {t:"Mon attention est très variable — je ne contrôle pas facilement ma concentration",s:2},
+       {t:"Je peux me concentrer mais ça demande un effort que je n'ai pas toujours",s:3},
+       {t:"J'ai développé des pratiques qui me permettent de rester focalisé et disponible",s:4}]},
+  { p:'P', d:'Dimension Psychologique',
+    t:"Dans vos relations professionnelles, les conflits ou les tensions :",
+    o:[{t:"Se répètent avec les mêmes types de personnes — j'attire ou génère toujours les mêmes dynamiques",s:1},
+       {t:"Me coûtent énormément — je préfère éviter plutôt qu'affronter",s:2},
+       {t:"Je gère, mais rarement avec la clarté que je voudrais",s:3},
+       {t:"Sont des occasions d'apprendre quelque chose sur moi ou sur la situation",s:4}]},
+  { p:'Ph', d:'Dimension Philosophique',
+    t:"Votre rapport aux décisions difficiles — celles qui engagent sur le long terme :",
+    o:[{t:"Je reporte, je procrastine — la décision me paralyse",s:1},
+       {t:"Je décide, mais souvent sous la pression de l'urgence ou de l'opinion des autres",s:2},
+       {t:"Je réfléchis, mais je manque d'un cadre clair pour choisir avec confiance",s:3},
+       {t:"Je distingue ce qui dépend de moi et j'avance avec ce que j'ai",s:4}]},
+  { p:'Pn', d:'Dimension Pneuma',
+    t:"Votre sentiment de cohérence entre qui vous êtes et ce que vous faites professionnellement :",
+    o:[{t:"Il n'y a pas de cohérence — je joue un rôle qui n'est pas le mien",s:1},
+       {t:"Il y a des zones d'alignement et des zones de dissonance importantes",s:2},
+       {t:"Je travaille cette cohérence, mais c'est un effort constant",s:3},
+       {t:"Ce que je fais reflète globalement qui je suis et ce en quoi je crois",s:4}]},
+  { p:'P', d:'Dimension Psychologique',
+    t:"Votre capacité à exprimer clairement vos besoins et vos limites en contexte professionnel :",
+    o:[{t:"Je n'y arrive pas — j'accumule jusqu'à l'explosion ou la rupture",s:1},
+       {t:"J'essaie, mais mes mots ne reflètent pas ce que je ressens vraiment",s:2},
+       {t:"Je peux le faire dans des conditions favorables, mais pas sous pression",s:3},
+       {t:"Je communique avec clarté même dans les situations inconfortables",s:4}]},
+  { p:'Phy', d:'Dimension Physique',
+    t:"Votre discipline personnelle — la capacité à tenir vos engagements envers vous-même :",
+    o:[{t:"Je n'arrive pas à maintenir une discipline — les bonnes résolutions ne tiennent pas",s:1},
+       {t:"Je commence, mais j'abandonne dès que la motivation baisse",s:2},
+       {t:"Je maintiens une discipline dans certains domaines, mais pas dans d'autres",s:3},
+       {t:"J'ai construit une discipline stable qui ne repose pas uniquement sur la motivation",s:4}]},
+  { p:'Ph', d:'Dimension Philosophique',
+    t:"Votre capacité à rester stable et lucide dans un environnement incertain ou sous pression :",
+    o:[{t:"L'incertitude me déstabilise profondément — j'ai besoin de contrôle pour fonctionner",s:1},
+       {t:"Je tiens, mais au prix d'un effort épuisant et d'une tension permanente",s:2},
+       {t:"J'ai développé une certaine stabilité, mais elle reste fragile face aux imprévus",s:3},
+       {t:"J'ai appris à trouver un ancrage intérieur qui ne dépend pas des circonstances",s:4}]},
+  { p:'Pn', d:'Dimension Pneuma',
+    t:"La question qui résume le mieux votre situation professionnelle actuelle est :",
+    o:[{t:"Pourquoi est-ce que je continue à faire cela alors que ça ne me nourrit plus ?",s:1},
+       {t:"Comment faire pour que ce que je vis corresponde à ce que je veux vraiment ?",s:2},
+       {t:"Qu'est-ce qui m'empêche d'aller là où je sens que je devrais être ?",s:3},
+       {t:"Comment amplifier ce que je construis et l'aligner encore davantage avec qui je suis ?",s:4}]}
 ];
 
-// ─── PILIERS ───
-var PIL={
-    P:  {name:'Psychologique'},
-    Ph: {name:'Philosophique'},
-    Phy:{name:'Physique'},
-    Pn: {name:'Pneuma'}
+/* ══════════════════════════════════════════
+   PILIERS & TEXTES
+══════════════════════════════════════════ */
+var PIL = {
+  P:  { name:'Psychologique' },
+  Ph: { name:'Philosophique' },
+  Phy:{ name:'Physique' },
+  Pn: { name:'Pneuma' }
 };
 
-// ─── TEXTES ADAPTATIFS — 3 niveaux par pilier ───
-// low < 45 | mid 45-72 | high > 72
-var TXT={
-    P:{
-        low:{lvl:'low',lbl:'Axe prioritaire',
-             short:"Votre dimension psychologique révèle des schémas relationnels et émotionnels qui limitent aujourd'hui votre efficacité et votre qualité de vie au travail.",
-             long:"<strong>La dimension Psychologique est votre axe de travail prioritaire.</strong> Les mécanismes que vous avez mis en place pour fonctionner dans des environnements exigeants vous ont protégé — mais ils vous coûtent aujourd'hui plus qu'ils ne vous servent. Comprendre comment vos réactions se construisent, comment vos besoins s'expriment ou ne s'expriment pas, comment les dynamiques relationnelles se répètent — c'est là que se trouve votre premier levier de transformation durable. Le travail en maïeutique avec Denis vous sera des plus utile si vous acceptez d'entrer dans une relation sincère et honnête. Les questions posées ne seront pas des jugements — ce seront des miroirs. Ce que vous y verrez vous appartiendra entièrement."},
-        mid:{lvl:'mid',lbl:'En développement',
-             short:"Votre dimension psychologique est en mouvement. Vous avez les ressources — il s'agit maintenant de les consolider et de les affiner dans les situations qui résistent encore.",
-             long:""},
-        high:{lvl:'high',lbl:'Dimension solide',
-              short:"Votre dimension psychologique est un véritable atout. Vous lisez les situations et les dynamiques avec une maturité qui vous distingue. Ce capital mérite d'être approfondi et transmis.",
-              long:""}
-    },
-    Ph:{
-        low:{lvl:'low',lbl:'Axe prioritaire',
-             short:"Votre dimension philosophique révèle un besoin de clarté dans vos critères de décision et votre rapport aux événements que vous ne contrôlez pas.",
-             long:"<strong>La dimension Philosophique est votre axe de travail prioritaire.</strong> Vous avez les ressources intellectuelles et humaines nécessaires. Ce qui manque, c'est un cadre — une boussole intérieure qui ne se laisse pas dérégler par le bruit du monde et la pression des urgences. La capacité à distinguer ce qui dépend de vous de ce qui n'en dépend pas n'est pas une compétence innée : c'est une pratique. Un entraînement quotidien de la lucidité. Le travail en maïeutique vous permettra de construire ce cadre à partir de ce que vous êtes vraiment — pas de ce qu'on vous a dit que vous devriez être. Denis ne vous donnera pas les réponses. Il vous aidera à formuler les bonnes questions — celles qui, une fois posées, rendent les décisions bien plus claires."},
-        mid:{lvl:'mid',lbl:'En développement',
-             short:"Votre dimension philosophique est en construction. Vous avez développé des ressources solides mais vous cherchez encore un cadre plus stable pour décider et avancer avec confiance.",
-             long:""},
-        high:{lvl:'high',lbl:'Dimension solide',
-              short:"Votre dimension philosophique est une force. Vous avez développé une boussole intérieure fiable. Cette lucidité face aux événements est rare — et précieuse dans les environnements sous pression.",
-              long:""}
-    },
-    Phy:{
-        low:{lvl:'low',lbl:'Axe prioritaire',
-             short:"Votre dimension physique révèle une relation au corps et à l'énergie fragilisée — qui impacte directement votre performance et votre disponibilité mentale.",
-             long:"<strong>La dimension Physique est votre axe de travail prioritaire.</strong> Le corps est le premier territoire. Tout ce que vous construisez professionnellement, il le porte. Quand il cède, tout cède. Ce que vos réponses révèlent n'est pas un manque de volonté — c'est un manque de méthode et d'ancrage. Repartir du corps par des gestes simples, répétés, conscients, c'est souvent là que tout recommence. Le travail proposé ne passe pas par des programmes intensifs mais par la reconstruction d'une relation juste avec ce que votre corps vous dit. Denis a lui-même vécu ce retour au corps comme le point de départ de sa propre transformation. Il sait que ça ne commence pas par l'effort — ça commence par l'écoute."},
-        mid:{lvl:'mid',lbl:'En développement',
-             short:"Votre dimension physique est présente mais fragile. Vous avez des intuitions justes sur ce dont vous avez besoin — il s'agit maintenant de les transformer en pratiques stables et ancrées.",
-             long:""},
-        high:{lvl:'high',lbl:'Dimension solide',
-              short:"Votre dimension physique est une fondation solide. Votre rapport au corps et à l'énergie vous donne un avantage réel — une présence, une endurance et une disponibilité que beaucoup cherchent sans trouver.",
-              long:""}
-    },
-    Pn:{
-        low:{lvl:'low',lbl:'Axe prioritaire',
-             short:"Votre dimension Pneuma révèle une tension profonde autour du sens et de la direction — qui affecte l'ensemble de votre engagement professionnel.",
-             long:"<strong>La dimension Pneuma est votre axe de travail prioritaire.</strong> C'est la dimension la plus difficile à aborder — et souvent la plus urgente. Quand le sens manque, les trois autres piliers deviennent des techniques sans âme. On peut être relationnellement habile, philosophiquement rigoureux, physiquement discipliné — et se sentir profondément vide. Ce que vos réponses pointent, c'est un décalage entre ce que vous faites et ce à quoi vous vous reliez intérieurement. Ce travail ne passe pas par des réponses toutes faites. Il passe par des questions que peu de personnes osent poser à voix haute. Denis les posera. Et dans cet espace-là, quelque chose peut se remettre en mouvement."},
-        mid:{lvl:'mid',lbl:'En développement',
-             short:"Votre dimension Pneuma est en recherche. Vous percevez un sens à votre action, mais il est encore fragile ou partiel. Ce travail de fond mérite d'être approfondi.",
-             long:""},
-        high:{lvl:'high',lbl:'Dimension solide',
-              short:"Votre dimension Pneuma est une boussole. Vous avez trouvé un ancrage dans le sens de ce que vous faites — ce qui vous donne une stabilité et une cohérence rares dans des environnements exigeants.",
-              long:""}
-    }
+var TXT = {
+  P:{
+    low:{ badge:'Axe prioritaire', cls:'badge-low',
+      short:"Votre dimension psychologique révèle des schémas relationnels et émotionnels qui limitent aujourd'hui votre efficacité et votre qualité de vie au travail.",
+      long:"<strong>La dimension Psychologique est votre axe de travail prioritaire.</strong> Les mécanismes que vous avez mis en place pour fonctionner dans des environnements exigeants vous ont protégé — mais ils vous coûtent aujourd'hui plus qu'ils ne vous servent. Comprendre comment vos réactions se construisent, comment vos besoins s'expriment ou ne s'expriment pas, comment les dynamiques relationnelles se répètent — c'est là que se trouve votre premier levier de transformation durable. Le travail en maïeutique avec Denis vous sera des plus utile si vous acceptez d'entrer dans une relation sincère et honnête. Les questions posées ne seront pas des jugements — ce seront des miroirs. Ce que vous y verrez vous appartiendra entièrement."},
+    mid:{ badge:'En développement', cls:'badge-mid',
+      short:"Votre dimension psychologique est en mouvement. Vous avez les ressources — il s'agit maintenant de les consolider dans les situations qui résistent encore.",
+      long:""},
+    high:{ badge:'Dimension solide', cls:'badge-high',
+      short:"Votre dimension psychologique est un atout réel. Vous lisez les situations et les dynamiques avec une maturité qui vous distingue. Ce capital mérite d'être approfondi.",
+      long:""}
+  },
+  Ph:{
+    low:{ badge:'Axe prioritaire', cls:'badge-low',
+      short:"Votre dimension philosophique révèle un besoin de clarté dans vos critères de décision et votre rapport aux événements que vous ne contrôlez pas.",
+      long:"<strong>La dimension Philosophique est votre axe de travail prioritaire.</strong> Vous avez les ressources nécessaires. Ce qui manque, c'est un cadre — une boussole intérieure qui ne se laisse pas dérégler par le bruit du monde et la pression des urgences. La capacité à distinguer ce qui dépend de vous de ce qui n'en dépend pas n'est pas une compétence innée : c'est une pratique. Un entraînement quotidien de la lucidité. Le travail en maïeutique vous permettra de construire ce cadre à partir de ce que vous êtes vraiment — pas de ce qu'on vous a dit que vous devriez être. Denis ne vous donnera pas les réponses. Il vous aidera à formuler les bonnes questions — celles qui, une fois posées, rendent les décisions bien plus claires."},
+    mid:{ badge:'En développement', cls:'badge-mid',
+      short:"Votre dimension philosophique est en construction. Vous avez des ressources solides mais cherchez encore un cadre plus stable pour décider et avancer avec confiance.",
+      long:""},
+    high:{ badge:'Dimension solide', cls:'badge-high',
+      short:"Votre dimension philosophique est une force. Vous avez développé une boussole intérieure fiable. Cette lucidité face aux événements est rare — et précieuse sous pression.",
+      long:""}
+  },
+  Phy:{
+    low:{ badge:'Axe prioritaire', cls:'badge-low',
+      short:"Votre dimension physique révèle une relation au corps et à l'énergie fragilisée — qui impacte directement votre performance et votre disponibilité mentale.",
+      long:"<strong>La dimension Physique est votre axe de travail prioritaire.</strong> Le corps est le premier territoire. Tout ce que vous construisez professionnellement, il le porte. Quand il cède, tout cède. Ce que vos réponses révèlent n'est pas un manque de volonté — c'est un manque de méthode et d'ancrage. Repartir du corps par des gestes simples, répétés, conscients, c'est souvent là que tout recommence. Le travail proposé ne passe pas par des programmes intensifs mais par la reconstruction d'une relation juste avec ce que votre corps vous dit. Denis a lui-même vécu ce retour au corps comme le point de départ de sa propre transformation. Il sait que ça ne commence pas par l'effort — ça commence par l'écoute."},
+    mid:{ badge:'En développement', cls:'badge-mid',
+      short:"Votre dimension physique est présente mais fragile. Vous avez des intuitions justes — il s'agit maintenant de les transformer en pratiques stables et ancrées.",
+      long:""},
+    high:{ badge:'Dimension solide', cls:'badge-high',
+      short:"Votre dimension physique est une fondation solide. Votre rapport au corps et à l'énergie vous donne une présence, une endurance et une disponibilité que beaucoup cherchent.",
+      long:""}
+  },
+  Pn:{
+    low:{ badge:'Axe prioritaire', cls:'badge-low',
+      short:"Votre dimension Pneuma révèle une tension profonde autour du sens et de la direction — qui affecte l'ensemble de votre engagement professionnel.",
+      long:"<strong>La dimension Pneuma est votre axe de travail prioritaire.</strong> C'est la dimension la plus difficile à aborder — et souvent la plus urgente. Quand le sens manque, les trois autres piliers deviennent des techniques sans âme. On peut être relationnellement habile, philosophiquement rigoureux, physiquement discipliné — et se sentir profondément vide. Ce que vos réponses pointent, c'est un décalage entre ce que vous faites et ce à quoi vous vous reliez intérieurement. Ce travail ne passe pas par des réponses toutes faites. Il passe par des questions que peu de personnes osent poser à voix haute. Denis les posera. Et dans cet espace-là, quelque chose peut se remettre en mouvement."},
+    mid:{ badge:'En développement', cls:'badge-mid',
+      short:"Votre dimension Pneuma est en recherche. Vous percevez un sens à votre action, mais il est encore fragile ou partiel. Ce travail de fond mérite d'être approfondi.",
+      long:""},
+    high:{ badge:'Dimension solide', cls:'badge-high',
+      short:"Votre dimension Pneuma est une boussole. Vous avez trouvé un ancrage dans le sens de ce que vous faites — ce qui vous donne une stabilité et une cohérence rares.",
+      long:""}
+  }
 };
 
-function shuffleArray(arr){
-    var a=arr.slice();
-    for(var i=a.length-1;i>0;i--){
-        var j=Math.floor(Math.random()*(i+1));
-        var tmp=a[i];a[i]=a[j];a[j]=tmp;
-    }
-    return a;
+/* ══════════════════════════════════════════
+   ÉTAT & SHUFFLE
+══════════════════════════════════════════ */
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
 }
-// Pre-shuffle — SHUFFLED[q][displayPos] = originalIndex
-var SHUFFLED=Q.map(function(q){
-    return shuffleArray([0,1,2,3]);
+
+// SHUFFLED[q] = tableau de 4 indices originaux dans l'ordre d'affichage
+var SHUFFLED = Q.map(function() { return shuffle([0,1,2,3]); });
+// ans[q] = index ORIGINAL sélectionné (pour scoring correct)
+var ans = new Array(Q.length).fill(null);
+var cur = 0;
+
+/* ══════════════════════════════════════════
+   LEVEL & DOTS
+══════════════════════════════════════════ */
+function getLevel(pct) { return pct < 45 ? 'low' : pct <= 72 ? 'mid' : 'high'; }
+
+function updateDots() {
+  var cnt = { P:0, Ph:0, Phy:0, Pn:0 };
+  Q.forEach(function(q, i) { if (ans[i] !== null) cnt[q.p]++; });
+  ['P','Ph','Phy','Pn'].forEach(function(p, i) {
+    var total = Q.filter(function(q) { return q.p === p; }).length;
+    var el = document.getElementById('dot' + i);
+    if (!el) return;
+    el.className = cnt[p] === total ? 'dot done' : cnt[p] > 0 ? 'dot active' : 'dot';
+  });
+}
+
+/* ══════════════════════════════════════════
+   RENDU QUESTION
+══════════════════════════════════════════ */
+function renderQ() {
+  var q = Q[cur];
+  document.getElementById('q-dim').textContent = q.d;
+  document.getElementById('q-num').textContent = 'Question ' + (cur < 9 ? '0' : '') + (cur + 1) + ' sur ' + Q.length;
+  document.getElementById('q-text').textContent = q.t;
+  document.getElementById('prog-count').textContent = (cur + 1) + ' / ' + Q.length;
+  document.getElementById('prog-fill').style.width = ((cur + 1) / Q.length * 100) + '%';
+  document.getElementById('btn-prev').style.visibility = cur === 0 ? 'hidden' : 'visible';
+
+  var bn = document.getElementById('btn-next');
+  bn.textContent = cur === Q.length - 1 ? 'Voir mes résultats →' : 'Suivant →';
+  bn.className = ans[cur] !== null ? 'btn-outline on' : 'btn-outline';
+
+  var letters = ['A','B','C','D'];
+  var wrap = document.getElementById('q-opts');
+  wrap.innerHTML = '';
+  var shuf = SHUFFLED[cur];
+
+  shuf.forEach(function(origIdx, displayPos) {
+    var opt = q.o[origIdx];
+    var isSel = (ans[cur] === origIdx);
+    var d = document.createElement('div');
+    d.className = 'opt' + (isSel ? ' sel' : '');
+    d.innerHTML = '<div class="opt-letter">' + letters[displayPos] + '</div><div class="opt-text">' + opt.t + '</div>';
+    (function(oi) { d.onclick = function() { selectOpt(oi); }; })(origIdx);
+    wrap.appendChild(d);
+  });
+
+  updateDots();
+}
+
+/* ══════════════════════════════════════════
+   SÉLECTION — stocke l'index original
+══════════════════════════════════════════ */
+function selectOpt(origIdx) {
+  ans[cur] = origIdx;
+  var shuf = SHUFFLED[cur];
+  document.querySelectorAll('.opt').forEach(function(el, displayPos) {
+    var isThis = (shuf[displayPos] === origIdx);
+    el.className = 'opt' + (isThis ? ' sel' : '');
+  });
+  document.getElementById('btn-next').className = 'btn-outline on';
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+document.getElementById('btn-start').onclick = function() {
+  document.getElementById('screen-intro').style.display = 'none';
+  document.getElementById('screen-quiz').style.display = 'flex';
+  renderQ();
+};
+
+document.getElementById('btn-next').onclick = function() {
+  if (ans[cur] === null) return;
+  if (cur < Q.length - 1) {
+    cur++;
+    renderQ();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    showResults();
+  }
+};
+
+document.getElementById('btn-prev').onclick = function() {
+  if (cur > 0) {
+    cur--;
+    renderQ();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+
+/* ══════════════════════════════════════════
+   SCORES
+══════════════════════════════════════════ */
+function computeScores() {
+  var raw = { P:0, Ph:0, Phy:0, Pn:0 };
+  var mx  = { P:0, Ph:0, Phy:0, Pn:0 };
+  Q.forEach(function(q, i) {
+    if (ans[i] !== null) { raw[q.p] += q.o[ans[i]].s; mx[q.p] += 4; }
+  });
+  var pct = {};
+  Object.keys(raw).forEach(function(k) { pct[k] = Math.round((raw[k] / mx[k]) * 100); });
+  return pct;
+}
+
+/* ══════════════════════════════════════════
+   RADAR
+══════════════════════════════════════════ */
+function drawRadar(scores, weakest) {
+  var svg = document.getElementById('radar-svg');
+  var cx = 180, cy = 180, r = 130;
+  var keys    = ['P','Ph','Phy','Pn'];
+  var names   = ['Psychologique','Philosophique','Physique','Pneuma'];
+  var angles  = [270, 0, 90, 180];
+  svg.innerHTML = '';
+
+  function pt(cx, cy, r, angle) {
+    var rad = angle * Math.PI / 180;
+    return [cx + Math.cos(rad) * r, cy + Math.sin(rad) * r];
+  }
+
+  // Cercles de fond
+  [0.25, 0.5, 0.75, 1].forEach(function(f) {
+    var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r * f);
+    c.setAttribute('fill', 'none'); c.setAttribute('stroke', 'rgba(197,160,89,0.07)'); c.setAttribute('stroke-width', '1');
+    svg.appendChild(c);
+  });
+
+  // Axes
+  angles.forEach(function(a) {
+    var p = pt(cx, cy, r, a);
+    var l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    l.setAttribute('x1', cx); l.setAttribute('y1', cy);
+    l.setAttribute('x2', p[0]); l.setAttribute('y2', p[1]);
+    l.setAttribute('stroke', 'rgba(197,160,89,0.09)'); l.setAttribute('stroke-width', '1');
+    svg.appendChild(l);
+  });
+
+  // Polygone données
+  var pts = keys.map(function(k, i) {
+    return pt(cx, cy, r * (scores[k] || 0) / 100, angles[i]);
+  });
+  var poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  poly.setAttribute('points', pts.map(function(p) { return p[0] + ',' + p[1]; }).join(' '));
+  poly.setAttribute('fill', 'rgba(197,160,89,0.1)');
+  poly.setAttribute('stroke', 'rgba(197,160,89,0.45)');
+  poly.setAttribute('stroke-width', '1.5');
+  svg.appendChild(poly);
+
+  // Axe prioritaire en surbrillance
+  var wi = keys.indexOf(weakest);
+  var wp = pt(cx, cy, r * (scores[weakest] || 0) / 100, angles[wi]);
+  var wl = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  wl.setAttribute('x1', cx); wl.setAttribute('y1', cy);
+  wl.setAttribute('x2', wp[0]); wl.setAttribute('y2', wp[1]);
+  wl.setAttribute('stroke', 'rgba(197,160,89,0.9)'); wl.setAttribute('stroke-width', '3');
+  svg.appendChild(wl);
+
+  // Points
+  pts.forEach(function(p, i) {
+    var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', p[0]); c.setAttribute('cy', p[1]);
+    c.setAttribute('r', keys[i] === weakest ? '7' : '4');
+    c.setAttribute('fill', keys[i] === weakest ? 'var(--gold)' : 'rgba(197,160,89,0.55)');
+    svg.appendChild(c);
+  });
+
+  // Labels
+  names.forEach(function(name, i) {
+    var k = keys[i];
+    var lp = pt(cx, cy, r + 24, angles[i]);
+    var t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('x', lp[0]); t.setAttribute('y', lp[1]);
+    t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
+    t.setAttribute('font-family', 'Cormorant Garamond, Georgia, serif');
+    t.setAttribute('font-size', k === weakest ? '14' : '12');
+    t.setAttribute('font-style', 'italic');
+    t.setAttribute('fill', k === weakest ? 'rgba(197,160,89,1)' : 'rgba(197,160,89,0.5)');
+    t.textContent = name;
+    svg.appendChild(t);
+    // Score
+    var sp = pt(cx, cy, r * (scores[k] || 0) / 100 + 16, angles[i]);
+    var st = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    st.setAttribute('x', sp[0]); st.setAttribute('y', sp[1]);
+    st.setAttribute('text-anchor', 'middle'); st.setAttribute('dominant-baseline', 'middle');
+    st.setAttribute('font-family', 'Outfit, Arial, sans-serif');
+    st.setAttribute('font-size', '9');
+    st.setAttribute('fill', 'rgba(197,160,89,0.65)');
+    st.textContent = (scores[k] || 0) + '%';
+    svg.appendChild(st);
+  });
+}
+
+/* ══════════════════════════════════════════
+   AFFICHAGE RÉSULTATS
+══════════════════════════════════════════ */
+function showResults() {
+  document.getElementById('screen-quiz').style.display = 'none';
+  document.getElementById('screen-result').style.display = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  var scores = computeScores();
+  var weakest = Object.keys(scores).sort(function(a, b) { return scores[a] - scores[b]; })[0];
+
+  drawRadar(scores, weakest);
+
+  // Score cards
+  var grid = document.getElementById('sc-grid');
+  grid.innerHTML = '';
+  ['P','Phy','Ph','Pn'].forEach(function(k) {
+    var s = scores[k] || 0;
+    var lvl = getLevel(s);
+    var isPrio = (k === weakest);
+    var tx = TXT[k][isPrio ? 'low' : lvl];
+    var card = document.createElement('div');
+    card.className = 'sc' + (isPrio ? ' prio' : '');
+    card.innerHTML =
+      '<div class="sc-letter">P</div>' +
+      '<div class="sc-name">' + PIL[k].name + '</div>' +
+      '<div class="sc-bar-bg"><div class="sc-bar" id="bar-' + k + '" style="width:0"></div></div>' +
+      '<div class="sc-pct">' + s + '%</div>' +
+      '<div class="sc-badge ' + tx.cls + '">' + tx.badge + '</div>';
+    grid.appendChild(card);
+  });
+
+  // Anime les barres
+  setTimeout(function() {
+    ['P','Phy','Ph','Pn'].forEach(function(k) {
+      var b = document.getElementById('bar-' + k);
+      if (b) b.style.width = (scores[k] || 0) + '%';
+    });
+  }, 200);
+
+  // Synthèse
+  var syn = document.getElementById('syn-box');
+  var html = '<p class="syn-intro-txt">Votre profil des 4P dessine une configuration singulière — à la fois un portrait de vos ressources actuelles et un indicateur précis des zones où votre développement peut s\'accélérer.</p>';
+
+  // Pilier prioritaire en premier
+  var pw = TXT[weakest].low;
+  html += '<div class="ps prio"><div class="ps-head"><div class="ps-letter">P</div><div class="ps-name">' + PIL[weakest].name + '</div><div class="ps-score">' + (scores[weakest] || 0) + '%</div></div><p class="ps-txt">' + pw.long + '</p></div>';
+
+  // Autres piliers
+  ['P','Ph','Phy','Pn'].filter(function(k) { return k !== weakest; }).forEach(function(k) {
+    var s = scores[k] || 0;
+    var tx = TXT[k][getLevel(s)];
+    html += '<div class="ps"><div class="ps-head"><div class="ps-letter">P</div><div class="ps-name">' + PIL[k].name + '</div><div class="ps-score">' + s + '%</div></div><p class="ps-txt">' + tx.short + '</p></div>';
+  });
+
+  syn.innerHTML = html;
+}
+
+/* ══════════════════════════════════════════
+   FORMULAIRE
+══════════════════════════════════════════ */
+document.getElementById('btn-send').onclick = function() {
+  var p = document.getElementById('f-prenom').value.trim();
+  var n = document.getElementById('f-nom').value.trim();
+  var a = document.getElementById('f-age').value.trim();
+  var e = document.getElementById('f-email').value.trim();
+  if (!p || !n || !a || !e) { alert('Merci de remplir les champs obligatoires.'); return; }
+
+  var scores = computeScores();
+  var weakest = Object.keys(scores).sort(function(a, b) { return scores[a] - scores[b]; })[0];
+  var scoreStr = Object.keys(scores).map(function(k) { return PIL[k].name + ': ' + scores[k] + '%'; }).join(' | ');
+  var body =
+    'Prénom: ' + p + '\nNom: ' + n + '\nÂge: ' + a + '\nEmail: ' + e +
+    '\nEntreprise: ' + document.getElementById('f-ent').value +
+    '\nPoste: ' + document.getElementById('f-poste').value +
+    '\nTél: ' + document.getElementById('f-tel').value +
+    '\n\nRésultats 4P:\n' + scoreStr +
+    '\nAxe prioritaire: ' + PIL[weakest].name +
+    '\n\nBesoin:\n' + document.getElementById('f-besoin').value;
+
+  window.location.href = 'mailto:denisdeblevidcontact@gmail.com?subject=' +
+    encodeURIComponent('Diagnostic 4P — ' + p + ' ' + n) +
+    '&body=' + encodeURIComponent(body);
+
+  document.getElementById('form-fields').style.display = 'none';
+  document.getElementById('ok-name').textContent = p;
+  document.getElementById('form-ok').style.display = 'block';
+};
+
+/* ══════════════════════════════════════════
+   CURSEUR DORÉ
+══════════════════════════════════════════ */
+var curEl = document.getElementById('cur');
+var ringEl = document.getElementById('cur-ring');
+var mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', function(e) {
+  mx = e.clientX; my = e.clientY;
+  curEl.style.left = (mx - 4) + 'px';
+  curEl.style.top  = (my - 4) + 'px';
 });
 
-// ─── STATE ───
-// ans[q] stores the ORIGINAL index chosen (for correct scoring)
-var ans=new Array(Q.length).fill(null), cur=0;
+(function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ringEl.style.left = rx + 'px';
+  ringEl.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
 
-function getLevel(pct){ return pct<45?'low':pct<=72?'mid':'high'; }
-
-function updateDots(){
-    var cnt={P:0,Ph:0,Phy:0,Pn:0};
-    Q.forEach(function(q,i){if(ans[i]!==null)cnt[q.p]++;});
-    var order=['P','Ph','Phy','Pn'];
-    order.forEach(function(p,i){
-        var total=Q.filter(function(q){return q.p===p;}).length;
-        var el=document.getElementById('sd'+i);
-        if(!el)return;
-        if(cnt[p]===total) el.className='sdot done';
-        else if(cnt[p]>0) el.className='sdot active';
-        else el.className='sdot';
-    });
-}
-
-function renderQ(){
-    var q=Q[cur];
-    document.getElementById('qdim').textContent=q.d;
-    document.getElementById('qnum').textContent='Question '+(cur<9?'0':'')+(cur+1)+' sur '+Q.length;
-    document.getElementById('qtxt').textContent=q.t;
-    document.getElementById('prog-n').textContent=(cur+1)+' / '+Q.length;
-    document.getElementById('prog-fill').style.width=((cur+1)/Q.length*100)+'%';
-    document.getElementById('btn-prev').style.visibility=cur===0?'hidden':'visible';
-    var bn=document.getElementById('btn-next');
-    bn.textContent=cur===Q.length-1?'Voir mes résultats →':'Suivant →';
-    bn.className='btn-next'+(ans[cur]!==null?' on':'');
-    var letters=['A','B','C','D'];
-    var wrap=document.getElementById('qopts');
-    wrap.innerHTML='';
-    var shuffle=SHUFFLED[cur];
-    shuffle.forEach(function(origIdx,displayPos){
-        var opt=q.o[origIdx];
-        // Selected = this original index matches what was stored
-        var isSelected=(ans[cur]===origIdx);
-        var d=document.createElement('div');
-        d.className='opt'+(isSelected?' sel':'');
-        d.innerHTML='<div class="om">'+letters[displayPos]+'</div><div class="ot">'+opt.t+'</div>';
-        if(isSelected){
-            var m=d.querySelector('.om');
-            m.style.background='var(--gold)';m.style.color='var(--black)';m.style.borderColor='var(--gold)';
-        }
-        // Store ORIGINAL index so scoring is correct
-        (function(oIdx){d.onclick=function(){selOpt(oIdx);};})(origIdx);
-        wrap.appendChild(d);
-    });
-    updateDots();
-}
-function selOpt(i){
-    ans[cur]=i;
-    document.querySelectorAll('.opt').forEach(function(el,idx){
-        el.classList.toggle('sel',idx===i);
-        var m=el.querySelector('.om');
-        if(idx===i){m.style.background='var(--gold)';m.style.color='var(--black)';m.style.borderColor='var(--gold)';}
-        else{m.style.background='';m.style.color='var(--gold)';m.style.borderColor='';}
-    });
-    document.getElementById('btn-next').className='btn-next on';
-}
-
-document.getElementById('btn-start').onclick=function(){
-    document.getElementById('intro').style.display='none';
-    var qz=document.getElementById('quiz');
-    qz.style.display='flex';
-    renderQ();
-};
-
-document.getElementById('btn-next').onclick=function(){
-    if(ans[cur]===null)return;
-    if(cur<Q.length-1){cur++;renderQ();window.scrollTo({top:0,behavior:'smooth'});}
-    else showResults();
-};
-
-document.getElementById('btn-prev').onclick=function(){
-    if(cur>0){cur--;renderQ();window.scrollTo({top:0,behavior:'smooth'});}
-};
-
-function computeScores(){
-    var raw={P:0,Ph:0,Phy:0,Pn:0},mx={P:0,Ph:0,Phy:0,Pn:0};
-    Q.forEach(function(q,i){
-        if(ans[i]!==null){raw[q.p]+=q.o[ans[i]].s;mx[q.p]+=4;}
-    });
-    var pct={};
-    Object.keys(raw).forEach(function(k){pct[k]=Math.round((raw[k]/mx[k])*100);});
-    return pct;
-}
-
-function drawRadar(scores,weakest){
-    var svg=document.getElementById('radar');
-    var cx=180,cy=180,r=130;
-    var keys=['P','Ph','Phy','Pn'];
-    var names=['Psychologique','Philosophique','Physique','Pneuma'];
-    var angles=[270,0,90,180];
-    svg.innerHTML='';
-
-    // Grid
-    [.25,.5,.75,1].forEach(function(f){
-        var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-        c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r*f);
-        c.setAttribute('fill','none');c.setAttribute('stroke','rgba(197,160,89,0.07)');c.setAttribute('stroke-width','1');
-        svg.appendChild(c);
-    });
-
-    // Axes
-    angles.forEach(function(a){
-        var rad=a*Math.PI/180;
-        var l=document.createElementNS('http://www.w3.org/2000/svg','line');
-        l.setAttribute('x1',cx);l.setAttribute('y1',cy);
-        l.setAttribute('x2',cx+Math.cos(rad)*r);l.setAttribute('y2',cy+Math.sin(rad)*r);
-        l.setAttribute('stroke','rgba(197,160,89,0.09)');l.setAttribute('stroke-width','1');
-        svg.appendChild(l);
-    });
-
-    // Data points
-    var pts=keys.map(function(k,i){
-        var rad=angles[i]*Math.PI/180;
-        var v=(scores[k]||0)/100;
-        return[cx+Math.cos(rad)*r*v, cy+Math.sin(rad)*r*v];
-    });
-
-    // Polygon
-    var poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
-    poly.setAttribute('points',pts.map(function(p){return p[0]+','+p[1];}).join(' '));
-    poly.setAttribute('fill','rgba(197,160,89,0.1)');
-    poly.setAttribute('stroke','rgba(197,160,89,0.45)');
-    poly.setAttribute('stroke-width','1.5');
-    svg.appendChild(poly);
-
-    // Weakest highlight
-    var wi=keys.indexOf(weakest);
-    var wrad=angles[wi]*Math.PI/180;
-    var wv=(scores[weakest]||0)/100;
-    var wl=document.createElementNS('http://www.w3.org/2000/svg','line');
-    wl.setAttribute('x1',cx);wl.setAttribute('y1',cy);
-    wl.setAttribute('x2',cx+Math.cos(wrad)*r*wv);wl.setAttribute('y2',cy+Math.sin(wrad)*r*wv);
-    wl.setAttribute('stroke','rgba(197,160,89,0.9)');wl.setAttribute('stroke-width','3');
-    svg.appendChild(wl);
-
-    // Dots
-    pts.forEach(function(p,i){
-        var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-        c.setAttribute('cx',p[0]);c.setAttribute('cy',p[1]);
-        c.setAttribute('r',keys[i]===weakest?'7':'4');
-        c.setAttribute('fill',keys[i]===weakest?'var(--gold)':'rgba(197,160,89,0.55)');
-        svg.appendChild(c);
-    });
-
-    // Labels
-    keys.forEach(function(k,i){
-        var rad=angles[i]*Math.PI/180;
-        var lx=cx+Math.cos(rad)*(r+24), ly=cy+Math.sin(rad)*(r+24);
-        var t=document.createElementNS('http://www.w3.org/2000/svg','text');
-        t.setAttribute('x',lx);t.setAttribute('y',ly);
-        t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','middle');
-        t.setAttribute('font-family','Cormorant Garamond, serif');
-        t.setAttribute('font-size',k===weakest?'14':'12');
-        t.setAttribute('font-style','italic');
-        t.setAttribute('fill',k===weakest?'rgba(197,160,89,1)':'rgba(197,160,89,0.5)');
-        t.textContent=names[i];
-        svg.appendChild(t);
-        // Score
-        var sv=scores[k]||0;
-        var sx=cx+Math.cos(rad)*(r*sv/100+18), sy=cy+Math.sin(rad)*(r*sv/100+18);
-        var st=document.createElementNS('http://www.w3.org/2000/svg','text');
-        st.setAttribute('x',sx);st.setAttribute('y',sy);
-        st.setAttribute('text-anchor','middle');st.setAttribute('dominant-baseline','middle');
-        st.setAttribute('font-family','Outfit, sans-serif');
-        st.setAttribute('font-size','9');
-        st.setAttribute('fill','rgba(197,160,89,0.65)');
-        st.textContent=sv+'%';
-        svg.appendChild(st);
-    });
-}
-
-function showResults(){
-    document.getElementById('quiz').style.display='none';
-    var res=document.getElementById('results');
-    res.style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-
-    var scores=computeScores();
-    var weakest=Object.keys(scores).sort(function(a,b){return scores[a]-scores[b];})[0];
-
-    drawRadar(scores,weakest);
-
-    // Score cards
-    var grid=document.getElementById('sc-grid');
-    grid.innerHTML='';
-    ['P','Phy','Ph','Pn'].forEach(function(k){
-        var s=scores[k], isPrio=k===weakest;
-        var c=document.createElement('div');
-        c.className='sc'+(isPrio?' prio':'');
-        c.innerHTML='<div class="sc-l">P</div>'+
-            '<div class="sc-n">'+PIL[k].name+'</div>'+
-            '<div class="sc-bg"><div class="sc-fill" data-w="'+s+'"></div></div>'+
-            '<div class="sc-pct">'+s+'%</div>'+
-            (isPrio?'<div class="sc-badge">Axe prioritaire</div>':'');
-        grid.appendChild(c);
-    });
-    setTimeout(function(){
-        document.querySelectorAll('.sc-fill').forEach(function(b){b.style.width=b.getAttribute('data-w')+'%';});
-    },200);
-
-    // Synthesis
-    var syn=document.getElementById('syn');
-    var intro='Votre profil des 4P dessine une configuration singulière — à la fois un portrait de vos ressources actuelles et un indicateur précis des zones où votre développement peut s\'accélérer.';
-    var html='<p class="syn-intro">'+intro+'</p>';
-
-    // Priority pillar first — with long text
-    var pw=TXT[weakest].low;
-    html+='<div class="ps prio-block">';
-    html+='<div class="ps-head"><div class="ps-l">P</div><div class="ps-name">'+PIL[weakest].name+'</div><div class="ps-lvl '+pw.lvl+'">'+pw.lbl+'</div></div>';
-    html+='<p class="ps-txt">'+pw.long+'</p>';
-    html+='</div>';
-
-    // Other pillars — adaptive text based on score
-    ['P','Ph','Phy','Pn'].filter(function(k){return k!==weakest;}).forEach(function(k){
-        var s=scores[k], lvl=getLevel(s), tx=TXT[k][lvl];
-        html+='<div class="ps">';
-        html+='<div class="ps-head"><div class="ps-l">P</div><div class="ps-name">'+PIL[k].name+'</div><div class="ps-lvl '+lvl+'">'+tx.lbl+'</div></div>';
-        html+='<p class="ps-txt">'+tx.short+'</p>';
-        html+='</div>';
-    });
-
-    syn.innerHTML=html;
-}
-
-// Form
-var eu='denisdeblevidcontact', ed='gmail.com';
-document.getElementById('form-btn').onclick=function(){
-    var p=document.getElementById('f-prenom').value.trim();
-    var n=document.getElementById('f-nom').value.trim();
-    var a=document.getElementById('f-age').value.trim();
-    var e=document.getElementById('f-email').value.trim();
-    if(!p||!n||!a||!e){alert('Merci de remplir les champs obligatoires.');return;}
-    var scores=computeScores();
-    var weakest=Object.keys(scores).sort(function(a,b){return scores[a]-scores[b];})[0];
-    var scoreStr=Object.keys(scores).map(function(k){return PIL[k].name+': '+scores[k]+'%';}).join(' | ');
-    var body='Prénom: '+p+'\nNom: '+n+'\nÂge: '+a+'\nEmail: '+e+
-        '\nEntreprise: '+document.getElementById('f-ent').value+
-        '\nPoste: '+document.getElementById('f-poste').value+
-        '\nTél: '+document.getElementById('f-tel').value+
-        '\n\nRésultats 4P:\n'+scoreStr+
-        '\nAxe prioritaire: '+PIL[weakest].name+
-        '\n\nBesoin:\n'+document.getElementById('f-besoin').value;
-    window.location.href='mailto:'+eu+'@'+ed+'?subject='+encodeURIComponent('Diagnostic 4P — '+p+' '+n)+'&body='+encodeURIComponent(body);
-    document.getElementById('form-body').style.display='none';
-    document.getElementById('ok-name').textContent=p;
-    document.getElementById('form-ok').style.display='block';
-};
+document.addEventListener('mouseover', function(e) {
+  if (e.target.matches('button, .opt, a')) curEl.style.transform = 'scale(2.5)';
+  else curEl.style.transform = 'scale(1)';
+});
 </script>
 </body>
 </html>
