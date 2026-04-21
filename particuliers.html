@@ -55,8 +55,8 @@ nav.sc{background:rgba(253,246,236,.98);border-bottom:1px solid var(--border);}
 .inner{max-width:1080px;margin:0 auto;}
 
 /* ══════════ HERO ══════════ */
-.hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:140px 80px 80px;}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.9;}
+.hero{min-height:85vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:100px 80px 60px;}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:.9;}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(44,31,14,.85) 35%,rgba(44,31,14,.3) 65%,rgba(44,31,14,.05) 100%);}
 .hero-left{position:relative;z-index:1;max-width:620px;}
 .hero-eye{font-size:.56rem;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin-bottom:22px;opacity:0;animation:fu .8s .2s ease both;}
@@ -135,27 +135,20 @@ nav.sc{background:rgba(253,246,236,.98);border-bottom:1px solid var(--border);}
 @media(max-width:640px){.presta-grid{grid-template-columns:1fr;}.presta{padding:24px 18px;}}
 
 /* ══════════ CARROUSEL ══════════ */
-.cit-sec{padding:60px 0;}
-.cit-header{text-align:center;padding:0 40px 32px;}
-.carousel{position:relative;width:100%;height:580px;overflow:hidden;}
-.carousel-track{display:flex;height:100%;transition:transform .7s cubic-bezier(.77,0,.18,1);}
-.carousel-slide{min-width:100%;height:100%;position:relative;overflow:hidden;flex-shrink:0;}
-.carousel-slide img{width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .7s ease;}
-.carousel-slide.active img{opacity:1;}
-.carousel-slide:not(.active) img{opacity:0;}
-.c-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,31,14,.92) 0%,rgba(44,31,14,.35) 50%,rgba(44,31,14,.15) 100%);}
-.c-content{position:absolute;bottom:0;left:0;right:0;padding:44px 80px;z-index:2;}
-.c-open{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:rgba(232,131,42,.25);line-height:.3;display:block;margin-bottom:14px;}
-.c-q{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.5rem);font-style:italic;color:var(--cream);line-height:1.6;margin-bottom:14px;max-width:680px;}
-.c-author{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--amber);}
-.c-src{font-size:.58rem;color:rgba(253,246,236,.4);font-style:italic;margin-top:3px;}
-.c-nav{position:absolute;bottom:44px;right:80px;display:flex;gap:6px;z-index:3;}
-.c-dot{width:26px;height:2px;background:rgba(253,246,236,.2);cursor:none;transition:all .3s;border:none;padding:0;}
-.c-dot.active{background:var(--amber);width:40px;}
-.c-arrows{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 20px;z-index:3;pointer-events:none;}
-.c-arrow{background:rgba(253,246,236,.5);border:1px solid rgba(232,131,42,.2);color:var(--amber);width:42px;height:42px;display:flex;align-items:center;justify-content:center;cursor:none;transition:all .3s;pointer-events:all;font-size:1.1rem;}
-.c-arrow:hover{background:var(--amber);color:var(--deep);}
-@media(max-width:640px){.carousel{height:480px;}.c-content{padding:28px 22px;}.c-nav{right:22px;bottom:28px;}}
+.cit-sec{padding:60px 40px;}
+.cit-header{text-align:center;margin-bottom:40px;}
+.cit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1080px;margin:0 auto;}
+.cit-card{position:relative;overflow:hidden;}
+.cit-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .5s ease;}
+.cit-card:hover img{transform:scale(1.04);}
+.cit-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,31,14,.92) 0%,rgba(44,31,14,.2) 55%,transparent 100%);}
+.cit-card-content{position:absolute;bottom:0;left:0;right:0;padding:18px;}
+.cit-card-open{font-family:'Cormorant Garamond',serif;font-size:2rem;color:rgba(232,131,42,.4);line-height:.3;display:block;margin-bottom:8px;}
+.cit-card-q{font-family:'Cormorant Garamond',serif;font-size:.85rem;font-style:italic;color:#fdf6ec;line-height:1.55;margin-bottom:8px;}
+.cit-card-author{font-size:.54rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);}
+.cit-card-src{font-size:.5rem;color:rgba(253,246,236,.45);font-style:italic;margin-top:2px;}
+@media(max-width:768px){.cit-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.cit-grid{grid-template-columns:1fr;}}
 
 /* ══════════ BOOKLET + DIAGNOSTIC côte à côte ══════════ */
 .bd-sec{padding:60px 40px;background:linear-gradient(180deg,var(--deep) 0%,var(--mid) 100%);}
@@ -392,74 +385,67 @@ footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
     <span class="sec-tag">Sagesse</span>
     <h2 class="sec-h">Des mots qui <em>traversent le temps</em></h2>
   </div>
-  <div class="carousel" id="carousel">
-    <div class="carousel-track" id="c-track">
-      <div class="carousel-slide active">
-        <img src="PhotoEpict%C3%A8te.jpg" alt="Épictète" style="object-position:center 55%;">
-        <div class="c-overlay"></div>
-        <div class="c-content">
-          <span class="c-open">"</span>
-          <p class="c-q">Des choses, les unes dépendent de nous, les autres ne dépendent pas de nous. Ce qui dépend de nous, ce sont nos jugements, nos désirs, nos aversions.</p>
-          <p class="c-author">Épictète</p>
-          <p class="c-src">Manuel · Chapitre I · Stoïcisme, Ier-IIe siècle</p>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <img src="Photo-Frankl-1.jpeg" alt="Viktor Frankl" style="object-position:center 45%;">
-        <div class="c-overlay"></div>
-        <div class="c-content">
-          <span class="c-open">"</span>
-          <p class="c-q">On peut tout ôter à un homme, sauf une chose : la dernière des libertés humaines — celle de choisir son attitude dans n'importe quelles circonstances.</p>
-          <p class="c-author">Viktor Frankl</p>
-          <p class="c-src">La Nuit des hommes · Existentialisme, XXe siècle</p>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <img src="PhotoMarcAur%C3%A8le3.webp" alt="Marc Aurèle" style="object-position:center 15%;">
-        <div class="c-overlay"></div>
-        <div class="c-content">
-          <span class="c-open">"</span>
-          <p class="c-q">Cherche en toi-même, et tu trouveras la source du bien — une source qui peut toujours jaillir, si tu sais toujours y creuser.</p>
-          <p class="c-author">Marc Aurèle</p>
-          <p class="c-src">Pensées pour moi-même · Livre IV · Stoïcisme, IIe siècle</p>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <img src="PhotoS%C3%A9n%C3%A8que.jpg" alt="Sénèque" style="object-position:center 20%;">
-        <div class="c-overlay"></div>
-        <div class="c-content">
-          <span class="c-open">"</span>
-          <p class="c-q">Ce n'est pas que nous ayons peu de temps à vivre, mais c'est que nous en perdons beaucoup. La vie est assez longue pour qui sait l'employer.</p>
-          <p class="c-author">Sénèque</p>
-          <p class="c-src">De la brièveté de la vie · Stoïcisme, Ier siècle</p>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <img src="Photo-Frankl-2.png" alt="Viktor Frankl" style="object-position:center 35%;">
-        <div class="c-overlay"></div>
-        <div class="c-content">
-          <span class="c-open">"</span>
-          <p class="c-q">La souffrance cesse d'être une souffrance d'une certaine façon au moment où elle trouve un sens.</p>
-          <p class="c-author">Viktor Frankl</p>
-          <p class="c-src">La Nuit des hommes · Existentialisme, XXe siècle</p>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <img src="PhotoEpict%C3%A8te2.jpg" alt="Épictète" style="object-position:center 35%;">
-        <div class="c-overlay"></div>
-        <div class="c-content">
-          <span class="c-open">"</span>
-          <p class="c-q">Ne cherche pas que ce qui arrive arrive comme tu veux ; mais veuille que les choses arrivent comme elles arrivent, et tu seras tranquille.</p>
-          <p class="c-author">Épictète</p>
-          <p class="c-src">Manuel · Chapitre VIII · Stoïcisme, Ier-IIe siècle</p>
-        </div>
+  <div class="cit-grid">
+    <div class="cit-card">
+      <img src="PhotoEpict%C3%A8te.jpg" alt="Épictète" style="object-position:center 50%;">
+      <div class="cit-card-overlay"></div>
+      <div class="cit-card-content">
+        <span class="cit-card-open">&ldquo;</span>
+        <p class="cit-card-q">Des choses, les unes dépendent de nous, les autres ne dépendent pas de nous.</p>
+        <p class="cit-card-author">Épictète</p>
+        <p class="cit-card-src">Manuel · Chapitre I</p>
       </div>
     </div>
-    <div class="c-arrows">
-      <button class="c-arrow" id="c-prev">←</button>
-      <button class="c-arrow" id="c-next">→</button>
+    <div class="cit-card">
+      <img src="Photo-Frankl-1.jpeg" alt="Viktor Frankl" style="object-position:center 45%;">
+      <div class="cit-card-overlay"></div>
+      <div class="cit-card-content">
+        <span class="cit-card-open">&ldquo;</span>
+        <p class="cit-card-q">On peut tout ôter à un homme, sauf la liberté de choisir son attitude dans n'importe quelles circonstances.</p>
+        <p class="cit-card-author">Viktor Frankl</p>
+        <p class="cit-card-src">La Nuit des hommes</p>
+      </div>
     </div>
-    <div class="c-nav" id="c-nav"></div>
+    <div class="cit-card">
+      <img src="PhotoMarcAur%C3%A8le3.webp" alt="Marc Aurèle" style="object-position:center 20%;">
+      <div class="cit-card-overlay"></div>
+      <div class="cit-card-content">
+        <span class="cit-card-open">&ldquo;</span>
+        <p class="cit-card-q">Cherche en toi-même, et tu trouveras la source du bien — une source qui peut toujours jaillir.</p>
+        <p class="cit-card-author">Marc Aurèle</p>
+        <p class="cit-card-src">Pensées pour moi-même · Livre IV</p>
+      </div>
+    </div>
+    <div class="cit-card">
+      <img src="PhotoS%C3%A9n%C3%A8que.jpg" alt="Sénèque" style="object-position:center 25%;">
+      <div class="cit-card-overlay"></div>
+      <div class="cit-card-content">
+        <span class="cit-card-open">&ldquo;</span>
+        <p class="cit-card-q">La vie est assez longue pour qui sait l'employer.</p>
+        <p class="cit-card-author">Sénèque</p>
+        <p class="cit-card-src">De la brièveté de la vie</p>
+      </div>
+    </div>
+    <div class="cit-card">
+      <img src="Photo-Frankl-2.png" alt="Viktor Frankl" style="object-position:center 40%;">
+      <div class="cit-card-overlay"></div>
+      <div class="cit-card-content">
+        <span class="cit-card-open">&ldquo;</span>
+        <p class="cit-card-q">La souffrance cesse d'être une souffrance au moment où elle trouve un sens.</p>
+        <p class="cit-card-author">Viktor Frankl</p>
+        <p class="cit-card-src">La Nuit des hommes</p>
+      </div>
+    </div>
+    <div class="cit-card">
+      <img src="PhotoEpict%C3%A8te2.jpg" alt="Épictète" style="object-position:center 40%;">
+      <div class="cit-card-overlay"></div>
+      <div class="cit-card-content">
+        <span class="cit-card-open">&ldquo;</span>
+        <p class="cit-card-q">Veuille que les choses arrivent comme elles arrivent, et tu seras tranquille.</p>
+        <p class="cit-card-author">Épictète</p>
+        <p class="cit-card-src">Manuel · Chapitre VIII</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -614,30 +600,5 @@ document.getElementById('c-btn').onclick=function(){
   document.getElementById('c-ok').style.display='block';
 };
 
-// Carrousel
-var slides=document.querySelectorAll('.carousel-slide');
-var track=document.getElementById('c-track');
-var navEl=document.getElementById('c-nav');
-var cs=0,timer;
-slides.forEach(function(_,i){
-  var d=document.createElement('button');
-  d.className='c-dot'+(i===0?' active':'');
-  (function(idx){d.onclick=function(){goTo(idx);};})(i);
-  navEl.appendChild(d);
-});
-function goTo(n){
-  slides[cs].classList.remove('active');
-  document.querySelectorAll('.c-dot')[cs].classList.remove('active');
-  cs=(n+slides.length)%slides.length;
-  slides[cs].classList.add('active');
-  document.querySelectorAll('.c-dot')[cs].classList.add('active');
-  track.style.transform='translateX(-'+(cs*100)+'%)';
-  clearInterval(timer);
-  timer=setInterval(function(){goTo(cs+1);},6000);
-}
-document.getElementById('c-prev').onclick=function(){goTo(cs-1);};
-document.getElementById('c-next').onclick=function(){goTo(cs+1);};
-timer=setInterval(function(){goTo(cs+1);},6000);
+
 </script>
-</body>
-</html>
