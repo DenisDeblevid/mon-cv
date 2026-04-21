@@ -55,9 +55,9 @@ nav.sc{background:rgba(253,246,236,.98);border-bottom:1px solid var(--border);}
 .inner{max-width:1080px;margin:0 auto;}
 
 /* ══════════ HERO ══════════ */
-.hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:120px 80px 80px;}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.85;}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(44,31,14,.7) 40%,rgba(44,31,14,.15) 100%);}
+.hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:140px 80px 80px;}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.9;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(44,31,14,.85) 35%,rgba(44,31,14,.3) 65%,rgba(44,31,14,.05) 100%);}
 .hero-left{position:relative;z-index:1;max-width:620px;}
 .hero-eye{font-size:.56rem;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin-bottom:22px;opacity:0;animation:fu .8s .2s ease both;}
 .hero-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,6vw,5.2rem);font-weight:300;line-height:1.05;margin-bottom:20px;opacity:0;animation:fu .8s .4s ease both;}
@@ -140,8 +140,9 @@ nav.sc{background:rgba(253,246,236,.98);border-bottom:1px solid var(--border);}
 .carousel{position:relative;width:100%;height:580px;overflow:hidden;}
 .carousel-track{display:flex;height:100%;transition:transform .7s cubic-bezier(.77,0,.18,1);}
 .carousel-slide{min-width:100%;height:100%;position:relative;overflow:hidden;flex-shrink:0;}
-.carousel-slide img{width:100%;height:100%;object-fit:cover;object-position:center;transform:scale(1.0);transition:transform 8s ease;}
-.carousel-slide.active img{transform:scale(1.06);}
+.carousel-slide img{width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .7s ease;}
+.carousel-slide.active img{opacity:1;}
+.carousel-slide:not(.active) img{opacity:0;}
 .c-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,31,14,.92) 0%,rgba(44,31,14,.35) 50%,rgba(44,31,14,.15) 100%);}
 .c-content{position:absolute;bottom:0;left:0;right:0;padding:44px 80px;z-index:2;}
 .c-open{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:rgba(232,131,42,.25);line-height:.3;display:block;margin-bottom:14px;}
@@ -394,7 +395,7 @@ footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
   <div class="carousel" id="carousel">
     <div class="carousel-track" id="c-track">
       <div class="carousel-slide active">
-        <img src="PhotoEpictète.jpg" alt="Épictète">
+        <img src="PhotoEpict%C3%A8te.jpg" alt="Épictète" style="object-position:center 55%;">
         <div class="c-overlay"></div>
         <div class="c-content">
           <span class="c-open">"</span>
@@ -404,7 +405,7 @@ footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
         </div>
       </div>
       <div class="carousel-slide">
-        <img src="Photo-Frankl-1.jpeg" alt="Viktor Frankl" style="object-position:center 15%;">
+        <img src="Photo-Frankl-1.jpeg" alt="Viktor Frankl" style="object-position:center 45%;">
         <div class="c-overlay"></div>
         <div class="c-content">
           <span class="c-open">"</span>
@@ -414,7 +415,7 @@ footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
         </div>
       </div>
       <div class="carousel-slide">
-        <img src="PhotoMarcAurèle3.webp" alt="Marc Aurèle" style="object-position:center 10%;">
+        <img src="PhotoMarcAur%C3%A8le3.webp" alt="Marc Aurèle" style="object-position:center 15%;">
         <div class="c-overlay"></div>
         <div class="c-content">
           <span class="c-open">"</span>
@@ -424,7 +425,7 @@ footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
         </div>
       </div>
       <div class="carousel-slide">
-        <img src="PhotoSénèque.jpg" alt="Sénèque" style="object-position:center 15%;">
+        <img src="PhotoS%C3%A9n%C3%A8que.jpg" alt="Sénèque" style="object-position:center 20%;">
         <div class="c-overlay"></div>
         <div class="c-content">
           <span class="c-open">"</span>
@@ -434,7 +435,7 @@ footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
         </div>
       </div>
       <div class="carousel-slide">
-        <img src="Photo-Frankl-2.png" alt="Viktor Frankl" style="object-position:center 40%;">
+        <img src="Photo-Frankl-2.png" alt="Viktor Frankl" style="object-position:center 35%;">
         <div class="c-overlay"></div>
         <div class="c-content">
           <span class="c-open">"</span>
@@ -444,7 +445,7 @@ footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
         </div>
       </div>
       <div class="carousel-slide">
-        <img src="PhotoEpictète2.jpg" alt="Épictète">
+        <img src="PhotoEpict%C3%A8te2.jpg" alt="Épictète" style="object-position:center 35%;">
         <div class="c-overlay"></div>
         <div class="c-content">
           <span class="c-open">"</span>
