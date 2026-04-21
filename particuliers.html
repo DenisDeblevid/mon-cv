@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renaître de la soif — Denis Deblevid</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --stone-deep:  #2c1f0e;
+  --stone-mid:   #3d2c14;
+  --stone-warm:  #4a3418;
+  --amber:       #e8832a;
+  --amber-l:     #f59a40;
+  --amber-dim:   rgba(232,131,42,0.12);
+  --rose-dust:   #d4906a;
+  --lav:         #b0a4cc;
+  --cream:       #fdf6ec;
+  --stone-light: #e8d8b8;
+  --gray:        #a08868;
+  --soft:        #d4c4a0;
+  --border:      rgba(232,131,42,0.2);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--stone-deep);color:var(--cream);cursor:none;overflow-x:hidden;}
+
+/* CURSEUR */
+#cur{width:8px;height:8px;background:var(--amber);border-radius:50%;position:fixed;top:-20px;left:-20px;pointer-events:none;z-index:9999;transition:transform .15s ease;}
+#cur-ring{width:30px;height:30px;border:1px solid var(--amber);border-radius:50%;position:fixed;top:-20px;left:-20px;pointer-events:none;z-index:9998;opacity:.55;}
+@media(max-width:640px){body{cursor:auto;}#cur,#cur-ring{display:none;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 48px;background:linear-gradient(to bottom,rgba(26,20,16,.97),transparent);transition:background .4s;}
+nav.sc{background:rgba(26,20,16,.98);border-bottom:1px solid var(--border);}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--amber);text-decoration:none;letter-spacing:.5px;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--amber);}
+.nav-cta{padding:7px 16px;border:1px solid rgba(201,124,42,.32);color:var(--amber)!important;transition:all .3s!important;}
+.nav-cta:hover{background:var(--amber)!important;color:var(--stone-deep)!important;}
+@media(max-width:640px){nav{padding:16px 20px;}.nav-links{display:none;}}
+
+/* BOUTONS */
+.btn-a{background:var(--amber);border:none;color:var(--stone-deep);padding:13px 30px;font-family:'Outfit',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:none;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-a:hover{background:var(--amber-l);}
+.btn-g{background:none;border:1px solid rgba(201,124,42,.28);color:var(--amber);padding:13px 30px;font-family:'Outfit',sans-serif;font-size:.68rem;letter-spacing:2.5px;text-transform:uppercase;cursor:none;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-g:hover{background:var(--amber-dim);border-color:var(--amber);}
+
+/* UTILITAIRES */
+.sec-tag{font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--amber);opacity:.7;margin-bottom:10px;display:block;}
+.sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(1.7rem,3vw,2.7rem);font-weight:300;line-height:1.2;margin-bottom:14px;}
+.sec-h em{color:var(--amber);font-style:italic;}
+.sec-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gray);font-size:.98rem;line-height:1.8;}
+.center{text-align:center;}
+.inner{max-width:1080px;margin:0 auto;}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;position:relative;overflow:hidden;padding:120px 80px 80px;}
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.35;}
+.hero-bg-overlay{position:absolute;inset:0;background:
+    linear-gradient(to right, rgba(44,31,14,.92) 40%, rgba(44,31,14,.55) 100%),
+    linear-gradient(to bottom, rgba(44,31,14,.3) 0%, transparent 30%, transparent 70%, rgba(44,31,14,.6) 100%);
+}
+.hero-left{position:relative;z-index:1;}
+.hero-eye{font-size:.56rem;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin-bottom:22px;opacity:0;animation:fu .8s .2s ease both;}
+.hero-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5.5vw,4.8rem);font-weight:300;line-height:1.08;margin-bottom:20px;opacity:0;animation:fu .8s .4s ease both;}
+.hero-h em{color:var(--amber);font-style:italic;}
+.hero-h span{color:var(--lav);}
+.hero-p{font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,1.6vw,1.15rem);font-style:italic;color:var(--stone-light);line-height:1.8;max-width:440px;margin-bottom:10px;opacity:0;animation:fu .8s .6s ease both;}
+.hero-q{font-size:.65rem;color:rgba(201,124,42,.4);letter-spacing:2px;margin-bottom:40px;opacity:0;animation:fu .8s .7s ease both;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fu .8s .9s ease both;}
+.hero-right{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;}
+.hero-photo-wrap{position:relative;}
+.hero-photo{width:100%;max-width:460px;aspect-ratio:3/4;object-fit:cover;object-position:center top;display:block;}
+.hero-photo-frame{position:absolute;inset:-8px -8px 8px 8px;border:1px solid rgba(201,124,42,.2);pointer-events:none;z-index:-1;}
+.hero-water{position:absolute;bottom:24px;right:-20px;background:rgba(26,20,16,.9);border:1px solid var(--border);padding:14px 18px;max-width:180px;}
+.hero-water-q{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--stone-light);font-size:.82rem;line-height:1.6;}
+.hero-water-a{font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-top:6px;opacity:.6;}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;padding:100px 24px 60px;gap:40px;}
+  .hero-right{order:-1;}
+  .hero-photo{max-width:100%;aspect-ratio:4/3;object-position:center 20%;}
+}
+
+/* PÔLES */
+.poles-bg{background:linear-gradient(180deg,var(--stone-deep) 0%,var(--stone-mid) 100%);padding:90px 40px;}
+.poles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:52px;}
+.pole{background:rgba(255,255,255,.02);border:1px solid rgba(201,124,42,.07);padding:40px 36px;position:relative;overflow:hidden;transition:all .4s;}
+.pole:hover{background:rgba(201,124,42,.04);border-color:rgba(201,124,42,.22);}
+.pole::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--amber);transition:height .5s;}
+.pole:hover::before{height:100%;}
+.pole-n{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:rgba(201,124,42,.12);font-style:italic;font-weight:300;line-height:1;margin-bottom:12px;}
+.pole-h{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--cream);margin-bottom:10px;}
+.pole-h em{color:var(--amber);font-style:italic;}
+.pole-t{font-size:.82rem;color:var(--gray);line-height:1.85;margin-bottom:12px;}
+.pole-q{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--stone-light);font-size:.92rem;line-height:1.6;}
+@media(max-width:640px){.poles-grid{grid-template-columns:1fr;}.pole{padding:26px 20px;}}
+
+/* MÉTHODE */
+.methode-bg{padding:90px 40px;position:relative;overflow:hidden;}
+.methode-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(155,143,184,.06) 0%,transparent 55%);}
+.methode-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:52px;}
+.methode-photo{position:relative;}
+.methode-img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top;display:block;}
+.methode-frame{position:absolute;inset:10px -10px -10px 10px;border:1px solid rgba(201,124,42,.18);pointer-events:none;z-index:-1;}
+.methode-caption{position:absolute;bottom:-1px;left:0;right:0;padding:16px 20px;background:linear-gradient(to top,rgba(26,20,16,.95),transparent);}
+.methode-caption-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);font-weight:300;}
+.methode-caption-role{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);opacity:.7;margin-top:3px;}
+.methode-content p{font-family:'Cormorant Garamond',serif;font-size:1.02rem;color:var(--stone-light);line-height:1.85;margin-bottom:16px;font-style:italic;}
+.methode-content p strong{color:var(--cream);font-style:normal;font-weight:400;}
+.methode-content .big-q{font-size:1.12rem;color:rgba(201,124,42,.65);margin-top:4px;}
+.p4-list{display:flex;flex-direction:column;gap:8px;margin-top:24px;}
+.p4{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:1px solid var(--border);background:rgba(255,255,255,.02);transition:all .3s;}
+.p4:hover{background:var(--amber-dim);}
+.p4-l{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--amber);font-style:italic;font-weight:300;line-height:1;width:28px;flex-shrink:0;}
+.p4-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--cream);margin-bottom:2px;}
+.p4-desc{font-size:.7rem;color:var(--gray);}
+.p4-more{font-size:.76rem;color:var(--soft);line-height:1.65;margin-top:6px;}
+@media(max-width:768px){.methode-grid{grid-template-columns:1fr;}}
+
+/* ENGAGEMENT */
+.engagement-bg{background:linear-gradient(180deg,var(--stone-mid) 0%,var(--stone-deep) 100%);padding:90px 40px;}
+.engagement-inner{max-width:800px;}
+.engagement-txt{font-family:'Cormorant Garamond',serif;font-size:1.03rem;color:var(--stone-light);line-height:1.85;font-style:italic;margin-bottom:28px;}
+.engagement-txt strong{color:var(--cream);font-style:normal;font-weight:400;}
+.refs{display:flex;flex-direction:column;gap:10px;margin-top:28px;}
+.ref{padding:16px 20px;border-left:2px solid rgba(201,124,42,.28);background:rgba(255,255,255,.02);}
+.ref-t{font-size:.76rem;color:var(--soft);margin-bottom:5px;line-height:1.65;}
+.ref-s{font-size:.6rem;color:var(--gray);font-style:italic;}
+
+/* PRESTATIONS */
+.presta-bg{padding:90px 40px;}
+.argent-box{border:1px solid rgba(201,124,42,.22);border-left:3px solid var(--amber);padding:22px 26px;background:rgba(201,124,42,.04);margin-bottom:44px;}
+.argent-box h4{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--amber);font-weight:300;margin-bottom:7px;}
+.argent-box p{font-size:.81rem;color:var(--stone-light);line-height:1.75;}
+.presta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.presta{border:1px solid var(--border);padding:36px 32px;background:rgba(255,255,255,.02);transition:all .4s;}
+.presta:hover{background:rgba(201,124,42,.03);border-color:rgba(201,124,42,.28);}
+.presta-badge{font-size:.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);border:1px solid rgba(201,124,42,.28);padding:3px 8px;display:inline-block;margin-bottom:12px;}
+.presta-h{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--cream);margin-bottom:10px;}
+.presta-desc{font-size:.81rem;color:var(--gray);line-height:1.8;margin-bottom:22px;}
+.tarifs{border-top:1px solid var(--border);padding-top:18px;}
+.tarif{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.tarif:last-of-type{border-bottom:none;}
+.t-label{font-size:.73rem;color:var(--soft);}
+.t-sub{font-size:.58rem;color:var(--gray);font-style:italic;display:block;}
+.t-price{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--amber);font-weight:300;}
+.t-note{font-size:.6rem;color:var(--gray);font-style:italic;margin-top:12px;line-height:1.6;}
+@media(max-width:640px){.presta-grid{grid-template-columns:1fr;}.presta{padding:24px 18px;}}
+
+/* BOOKLET */
+.booklet-bg{background:linear-gradient(180deg,var(--stone-deep) 0%,var(--stone-mid) 100%);padding:90px 40px;}
+.booklet-card{border:1px solid rgba(201,124,42,.2);border-top:2px solid var(--amber);padding:48px 50px;background:rgba(255,255,255,.02);text-align:center;position:relative;overflow:hidden;}
+.booklet-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,124,42,.05) 0%,transparent 55%);}
+.booklet-card>*{position:relative;z-index:1;}
+.booklet-h{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3vw,2.3rem);font-weight:300;line-height:1.2;margin-bottom:10px;}
+.booklet-h em{color:var(--amber);font-style:italic;}
+.booklet-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gray);font-size:.92rem;line-height:1.7;margin-bottom:28px;max-width:440px;margin-left:auto;margin-right:auto;}
+.booklet-themes{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.th{font-size:.57rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);border:1px solid rgba(201,124,42,.22);padding:4px 10px;}
+.booklet-form{display:flex;gap:10px;max-width:400px;margin:0 auto 10px;}
+.b-input{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(201,124,42,.12);color:var(--cream);padding:11px 14px;font-family:'Outfit',sans-serif;font-size:.82rem;outline:none;transition:border-color .3s;}
+.b-input:focus{border-color:rgba(201,124,42,.4);}
+.b-input::placeholder{color:rgba(245,237,224,.18);}
+.booklet-note{font-size:.58rem;color:var(--gray);}
+@media(max-width:640px){.booklet-card{padding:28px 18px;}.booklet-form{flex-direction:column;}}
+
+/* CITATIONS */
+.cit-bg{padding:90px 40px;}
+.cit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:44px;}
+.cit{padding:32px 26px;border:1px solid rgba(201,124,42,.06);background:rgba(255,255,255,.015);transition:all .4s;}
+.cit:hover{background:rgba(201,124,42,.03);border-color:rgba(201,124,42,.18);}
+.cit-open{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:rgba(201,124,42,.16);line-height:.4;display:block;margin-bottom:8px;}
+.cit-q{font-family:'Cormorant Garamond',serif;font-size:.98rem;font-style:italic;color:var(--stone-light);line-height:1.75;margin-bottom:16px;}
+.cit-author{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);opacity:.65;}
+.cit-src{font-size:.57rem;color:var(--gray);margin-top:3px;font-style:italic;}
+@media(max-width:768px){.cit-grid{grid-template-columns:1fr;}}
+
+/* DIAGNOSTIC */
+.diag-bg{background:linear-gradient(180deg,var(--stone-mid) 0%,var(--stone-deep) 100%);padding:90px 40px;position:relative;overflow:hidden;}
+.diag-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(155,143,184,.07) 0%,transparent 60%);}
+.diag-card{border:1px solid rgba(201,124,42,.14);padding:50px 46px;background:rgba(255,255,255,.02);text-align:center;position:relative;z-index:1;max-width:680px;margin:0 auto;}
+.diag-stats{display:flex;justify-content:center;gap:40px;margin:24px 0 32px;}
+.ds-n{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--amber);font-weight:300;display:block;line-height:1;}
+.ds-l{font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:4px;display:block;}
+@media(max-width:640px){.diag-card{padding:28px 18px;}}
+
+/* CONTACT */
+.contact-bg{padding:90px 40px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:52px;}
+.c-info-h{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--cream);margin-bottom:20px;}
+.c-item{margin-bottom:14px;}
+.c-label{font-size:.57rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:4px;}
+.c-val{font-size:.82rem;color:var(--soft);}
+.c-val a{color:var(--soft);text-decoration:none;transition:color .3s;}
+.c-val a:hover{color:var(--amber);}
+.c-quote{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(201,124,42,.45);font-size:.9rem;line-height:1.7;border-left:2px solid rgba(201,124,42,.18);padding-left:14px;margin-top:22px;}
+.c-form{display:flex;flex-direction:column;gap:12px;}
+.cf{display:flex;flex-direction:column;gap:5px;}
+.cf label{font-size:.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+.cf label span{color:var(--amber);}
+.cf input,.cf textarea,.cf select{background:rgba(255,255,255,.03);border:1px solid rgba(201,124,42,.1);color:var(--cream);padding:11px 14px;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:300;outline:none;width:100%;transition:border-color .3s;}
+.cf input:focus,.cf textarea:focus,.cf select:focus{border-color:rgba(201,124,42,.38);}
+.cf input::placeholder,.cf textarea::placeholder{color:rgba(245,237,224,.14);}
+.cf textarea{resize:vertical;min-height:85px;}
+.cf select option{background:var(--stone-mid);}
+.f-note{font-size:.58rem;color:var(--gray);opacity:.7;}
+.c-ok{display:none;text-align:center;padding:18px;}
+.c-ok p{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-style:italic;color:var(--stone-light);line-height:1.7;}
+.c-ok em{color:var(--amber);font-style:normal;}
+@media(max-width:640px){.contact-grid{grid-template-columns:1fr;}}
+
+/* FOOTER */
+footer{padding:32px 40px;border-top:1px solid var(--border);text-align:center;}
+.f-sig{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(201,124,42,.28);font-size:.82rem;margin-bottom:10px;}
+.f-links{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;}
+.f-links a{font-size:.57rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .3s;}
+.f-links a:hover{color:var(--amber);}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">Renaître de la soif</a>
+  <div class="nav-links">
+    <a href="#poles">Ce que je vis</a>
+    <a href="#methode">La méthode</a>
+    <a href="#prestations">Accompagnement</a>
+    <a href="#booklet">Guide gratuit</a>
+    <a href="#contact" class="nav-cta">Prendre RDV</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="Hero-Renaitre.jpg" alt="" class="hero-bg-img">
+    <div class="hero-bg-overlay"></div>
+  </div>
+  <div class="hero-left">
+    <p class="hero-eye">Denis Deblevid · Accompagnement Philosophique &amp; Spirituel · Coaching</p>
+    <h1 class="hero-h">
+      Il y a en toi<br>
+      <em>une soif</em> que rien<br>
+      n'a encore <span>étanchée.</span>
+    </h1>
+    <p class="hero-p">Pas une faiblesse. Un signal. Le signe que tu es prêt à aller chercher ce qui compte vraiment.</p>
+    <p class="hero-q">— et si c'était le début de quelque chose —</p>
+    <div class="hero-btns">
+      <a href="#diagnostic" class="btn-a">Faire mon diagnostic gratuit</a>
+      <a href="#prestations" class="btn-g">Découvrir l'accompagnement</a>
+    </div>
+  </div>
+  <div class="hero-right" style="display:flex;justify-content:flex-end;align-items:flex-end;padding-bottom:40px;">
+    <blockquote style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(253,246,236,.6);font-size:1.1rem;line-height:1.7;max-width:300px;border-left:2px solid rgba(232,131,42,.4);padding-left:16px;">
+      "L'eau qui étanche n'est pas toujours celle qu'on cherche."
+      <span style="display:block;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-top:8px;font-style:normal;">Denis Deblevid</span>
+    </blockquote>
+  </div>
+</section>
+
+<!-- PÔLES -->
+<section class="poles-bg" id="poles">
+  <div class="inner">
+    <div class="center">
+      <span class="sec-tag">Ce que tu traverses</span>
+      <h2 class="sec-h">Quatre territoires<br><em>de transformation</em></h2>
+      <p class="sec-sub">Chacun de ces espaces a quelque chose à te dire — et quelque chose à t'offrir.</p>
+    </div>
+    <div class="poles-grid">
+      <div class="pole">
+        <div class="pole-n">01</div>
+        <h3 class="pole-h">Fatigue &amp; <em>Vitalité</em></h3>
+        <p class="pole-t">Quand le corps dit stop avant même que la journée commence. Quand se lever le matin est déjà un effort. La fatigue physique — mais aussi la fatigue mentale : cette lassitude profonde qui s'installe quand on porte trop, trop longtemps, souvent seul. Ce n'est pas de la faiblesse. C'est un message que tu n'as pas encore su lire.</p>
+        <p class="pole-q">"Je fonctionne, mais je ne vis plus vraiment."</p>
+      </div>
+      <div class="pole">
+        <div class="pole-n">02</div>
+        <h3 class="pole-h">Argent &amp; <em>Pouvoir d'agir</em></h3>
+        <p class="pole-t">Quand la peur de manquer dicte chaque choix. Quand l'argent n'est plus un outil mais une menace silencieuse. Quand tu te sens piégé dans une vie que tu n'as pas vraiment choisie — parce que les contraintes matérielles semblent décider à ta place.</p>
+        <p class="pole-q">"Je travaille pour survivre, pas pour vivre."</p>
+      </div>
+      <div class="pole">
+        <div class="pole-n">03</div>
+        <h3 class="pole-h">Relations &amp; <em>Appartenance</em></h3>
+        <p class="pole-t">Quand la solitude s'installe malgré la présence des autres. Quand les mêmes conflits reviennent encore et encore. Ce territoire prépare quelque chose d'essentiel : le besoin d'appartenir vraiment — à quelque chose, à quelqu'un, à soi-même.</p>
+        <p class="pole-q">"Je suis entouré, et pourtant si seul."</p>
+      </div>
+      <div class="pole">
+        <div class="pole-n">04</div>
+        <h3 class="pole-h">Sens &amp; <em>Identité</em></h3>
+        <p class="pole-t">Quand la question "pourquoi ?" résonne sans réponse. Quand tu te demandes si la vie que tu vis est vraiment la tienne. C'est ici que commence l'épanouissement — et la vraie question de qui tu es.</p>
+        <p class="pole-q">"Je cherche qui je suis vraiment."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTHODE -->
+<section class="methode-bg" id="methode" style="padding:90px 40px;">
+  <div class="inner">
+    <div class="center">
+      <span class="sec-tag">La Méthode des 4P</span>
+      <h2 class="sec-h">Accompagnement<br><em>Philosophique &amp; Spirituel</em></h2>
+    </div>
+    <div class="methode-grid">
+      <div class="methode-photo">
+        <img src="Photos-Denis-Deblevid-Site-1.jpeg" alt="Denis Deblevid — Accompagnement" class="methode-img">
+        <div class="methode-frame"></div>
+        <div class="methode-caption">
+          <div class="methode-caption-name">Denis Deblevid</div>
+          <div class="methode-caption-role">Philosophique &amp; Spirituel · Coaching · Marseille</div>
+        </div>
+      </div>
+      <div class="methode-content">
+        <p>Ce n'est pas un programme. Ce n'est pas une liste de conseils. C'est un <strong>espace de dialogue</strong> dans lequel tu vas toi-même trouver tes réponses — parce qu'elles sont déjà en toi.</p>
+        <p>La <strong>maïeutique</strong> — l'art socratique d'accoucher les esprits — et la <strong>dialectique</strong> — l'art du dialogue qui fait émerger la vérité — sont au cœur de cette démarche.</p>
+        <p>Tu vas <strong>participer activement</strong>. Fournir un effort — accompagné, bienveillant, mais réel. C'est à cette condition que la transformation est durable.</p>
+        <p class="big-q">"Je pose les bonnes questions. Vous trouvez vos réponses."</p>
+        <div class="p4-list">
+          <div class="p4"><div class="p4-l">P</div><div><div class="p4-name">Psychologique</div><div class="p4-desc">Comprendre ses mécanismes intérieurs</div><div class="p4-more">Schémas relationnels, réactions émotionnelles, besoins non exprimés.</div></div></div>
+          <div class="p4"><div class="p4-l">P</div><div><div class="p4-name">Physique</div><div class="p4-desc">Retrouver l'ancrage dans le corps</div><div class="p4-more">Le corps est le premier espace de vérité. Ce qu'il porte, ce qu'il tait.</div></div></div>
+          <div class="p4"><div class="p4-l">P</div><div><div class="p4-name">Philosophique</div><div class="p4-desc">Construire une boussole intérieure</div><div class="p4-more">Distinguer ce qui dépend de toi. Décider sans être ballotté par les événements.</div></div></div>
+          <div class="p4"><div class="p4-l">P</div><div><div class="p4-name">Pneuma</div><div class="p4-desc">Retrouver le sens et la direction</div><div class="p4-more">Ce souffle intérieur qui donne du sens à tout le reste.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RÉFÉRENCES -->
+<section class="engagement-bg" id="references" style="padding:90px 40px;">
+  <div class="inner engagement-inner" style="max-width:800px;">
+    <span class="sec-tag">Ce que dit la recherche</span>
+    <h2 class="sec-h">Un chemin qui<br><em>a fait ses preuves</em></h2>
+    <p class="engagement-txt">L'accompagnement philosophique, spirituel et le coaching ne sont pas des disciplines ésotériques. Ce sont des pratiques dont l'efficacité a été <strong>mesurée, publiée et vérifiée</strong>. Ce que tu traverses a un nom. Et ce qu'on peut traverser ensemble a une réalité prouvée.</p>
+    <div class="refs">
+      <div class="ref">
+        <p class="ref-t">Le coaching améliore significativement la performance, le bien-être, la résilience et la capacité d'auto-régulation — démontré sur une compilation de 107 études scientifiques.</p>
+        <p class="ref-s">Theeboom, Beersma &amp; Van Vianen — Université d'Amsterdam — Journal of Positive Psychology, 2014</p>
+      </div>
+      <div class="ref">
+        <p class="ref-t">Un processus d'accompagnement structuré permet de construire une résilience émotionnelle mesurable et d'améliorer la performance professionnelle du coaché.</p>
+        <p class="ref-s">Oana David &amp; Oana Cobeanu — Université de Cluj — International Coaching Psychology Review, 2015</p>
+      </div>
+      <div class="ref">
+        <p class="ref-t">70% des personnes accompagnées rapportent une amélioration notable de leur gestion du temps, une réduction du stress et une meilleure clarté décisionnelle.</p>
+        <p class="ref-s">International Coaching Federation (ICF) &amp; PwC — Global Coaching Study, 2023</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESTATIONS -->
+<section class="presta-bg" id="prestations" style="padding:90px 40px;">
+  <div class="inner">
+    <div class="center">
+      <span class="sec-tag">Accompagnement</span>
+      <h2 class="sec-h">Choisir son <em>chemin</em></h2>
+      <p class="sec-sub" style="margin-bottom:40px;">Tarifs donnés à titre indicatif.<br>Chaque situation est unique — chaque tarif peut l'être aussi.</p>
+    </div>
+    <div class="argent-box">
+      <h4>Voici votre premier exercice : parlons d'argent.</h4>
+      <p>L'argent ne doit pas être un blocage. Ni une honte. Parler de ce que l'on peut — et de ce que l'on ne peut pas — c'est déjà entrer dans la démarche. Si un tarif vous semble inaccessible, dites-le. On trouve une solution ensemble. C'est le premier acte de confiance — et c'est lui qui ouvre tout le reste.</p>
+    </div>
+    <div class="presta-grid">
+      <div class="presta">
+        <span class="presta-badge">Philosophique &amp; Spirituel</span>
+        <h3 class="presta-h">Accompagnement<br>Philosophique &amp; Spirituel</h3>
+        <p class="presta-desc">Un espace pour accueillir ce qui résiste, ce qui pèse, ce qui cherche une sortie. Par le dialogue, la maïeutique et la dialectique, chaque séance est un pas vers une lecture plus juste de ton histoire — et vers les ressources libératrices qui sont déjà en toi.</p>
+        <div class="tarifs">
+          <div class="tarif"><span class="t-label">Séance diagnostic<span class="t-sub">Bilan complet — point de départ</span></span><span class="t-price">60 €</span></div>
+          <div class="tarif"><span class="t-label">Séance débloquage<span class="t-sub">Intervention ponctuelle — urgence</span></span><span class="t-price">45 €</span></div>
+          <div class="tarif"><span class="t-label">Forfait 3 séances<span class="t-sub">Séance diagnostic comprise</span></span><span class="t-price">120 €</span></div>
+          <div class="tarif"><span class="t-label">Forfait 5 séances<span class="t-sub">Séance diagnostic comprise</span></span><span class="t-price">180 €</span></div>
+          <p class="t-note">Le tarif est ajusté au besoin de chaque cas — y compris la possibilité d'une séance offerte.</p>
+        </div>
+      </div>
+      <div class="presta">
+        <span class="presta-badge">Coaching</span>
+        <h3 class="presta-h">Accompagnement<br>&amp; Coaching</h3>
+        <p class="presta-desc">Un coaching original, efficace et doux. Personnalisé, destiné à améliorer tes compétences et ta performance — en partant de qui tu es. La bienveillance est de mise. Tu gardes le contrôle sur chacune des décisions posées.</p>
+        <div class="tarifs">
+          <div class="tarif"><span class="t-label">Séance diagnostic<span class="t-sub">Bilan complet — point de départ</span></span><span class="t-price">60 €</span></div>
+          <div class="tarif"><span class="t-label">Séance de 1 heure</span><span class="t-price">55 €</span></div>
+          <div class="tarif"><span class="t-label">Forfait 5 séances<span class="t-sub">Séance diagnostic comprise</span></span><span class="t-price">200 €</span></div>
+          <div class="tarif"><span class="t-label">Forfait 10 séances<span class="t-sub">Séance diagnostic comprise</span></span><span class="t-price">350 €</span></div>
+          <p class="t-note">Le tarif est ajusté au besoin de chaque cas — y compris la possibilité d'une séance offerte.</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="#contact" class="btn-a">Réserver un premier échange offert →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKLET -->
+<section class="booklet-bg" id="booklet" style="padding:90px 40px;">
+  <div class="inner" style="max-width:760px;">
+    <div class="booklet-card">
+      <span class="sec-tag">Guide gratuit</span>
+      <h2 class="booklet-h">Renaître de la soif —<br><em>le guide</em></h2>
+      <p class="booklet-sub">Un guide de transformation intérieure fondé sur 30 ans de terrain, la philosophie stoïcienne et les sciences humaines. Gratuit. Sans engagement. Livré directement dans votre boîte mail.</p>
+      <div class="booklet-themes">
+        <span class="th">Fatigue</span><span class="th">Santé</span><span class="th">Travail</span>
+        <span class="th">Argent</span><span class="th">Relations</span><span class="th">Sens</span>
+      </div>
+      <div class="booklet-form">
+        <input type="email" class="b-input" id="b-email" placeholder="Votre adresse email">
+        <button class="btn-a" id="b-btn">Recevoir le guide →</button>
+      </div>
+      <p class="booklet-note">Vos données sont confidentielles. Aucun spam, jamais.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CITATIONS -->
+<section class="cit-bg" id="citations" style="padding:90px 40px;">
+  <div class="inner">
+    <div class="center">
+      <span class="sec-tag">Sagesse</span>
+      <h2 class="sec-h">Des mots qui <em>traversent le temps</em></h2>
+      <p class="sec-sub">Les photos seront ajoutées prochainement.</p>
+    </div>
+    <div class="cit-grid">
+      <div class="cit">
+        <img src="PhotoEpictète.jpg" alt="Épictète" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:14px;">
+        <span class="cit-open">"</span>
+        <p class="cit-q">Des choses, les unes dépendent de nous, les autres ne dépendent pas de nous. Ce qui dépend de nous, ce sont nos jugements, nos désirs, nos aversions.</p>
+        <p class="cit-author">Épictète</p>
+        <p class="cit-src">Manuel · Chapitre I · Stoïcisme, Ier-IIe siècle</p>
+      </div>
+      <div class="cit">
+        <img src="Photo-Frankl-1.jpeg" alt="Viktor Frankl" style="width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center top;margin-bottom:14px;">
+        <span class="cit-open">"</span>
+        <p class="cit-q">On peut tout ôter à un homme, sauf une chose : la dernière des libertés humaines — celle de choisir son attitude dans n'importe quelles circonstances.</p>
+        <p class="cit-author">Viktor Frankl</p>
+        <p class="cit-src">La Nuit des hommes · Existentialisme, XXe siècle</p>
+      </div>
+      <div class="cit">
+        <img src="PhotoMarcAurèle3.webp" alt="Marc Aurèle" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:14px;">
+        <span class="cit-open">"</span>
+        <p class="cit-q">Cherche en toi-même, et tu trouveras la source du bien — une source qui peut toujours jaillir, si tu sais toujours y creuser.</p>
+        <p class="cit-author">Marc Aurèle</p>
+        <p class="cit-src">Pensées pour moi-même · Livre IV · Stoïcisme, IIe siècle</p>
+      </div>
+      <div class="cit">
+        <img src="PhotoSénèque.jpg" alt="Sénèque" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:14px;">
+        <span class="cit-open">"</span>
+        <p class="cit-q">Ce n'est pas que nous ayons peu de temps à vivre, mais c'est que nous en perdons beaucoup. La vie est assez longue pour qui sait l'employer.</p>
+        <p class="cit-author">Sénèque</p>
+        <p class="cit-src">De la brièveté de la vie · Stoïcisme, Ier siècle</p>
+      </div>
+      <div class="cit">
+        <img src="Photo-Frankl-2.png" alt="Viktor Frankl" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:14px;">
+        <span class="cit-open">"</span>
+        <p class="cit-q">La souffrance cesse d'être une souffrance d'une certaine façon au moment où elle trouve un sens.</p>
+        <p class="cit-author">Viktor Frankl</p>
+        <p class="cit-src">La Nuit des hommes · Existentialisme, XXe siècle</p>
+      </div>
+      <div class="cit">
+        <img src="PhotoEpictète2.jpg" alt="Épictète" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:14px;">
+        <span class="cit-open">"</span>
+        <p class="cit-q">Ne cherche pas que ce qui arrive arrive comme tu veux ; mais veuille que les choses arrivent comme elles arrivent, et tu seras tranquille.</p>
+        <p class="cit-author">Épictète</p>
+        <p class="cit-src">Manuel · Chapitre VIII · Stoïcisme, Ier-IIe siècle</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC -->
+<section class="diag-bg" id="diagnostic">
+  <div class="inner">
+    <div class="diag-card">
+      <span class="sec-tag">Diagnostic gratuit</span>
+      <h2 class="sec-h">Par où<br><em>commencer ?</em></h2>
+      <p class="sec-sub">Un diagnostic en ligne pour identifier ce qui résiste en toi — et par où commencer à le traverser.</p>
+      <div class="diag-stats">
+        <div><span class="ds-n">12</span><span class="ds-l">Questions</span></div>
+        <div><span class="ds-n">4</span><span class="ds-l">Dimensions</span></div>
+        <div><span class="ds-n">8'</span><span class="ds-l">Environ</span></div>
+      </div>
+      <a href="questionnaire-particuliers.html" class="btn-a">Commencer le diagnostic →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-bg" id="contact" style="padding:90px 40px;">
+  <div class="inner">
+    <div class="center">
+      <span class="sec-tag">Contact</span>
+      <h2 class="sec-h">Un premier pas<br><em>suffit.</em></h2>
+      <p class="sec-sub">Premier échange offert · 30 minutes · Sans engagement</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <h3 class="c-info-h">Denis Deblevid</h3>
+        <div class="c-item"><div class="c-label">Accompagnement</div><div class="c-val">Philosophique &amp; Spirituel · Coaching</div></div>
+        <div class="c-item"><div class="c-label">Localisation</div><div class="c-val">Marseille, France</div></div>
+        <div class="c-item"><div class="c-label">Email</div><div class="c-val"><a href="mailto:denisdeblevidcontact@gmail.com">denisdeblevidcontact@gmail.com</a></div></div>
+        <div class="c-item"><div class="c-label">Réserver directement</div><div class="c-val"><a href="https://koalendar.com/e/rencontrer-denis" target="_blank">Calendrier en ligne →</a></div></div>
+        <blockquote class="c-quote">"Je pose les bonnes questions.<br>Vous trouvez vos réponses."</blockquote>
+      </div>
+      <div>
+        <div id="c-form" class="c-form">
+          <div class="cf"><label>Prénom <span>*</span></label><input type="text" id="c-prenom" placeholder="Votre prénom"></div>
+          <div class="cf"><label>Email <span>*</span></label><input type="email" id="c-email" placeholder="votre@email.com"></div>
+          <div class="cf"><label>Ce que vous traversez</label>
+            <select id="c-besoin">
+              <option value="">Choisir...</option>
+              <option>Fatigue &amp; Santé</option>
+              <option>Argent &amp; Pouvoir d'agir</option>
+              <option>Relations &amp; Appartenance</option>
+              <option>Sens &amp; Identité</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="cf"><label>Votre message</label><textarea id="c-msg" placeholder="Décrivez en quelques mots ce que vous traversez..."></textarea></div>
+          <p class="f-note">* Champs obligatoires. Vos données sont confidentielles.</p>
+          <button class="btn-a" id="c-btn" style="width:100%;text-align:center;">Envoyer →</button>
+        </div>
+        <div class="c-ok" id="c-ok">
+          <p>Merci <em id="c-ok-name"></em> —<br>Denis vous répondra dans les 48 heures.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="f-sig">"Renaître de la soif" — Denis Deblevid · Marseille · 2026</p>
+  <div class="f-links">
+    <a href="site.html">Site professionnel B2B</a>
+    <a href="questionnaire-b2b.html">Diagnostic professionnel</a>
+    <a href="https://linkedin.com/in/denis-deblevid" target="_blank">LinkedIn</a>
+    <a href="https://koalendar.com/e/rencontrer-denis" target="_blank">Prendre RDV</a>
+  </div>
+</footer>
+
+<script>
+var cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.left=(mx-4)+'px';cur.style.top=(my-4)+'px';});
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+document.addEventListener('mouseover',function(e){if(e.target.matches('a,button,.pole,.cit,.presta,.p4'))cur.style.transform='scale(2.5)';else cur.style.transform='scale(1)';});
+window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('sc',window.scrollY>60);});
+document.getElementById('b-btn').onclick=function(){
+  var e=document.getElementById('b-email').value.trim();
+  if(!e){alert('Merci de saisir votre email.');return;}
+  window.location.href='mailto:denisdeblevidcontact@gmail.com?subject='+encodeURIComponent('Guide Renaître de la soif')+'&body='+encodeURIComponent('Demande de guide de : '+e);
+};
+document.getElementById('c-btn').onclick=function(){
+  var p=document.getElementById('c-prenom').value.trim();
+  var e=document.getElementById('c-email').value.trim();
+  if(!p||!e){alert('Merci de remplir les champs obligatoires.');return;}
+  var b=document.getElementById('c-besoin').value;
+  var m=document.getElementById('c-msg').value;
+  var body='Prénom: '+p+'\nEmail: '+e+'\nSituation: '+b+'\nMessage:\n'+m;
+  window.location.href='mailto:denisdeblevidcontact@gmail.com?subject='+encodeURIComponent('Renaître de la soif — '+p)+'&body='+encodeURIComponent(body);
+  document.getElementById('c-form').style.display='none';
+  document.getElementById('c-ok-name').textContent=p;
+  document.getElementById('c-ok').style.display='block';
+};
+</script>
+</body>
+</html>
