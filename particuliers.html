@@ -15,7 +15,7 @@
   --amber-d: rgba(232,131,42,0.12);
   --lav:     #b0a4cc;
   --cream:   #fff8e8;
-  --stone:   #f5e0b0;
+  --stone:   #1a1a1a;
   --gray:    #c8a870;
   --soft:    #a88040;
   --border:  rgba(232,131,42,0.25);
@@ -29,6 +29,7 @@ body{
   color:var(--cream);
   cursor:none;
   overflow-x:hidden;
+  -webkit-text-stroke: 0.2px rgba(0,0,0,0.4);
   
 }
 
@@ -66,7 +67,7 @@ nav.sc{background:rgba(42,31,10,.97);border-bottom:1px solid var(--border);}
 .hero{min-height:70vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:100px 80px 60px;}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 75%;opacity:.9;}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(44,31,14,.85) 35%,rgba(44,31,14,.3) 65%,rgba(44,31,14,.05) 100%);}
-.hero-left{position:relative;z-index:1;max-width:620px;}
+.hero-left{position:relative;z-index:1;max-width:620px;color:#ffffff;-webkit-text-stroke:0.3px rgba(0,0,0,0.6);}
 .hero-eye{font-size:13px;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin-bottom:22px;opacity:0;animation:fu .8s .2s ease both;}
 .hero-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,6vw,5.2rem);font-weight:300;line-height:1.05;margin-bottom:20px;opacity:0;animation:fu .8s .4s ease both;text-shadow:0 2px 12px rgba(0,0,0,0.5);}
 .hero-h em{color:var(--amber);font-style:italic;}
@@ -81,8 +82,8 @@ nav.sc{background:rgba(42,31,10,.97);border-bottom:1px solid var(--border);}
 @media(max-width:640px){.hero{padding:100px 24px 60px;}.hero-quote{display:none;}}
 
 /* ══════════ PÔLES ══════════ */
-.poles{padding:60px 40px;background:transparent;}
-.poles-list{display:flex;flex-direction:column;gap:0;margin-top:36px;max-width:860px;margin-left:auto;margin-right:auto;background:rgba(255,255,255,0.18);backdrop-filter:blur(12px);padding:20px 32px;border-radius:2px;}
+.poles{padding:60px 40px;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);}
+.poles-list{display:flex;flex-direction:column;gap:0;margin-top:36px;max-width:860px;margin-left:auto;margin-right:auto;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);padding:20px 32px;border-radius:2px;color:#000000;}
 .pole{display:grid;grid-template-columns:80px 1fr;gap:0;border-bottom:1px solid rgba(232,131,42,.08);padding:24px 0;position:relative;cursor:none;transition:all .3s;}
 .pole:first-child{border-top:1px solid rgba(232,131,42,.08);}
 .pole-left{display:flex;flex-direction:column;align-items:flex-start;padding-right:24px;}
@@ -110,7 +111,7 @@ nav.sc{background:rgba(42,31,10,.97);border-bottom:1px solid var(--border);}
 .methode-caption{position:absolute;bottom:24px;left:24px;}
 .methode-caption-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);font-weight:300;}
 .methode-caption-role{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);opacity:.8;margin-top:3px;}
-.methode-content{padding:60px 56px;display:flex;flex-direction:column;justify-content:center;}
+.methode-content{padding:60px 56px;display:flex;flex-direction:column;justify-content:center;background:rgba(0,0,0,0.45);backdrop-filter:blur(8px);color:#ffffff;}
 .methode-content p{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--stone);line-height:1.8;margin-bottom:14px;font-style:italic;}
 .methode-content p strong{color:var(--cream);font-style:normal;font-weight:400;}
 .methode-content .big-q{font-size:1.08rem;color:rgba(232,131,42,.6);margin:4px 0 20px;}
@@ -128,7 +129,7 @@ nav.sc{background:rgba(42,31,10,.97);border-bottom:1px solid var(--border);}
 .argent-box h4{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--amber);font-weight:300;margin-bottom:7px;}
 .argent-box p{font-size:15px;color:var(--stone);line-height:1.75;}
 .presta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-.presta{border:1px solid var(--border);padding:36px 32px;background:rgba(255,255,255,0.2);backdrop-filter:blur(12px);transition:all .4s;}
+.presta{border:1px solid var(--border);padding:36px 32px;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);transition:all .4s;color:#000000;}
 .presta:hover{background:rgba(232,131,42,.03);border-color:rgba(232,131,42,.3);}
 .presta-badge{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);border:1px solid rgba(232,131,42,.28);padding:4px 10px;display:inline-block;margin-bottom:12px;font-weight:500;}
 .presta-h{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--cream);margin-bottom:10px;}
@@ -161,7 +162,7 @@ nav.sc{background:rgba(42,31,10,.97);border-bottom:1px solid var(--border);}
 /* ══════════ BOOKLET + DIAGNOSTIC côte à côte ══════════ */
 .bd-sec{padding:60px 40px;background:transparent;}
 .bd-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:960px;margin:0 auto;}
-.bd-card{border:1px solid var(--border);border-top:2px solid var(--amber);padding:40px 36px;background:rgba(255,255,255,0.2);backdrop-filter:blur(12px);text-align:center;position:relative;overflow:hidden;}
+.bd-card{border:1px solid var(--border);border-top:2px solid var(--amber);padding:40px 36px;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);text-align:center;color:#000000;position:relative;overflow:hidden;}
 .bd-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(232,131,42,.05) 0%,transparent 55%);}
 .bd-card>*{position:relative;z-index:1;}
 .bd-h{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;line-height:1.2;margin-bottom:10px;}
@@ -180,7 +181,7 @@ nav.sc{background:rgba(42,31,10,.97);border-bottom:1px solid var(--border);}
 @media(max-width:640px){.bd-grid{grid-template-columns:1fr;}.bd-card{padding:28px 20px;}.booklet-form{flex-direction:column;}}
 
 /* ══════════ RÉFÉRENCES ══════════ */
-.refs-sec{padding:60px 40px;}
+.refs-sec{padding:60px 40px;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);}
 .refs-inner{max-width:780px;margin:0 auto;}
 .refs-txt{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--stone);line-height:1.85;font-style:italic;margin-bottom:28px;}
 .refs-txt strong{color:var(--cream);font-style:normal;font-weight:400;}
