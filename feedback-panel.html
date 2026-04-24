@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Votre retour — Renaître de la soif</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--brun:#2C1A08;--amber:#E8832A;--dark:#C96A10;--light:#888888;}
+body{font-family:'Montserrat',sans-serif;background:radial-gradient(ellipse 150% 150% at 100% 0%,#fff 0%,#fff8d0 15%,#f5c030 35%,#e8832a 52%,#2a1f0a 85%,#1a1206 100%);background-attachment:fixed;min-height:100vh;}
+.wrap{max-width:640px;margin:0 auto;padding:40px 20px 80px;}
+.header{text-align:center;padding:50px 0 36px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,0.5);margin-bottom:10px;}
+.header p{color:rgba(255,255,255,0.8);font-size:14px;line-height:1.7;max-width:480px;margin:0 auto;}
+.devise{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--amber);font-size:16px;margin-top:12px;}
+.card{background:rgba(255,255,255,0.85);backdrop-filter:blur(14px);border-radius:4px;padding:32px;margin-bottom:20px;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--brun);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--amber);}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:500;letter-spacing:.5px;color:var(--brun);margin-bottom:6px;}
+.field input,.field textarea{width:100%;padding:10px 14px;border:1px solid rgba(44,26,8,0.2);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:13px;color:var(--brun);background:rgba(255,255,255,0.9);outline:none;transition:border .2s;}
+.field input:focus,.field textarea:focus{border-color:var(--amber);}
+.field textarea{min-height:72px;resize:vertical;}
+.radio-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.radio-opt{padding:7px 14px;border:1px solid rgba(44,26,8,0.2);border-radius:2px;font-size:12px;cursor:pointer;transition:all .2s;color:var(--brun);}
+.radio-opt.on{background:var(--amber);color:#fff;border-color:var(--amber);}
+.stars{display:flex;gap:6px;margin-top:4px;}
+.star{font-size:26px;cursor:pointer;color:#ddd;transition:color .15s;}
+.star.on{color:var(--amber);}
+.btn{width:100%;padding:14px;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;border-radius:2px;background:var(--amber);color:#fff;transition:all .3s;margin-top:8px;}
+.btn:hover{background:var(--dark);}
+.merci{display:none;text-align:center;padding:60px 20px;}
+.merci h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,0.5);margin-bottom:12px;}
+.merci p{color:rgba(255,255,255,0.8);font-size:14px;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Votre retour m'est précieux</h1>
+    <p>5 minutes pour m'aider à affiner ce que vous venez de découvrir.</p>
+    <div class="devise">Arkeï — Prokoptô</div>
+  </div>
+
+  <div id="fw">
+    <div class="card">
+      <div class="card-title">Qui êtes-vous ?</div>
+      <div class="field"><label>Prénom (optionnel)</label><input type="text" id="prenom" placeholder="Votre prénom"></div>
+      <div class="field"><label>Tranche d'âge</label>
+        <div class="radio-group" id="age">
+          <div class="radio-opt" onclick="pick(this,'age')">- de 30 ans</div>
+          <div class="radio-opt" onclick="pick(this,'age')">30-40 ans</div>
+          <div class="radio-opt" onclick="pick(this,'age')">40-50 ans</div>
+          <div class="radio-opt" onclick="pick(this,'age')">50-60 ans</div>
+          <div class="radio-opt" onclick="pick(this,'age')">+ de 60 ans</div>
+        </div>
+      </div>
+      <div class="field"><label>Situation</label>
+        <div class="radio-group" id="sit">
+          <div class="radio-opt" onclick="pick(this,'sit')">Salarié(e)</div>
+          <div class="radio-opt" onclick="pick(this,'sit')">Indépendant(e)</div>
+          <div class="radio-opt" onclick="pick(this,'sit')">En transition</div>
+          <div class="radio-opt" onclick="pick(this,'sit')">Retraité(e)</div>
+          <div class="radio-opt" onclick="pick(this,'sit')">Autre</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Le site renaitredelasoif.fr</div>
+      <div class="field"><label>Note globale</label>
+        <div class="stars" id="stars-site">
+          <span class="star" onclick="rate('site',1)">&#9733;</span>
+          <span class="star" onclick="rate('site',2)">&#9733;</span>
+          <span class="star" onclick="rate('site',3)">&#9733;</span>
+          <span class="star" onclick="rate('site',4)">&#9733;</span>
+          <span class="star" onclick="rate('site',5)">&#9733;</span>
+        </div>
+      </div>
+      <div class="field"><label>La première phrase vous a-t-elle accroché(e) ?</label>
+        <div class="radio-group" id="accroche">
+          <div class="radio-opt" onclick="pick(this,'accroche')">Oui, immédiatement</div>
+          <div class="radio-opt" onclick="pick(this,'accroche')">Plutôt oui</div>
+          <div class="radio-opt" onclick="pick(this,'accroche')">Pas vraiment</div>
+          <div class="radio-opt" onclick="pick(this,'accroche')">Non</div>
+        </div>
+      </div>
+      <div class="field"><label>Avez-vous compris ce que Denis propose ?</label>
+        <div class="radio-group" id="comprend">
+          <div class="radio-opt" onclick="pick(this,'comprend')">Très clairement</div>
+          <div class="radio-opt" onclick="pick(this,'comprend')">Assez clairement</div>
+          <div class="radio-opt" onclick="pick(this,'comprend')">Pas tout de suite</div>
+          <div class="radio-opt" onclick="pick(this,'comprend')">Pas vraiment</div>
+        </div>
+      </div>
+      <div class="field"><label>Ce qui vous a le plus touché</label><textarea id="touche" placeholder="Un texte, une section..."></textarea></div>
+      <div class="field"><label>Ce qui vous a le moins convaincu</label><textarea id="frein" placeholder="Ce qui vous a freiné..."></textarea></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Le guide "Renaître de la soif"</div>
+      <div class="field"><label>L'avez-vous téléchargé ?</label>
+        <div class="radio-group" id="guide">
+          <div class="radio-opt" onclick="pick(this,'guide')">Oui, lu</div>
+          <div class="radio-opt" onclick="pick(this,'guide')">Oui, parcouru</div>
+          <div class="radio-opt" onclick="pick(this,'guide')">Pas encore</div>
+          <div class="radio-opt" onclick="pick(this,'guide')">Non</div>
+        </div>
+      </div>
+      <div class="field"><label>Note du guide</label>
+        <div class="stars" id="stars-guide">
+          <span class="star" onclick="rate('guide',1)">&#9733;</span>
+          <span class="star" onclick="rate('guide',2)">&#9733;</span>
+          <span class="star" onclick="rate('guide',3)">&#9733;</span>
+          <span class="star" onclick="rate('guide',4)">&#9733;</span>
+          <span class="star" onclick="rate('guide',5)">&#9733;</span>
+        </div>
+      </div>
+      <div class="field"><label>Ce qui vous a le plus marqué</label><textarea id="gavis" placeholder="Une phrase, un exercice, un concept..."></textarea></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Le diagnostic (30 questions)</div>
+      <div class="field"><label>L'avez-vous fait ?</label>
+        <div class="radio-group" id="diag">
+          <div class="radio-opt" onclick="pick(this,'diag')">Oui, jusqu'au bout</div>
+          <div class="radio-opt" onclick="pick(this,'diag')">Partiellement</div>
+          <div class="radio-opt" onclick="pick(this,'diag')">Non</div>
+        </div>
+      </div>
+      <div class="field"><label>Vous a-t-il appris quelque chose sur vous-même ?</label>
+        <div class="radio-group" id="appris">
+          <div class="radio-opt" onclick="pick(this,'appris')">Oui, vraiment</div>
+          <div class="radio-opt" onclick="pick(this,'appris')">Un peu</div>
+          <div class="radio-opt" onclick="pick(this,'appris')">Pas vraiment</div>
+          <div class="radio-opt" onclick="pick(this,'appris')">Je ne l'ai pas fait</div>
+        </div>
+      </div>
+      <div class="field"><label>Note du diagnostic</label>
+        <div class="stars" id="stars-diag">
+          <span class="star" onclick="rate('diag',1)">&#9733;</span>
+          <span class="star" onclick="rate('diag',2)">&#9733;</span>
+          <span class="star" onclick="rate('diag',3)">&#9733;</span>
+          <span class="star" onclick="rate('diag',4)">&#9733;</span>
+          <span class="star" onclick="rate('diag',5)">&#9733;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Et maintenant ?</div>
+      <div class="field"><label>Après cette visite, vous avez envie de...</label>
+        <div class="radio-group" id="intention">
+          <div class="radio-opt" onclick="pick(this,'intention')">Prendre RDV</div>
+          <div class="radio-opt" onclick="pick(this,'intention')">En savoir plus</div>
+          <div class="radio-opt" onclick="pick(this,'intention')">Partager</div>
+          <div class="radio-opt" onclick="pick(this,'intention')">Revenir plus tard</div>
+          <div class="radio-opt" onclick="pick(this,'intention')">Rien de particulier</div>
+        </div>
+      </div>
+      <div class="field"><label>Un message pour Denis</label><textarea id="msg" placeholder="Ce que vous voudriez lui dire..." style="min-height:90px;"></textarea></div>
+    </div>
+
+    <button class="btn" onclick="envoyer()">Envoyer mon retour →</button>
+  </div>
+
+  <div class="merci" id="merci">
+    <h2>Merci.</h2>
+    <p>Votre retour est précieux. Il contribue à affiner ce projet pour ceux qui en auront besoin.</p>
+    <p style="margin-top:20px;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--amber);font-size:18px;">Arkeï — Prokoptô</p>
+  </div>
+</div>
+
+<script>
+const v={};
+function pick(el,g){document.querySelectorAll('#'+g+' .radio-opt').forEach(o=>o.classList.remove('on'));el.classList.add('on');v[g]=el.textContent.trim();}
+function rate(n,val){v['note_'+n]=val;document.querySelectorAll('#stars-'+n+' .star').forEach((s,i)=>s.classList.toggle('on',i<val));}
+function gv(id){return document.getElementById(id)?.value?.trim()||'-';}
+function envoyer(){
+  const p=gv('prenom');
+  const body=[
+    'Prenom: '+p,
+    'Age: '+(v.age||'-'),
+    'Situation: '+(v.sit||'-'),
+    '',
+    '-- SITE --',
+    'Note: '+(v.note_site||'-')+'/5',
+    'Accroche: '+(v.accroche||'-'),
+    'Comprehension: '+(v.comprend||'-'),
+    'Ce qui a touche: '+gv('touche'),
+    'Ce qui a freine: '+gv('frein'),
+    '',
+    '-- GUIDE --',
+    'Telecharge: '+(v.guide||'-'),
+    'Note: '+(v.note_guide||'-')+'/5',
+    'Avis: '+gv('gavis'),
+    '',
+    '-- DIAGNOSTIC --',
+    'Fait: '+(v.diag||'-'),
+    'Appris: '+(v.appris||'-'),
+    'Note: '+(v.note_diag||'-')+'/5',
+    '',
+    '-- INTENTION --',
+    'Intention: '+(v.intention||'-'),
+    'Message: '+gv('msg')
+  ].join('\n');
+  window.location.href='mailto:denisdeblevidcontact@gmail.com?subject='+encodeURIComponent('Feedback panel - '+p)+'&body='+encodeURIComponent(body);
+  setTimeout(()=>{document.getElementById('fw').style.display='none';document.getElementById('merci').style.display='block';},800);
+}
+</script>
+</body>
+</html>
