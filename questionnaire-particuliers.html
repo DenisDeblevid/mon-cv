@@ -95,6 +95,9 @@ body{
 .step.done{border-color:var(--amber);background:var(--amber);color:white;}
 
 @keyframes fu{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+.pilier-section{margin-bottom:28px;border-left:3px solid var(--amber);padding-left:16px;}
+.pilier-section-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--brun);font-weight:400;margin-bottom:16px;letter-spacing:.5px;}
 </style>
 </head>
 <body>
@@ -115,146 +118,129 @@ body{
     <div class="step" id="s3">✓</div>
   </div>
 
-  <!-- PARTIE 1 — LES 4 PILIERS -->
+    <!-- PARTIE 1 — LES 4 PILIERS -->
   <div id="part1">
     <div class="card">
       <div class="card-title">Partie 1 — Vos quatre piliers</div>
       <div class="card-sub">Comment vous sentez-vous dans chaque dimension ?</div>
       <div class="separator"></div>
-
       <div class="progress-bar"><div class="progress-fill" id="prog1" style="width:0%"></div></div>
 
-      <!-- Q1 Psychologique -->
+      <div class="pilier-section"><h4 class="pilier-section-title">Pilier Psychologique</h4>
       <div class="question">
         <span class="pilier-tag">Pilier Psychologique</span>
-        <label>Quelle est la qualité de votre dialogue intérieur en ce moment ? Vous sentez-vous en paix avec vos pensées, ou êtes-vous souvent en conflit avec vous-même ?</label>
+        <label>Quelle est la qualité de votre dialogue intérieur ? Vous sentez-vous en paix avec vos pensées, ou êtes-vous souvent en conflit avec vous-même ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q1" oninput="updateSlider('q1','v1');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q1a" oninput="updateSlider('q1a','q1av');updateProgress()">
           <div class="slider-labels"><span>Conflit permanent</span><span>Paix intérieure</span></div>
-          <div class="slider-value" id="v1">5</div>
+          <div class="slider-value" id="q1av">5</div>
         </div>
       </div>
-
-      <!-- Q2 Physique -->
-      <div class="question">
-        <span class="pilier-tag">Pilier Physique</span>
-        <label>Comment habitez-vous votre corps au quotidien ? Êtes-vous à l'écoute de ses signaux, ou l'ignorez-vous jusqu'à ce qu'il vous impose un arrêt ?</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q2" oninput="updateSlider('q2','v2');updateProgress1()">
-          <div class="slider-labels"><span>Je l'ignore</span><span>Pleine conscience</span></div>
-          <div class="slider-value" id="v2">5</div>
-        </div>
-      </div>
-
-      <!-- Q3 Philosophique -->
-      <div class="question">
-        <span class="pilier-tag">Pilier Philosophique</span>
-        <label>Avez-vous le sentiment de savoir ce qui dépend de vous et ce qui n'en dépend pas ? Distinguez-vous clairement votre zone d'action de celle que vous ne pouvez pas contrôler ?</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q3" oninput="updateSlider('q3','v3');updateProgress1()">
-          <div class="slider-labels"><span>Tout me submerge</span><span>Grande clarté</span></div>
-          <div class="slider-value" id="v3">5</div>
-        </div>
-      </div>
-
-      <!-- Q4 Pneuma -->
-      <div class="question">
-        <span class="pilier-tag">Pilier Pneuma</span>
-        <label>Avez-vous un sentiment de sens dans votre vie en ce moment ? Quelque chose à quoi vous vous reliez quand tout s'effondre autour de vous ?</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q4" oninput="updateSlider('q4','v4');updateProgress1()">
-          <div class="slider-labels"><span>Vide de sens</span><span>Sens profond</span></div>
-          <div class="slider-value" id="v4">5</div>
-        </div>
-      </div>
-
-
-      <!-- Q1b Psychologique -->
       <div class="question">
         <span class="pilier-tag">Pilier Psychologique</span>
-        <label>Êtes-vous souvent envahi par des pensées répétitives ou des ruminations — ou arrivez-vous à lâcher prise assez facilement ?</label>
+        <label>Êtes-vous souvent envahi par des ruminations — ou arrivez-vous à lâcher prise assez facilement ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q1b" oninput="updateSlider('q1b','v1b');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q1b" oninput="updateSlider('q1b','q1bv');updateProgress()">
           <div class="slider-labels"><span>Ruminations constantes</span><span>Lâcher prise facile</span></div>
-          <div class="slider-value" id="v1b">5</div>
+          <div class="slider-value" id="q1bv">5</div>
         </div>
       </div>
-
-      <!-- Q1c Psychologique -->
       <div class="question">
         <span class="pilier-tag">Pilier Psychologique</span>
         <label>Dans vos relations, avez-vous tendance à réagir impulsivement — ou parvenez-vous à observer vos réactions avant d'y répondre ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q1c" oninput="updateSlider('q1c','v1c');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q1c" oninput="updateSlider('q1c','q1cv');updateProgress()">
           <div class="slider-labels"><span>Réactions impulsives</span><span>Pleine maîtrise</span></div>
-          <div class="slider-value" id="v1c">5</div>
+          <div class="slider-value" id="q1cv">5</div>
         </div>
       </div>
-
-      <!-- Q2b Physique -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Pilier Physique</h4>
+      <div class="question">
+        <span class="pilier-tag">Pilier Physique</span>
+        <label>Comment habitez-vous votre corps au quotidien ? Êtes-vous à l'écoute de ses signaux, ou l'ignorez-vous jusqu'à ce qu'il vous impose un arrêt ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q2a" oninput="updateSlider('q2a','q2av');updateProgress()">
+          <div class="slider-labels"><span>Je l'ignore</span><span>Pleine conscience</span></div>
+          <div class="slider-value" id="q2av">5</div>
+        </div>
+      </div>
       <div class="question">
         <span class="pilier-tag">Pilier Physique</span>
         <label>Avez-vous une pratique corporelle régulière — marche, sport, mouvement — ou votre corps reste-t-il souvent immobile et ignoré ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q2b" oninput="updateSlider('q2b','v2b');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q2b" oninput="updateSlider('q2b','q2bv');updateProgress()">
           <div class="slider-labels"><span>Aucune pratique</span><span>Pratique régulière</span></div>
-          <div class="slider-value" id="v2b">5</div>
+          <div class="slider-value" id="q2bv">5</div>
         </div>
       </div>
-
-      <!-- Q2c Physique -->
       <div class="question">
         <span class="pilier-tag">Pilier Physique</span>
         <label>Votre sommeil est-il réparateur ? Vous réveillez-vous reposé — ou avec la sensation de ne jamais vraiment récupérer ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q2c" oninput="updateSlider('q2c','v2c');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q2c" oninput="updateSlider('q2c','q2cv');updateProgress()">
           <div class="slider-labels"><span>Sommeil épuisant</span><span>Sommeil réparateur</span></div>
-          <div class="slider-value" id="v2c">5</div>
+          <div class="slider-value" id="q2cv">5</div>
         </div>
       </div>
-
-      <!-- Q3b Philosophique -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Pilier Philosophique</h4>
       <div class="question">
         <span class="pilier-tag">Pilier Philosophique</span>
-        <label>Face à une épreuve ou un obstacle, votre premier réflexe est-il de chercher qui est responsable — ou de chercher ce que vous pouvez faire avec ce qui est ?</label>
+        <label>Avez-vous le sentiment de savoir ce qui dépend de vous et ce qui n'en dépend pas ? Distinguez-vous clairement votre zone d'action ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q3b" oninput="updateSlider('q3b','v3b');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q3a" oninput="updateSlider('q3a','q3av');updateProgress()">
+          <div class="slider-labels"><span>Tout me submerge</span><span>Grande clarté</span></div>
+          <div class="slider-value" id="q3av">5</div>
+        </div>
+      </div>
+      <div class="question">
+        <span class="pilier-tag">Pilier Philosophique</span>
+        <label>Face à un obstacle, votre premier réflexe est-il de chercher un coupable — ou de chercher ce que vous pouvez faire avec ce qui est ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q3b" oninput="updateSlider('q3b','q3bv');updateProgress()">
           <div class="slider-labels"><span>Je cherche un coupable</span><span>J'agis sur ce qui dépend de moi</span></div>
-          <div class="slider-value" id="v3b">5</div>
+          <div class="slider-value" id="q3bv">5</div>
         </div>
       </div>
-
-      <!-- Q3c Philosophique -->
       <div class="question">
         <span class="pilier-tag">Pilier Philosophique</span>
-        <label>Avez-vous des valeurs clairement définies qui guident vos décisions — ou prenez-vous vos décisions selon les circonstances sans vraiment de boussole intérieure ?</label>
+        <label>Avez-vous des valeurs clairement définies qui guident vos décisions — ou avancez-vous sans vraiment de boussole intérieure ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q3c" oninput="updateSlider('q3c','v3c');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q3c" oninput="updateSlider('q3c','q3cv');updateProgress()">
           <div class="slider-labels"><span>Pas de boussole</span><span>Valeurs très claires</span></div>
-          <div class="slider-value" id="v3c">5</div>
+          <div class="slider-value" id="q3cv">5</div>
         </div>
       </div>
-
-      <!-- Q4b Pneuma -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Pilier Pneuma</h4>
+      <div class="question">
+        <span class="pilier-tag">Pilier Pneuma</span>
+        <label>Avez-vous un sentiment de sens dans votre vie en ce moment ? Quelque chose à quoi vous vous reliez quand tout s'effondre ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q4a" oninput="updateSlider('q4a','q4av');updateProgress()">
+          <div class="slider-labels"><span>Vide de sens</span><span>Sens profond</span></div>
+          <div class="slider-value" id="q4av">5</div>
+        </div>
+      </div>
       <div class="question">
         <span class="pilier-tag">Pilier Pneuma</span>
         <label>Avez-vous une pratique de silence ou de retrait régulière — même brève — qui vous permet de vous reconnecter à vous-même ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q4b" oninput="updateSlider('q4b','v4b');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q4b" oninput="updateSlider('q4b','q4bv');updateProgress()">
           <div class="slider-labels"><span>Jamais</span><span>Chaque jour</span></div>
-          <div class="slider-value" id="v4b">5</div>
+          <div class="slider-value" id="q4bv">5</div>
         </div>
       </div>
-
-      <!-- Q4c Pneuma -->
       <div class="question">
         <span class="pilier-tag">Pilier Pneuma</span>
-        <label>Avez-vous le sentiment que votre vie a une direction — quelque chose vers quoi elle tend naturellement — ou avez-vous l'impression d'avancer sans destination claire ?</label>
+        <label>Avez-vous le sentiment que votre vie a une direction — ou avancez-vous sans destination claire ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q4c" oninput="updateSlider('q4c','v4c');updateProgress1()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q4c" oninput="updateSlider('q4c','q4cv');updateProgress()">
           <div class="slider-labels"><span>Sans direction</span><span>Direction claire</span></div>
-          <div class="slider-value" id="v4c">5</div>
+          <div class="slider-value" id="q4cv">5</div>
         </div>
+      </div>
       </div>
       <div class="btn-row">
         <button class="btn btn-primary" onclick="goTo2()">Continuer →</button>
@@ -268,206 +254,181 @@ body{
       <div class="card-title">Partie 2 — Vos six domaines de vie</div>
       <div class="card-sub">Dans votre quotidien, comment ça se passe ?</div>
       <div class="separator"></div>
-
       <div class="progress-bar"><div class="progress-fill" id="prog2" style="width:0%"></div></div>
 
-      <!-- Q5 Fatigue -->
+      <div class="pilier-section"><h4 class="pilier-section-title">Fatigue & Santé</h4>
       <div class="question">
         <span class="pilier-tag">Fatigue & Santé</span>
-        <label>Quelle est votre énergie générale en ce moment ? Vous levez-vous le matin avec envie — ou avec le sentiment de subir une journée de plus ?</label>
+        <label>Quelle est votre énergie générale ? Vous levez-vous le matin avec envie — ou avec le sentiment de subir une journée de plus ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q5" oninput="updateSlider('q5','v5');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q5a" oninput="updateSlider('q5a','q5av');updateProgress()">
           <div class="slider-labels"><span>Épuisement total</span><span>Énergie pleine</span></div>
-          <div class="slider-value" id="v5">5</div>
+          <div class="slider-value" id="q5av">5</div>
         </div>
       </div>
-
-      <!-- Q6 Relations -->
-      <div class="question">
-        <span class="pilier-tag">Relations & Amour</span>
-        <label>Dans vos relations importantes — couple, famille, amis — vous sentez-vous libre d'être vraiment vous-même, ou portez-vous un masque pour maintenir la paix ?</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q6" oninput="updateSlider('q6','v6');updateProgress2()">
-          <div class="slider-labels"><span>Masque permanent</span><span>Liberté totale</span></div>
-          <div class="slider-value" id="v6">5</div>
-        </div>
-      </div>
-
-      <!-- Q7 Travail -->
-      <div class="question">
-        <span class="pilier-tag">Travail & Sens</span>
-        <label>Votre travail vous nourrit-il quelque chose d'essentiel, ou avez-vous l'impression de remplir une fonction sans vraiment vous y reconnaître ?</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q7" oninput="updateSlider('q7','v7');updateProgress2()">
-          <div class="slider-labels"><span>Cage dorée</span><span>Travail nourricier</span></div>
-          <div class="slider-value" id="v7">5</div>
-        </div>
-      </div>
-
-      <!-- Q8 Argent -->
-      <div class="question">
-        <span class="pilier-tag">Argent & Abondance</span>
-        <label>Votre rapport à l'argent est-il serein ? Avez-vous le sentiment de le maîtriser — ou lui laissez-vous le pouvoir de gouverner vos décisions et votre humeur ?</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q8" oninput="updateSlider('q8','v8');updateProgress2()">
-          <div class="slider-labels"><span>Angoisse constante</span><span>Sérénité totale</span></div>
-          <div class="slider-value" id="v8">5</div>
-        </div>
-      </div>
-
-      <!-- Q9 Identité -->
-      <div class="question">
-        <span class="pilier-tag">Identité & Confiance</span>
-        <label>Savez-vous qui vous êtes vraiment — quand personne ne regarde ? Avez-vous confiance en votre valeur propre, indépendamment de ce que les autres pensent de vous ?</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q9" oninput="updateSlider('q9','v9');updateProgress2()">
-          <div class="slider-labels"><span>Perdu, incertain</span><span>Ancré, confiant</span></div>
-          <div class="slider-value" id="v9">5</div>
-        </div>
-      </div>
-
-      <!-- Q10 Spiritualité -->
-      <div class="question">
-        <span class="pilier-tag">Spiritualité & Pneuma</span>
-        <label>Avez-vous une pratique intérieure — quelle qu'elle soit — qui vous permet de vous reconnecter à vous-même régulièrement ? Silence, contemplation, foi, nature...</label>
-        <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q10" oninput="updateSlider('q10','v10');updateProgress2()">
-          <div class="slider-labels"><span>Aucune pratique</span><span>Pratique régulière</span></div>
-          <div class="slider-value" id="v10">5</div>
-        </div>
-      </div>
-
-
-      <!-- Q5b Fatigue -->
       <div class="question">
         <span class="pilier-tag">Fatigue & Santé</span>
-        <label>Avez-vous des douleurs ou tensions physiques récurrentes — dos, nuque, maux de tête — que vous attribuez au stress ou à la fatigue ?</label>
+        <label>Avez-vous des douleurs ou tensions physiques récurrentes — dos, nuque, maux de tête — que vous attribuez au stress ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q5b" oninput="updateSlider('q5b','v5b');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q5b" oninput="updateSlider('q5b','q5bv');updateProgress()">
           <div class="slider-labels"><span>Douleurs constantes</span><span>Corps serein</span></div>
-          <div class="slider-value" id="v5b">5</div>
+          <div class="slider-value" id="q5bv">5</div>
         </div>
       </div>
-
-      <!-- Q5c Fatigue -->
       <div class="question">
         <span class="pilier-tag">Fatigue & Santé</span>
-        <label>Prenez-vous soin de votre alimentation et de votre hydratation — ou mangez-vous souvent sans vraiment y prêter attention ?</label>
+        <label>Prenez-vous soin de votre alimentation et de votre hydratation — ou mangez-vous souvent sans y prêter attention ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q5c" oninput="updateSlider('q5c','v5c');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q5c" oninput="updateSlider('q5c','q5cv');updateProgress()">
           <div class="slider-labels"><span>Aucune attention</span><span>Soin quotidien</span></div>
-          <div class="slider-value" id="v5c">5</div>
+          <div class="slider-value" id="q5cv">5</div>
         </div>
       </div>
-
-      <!-- Q6b Relations -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Relations & Amour</h4>
       <div class="question">
         <span class="pilier-tag">Relations & Amour</span>
-        <label>Dans vos relations importantes, êtes-vous capable d'exprimer vos besoins clairement — ou gardez-vous souvent vos attentes pour vous en espérant que l'autre les devine ?</label>
+        <label>Dans vos relations importantes, vous sentez-vous libre d'être vraiment vous-même — ou portez-vous un masque pour maintenir la paix ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q6b" oninput="updateSlider('q6b','v6b');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q6a" oninput="updateSlider('q6a','q6av');updateProgress()">
+          <div class="slider-labels"><span>Masque permanent</span><span>Liberté totale</span></div>
+          <div class="slider-value" id="q6av">5</div>
+        </div>
+      </div>
+      <div class="question">
+        <span class="pilier-tag">Relations & Amour</span>
+        <label>Êtes-vous capable d'exprimer vos besoins clairement — ou gardez-vous vos attentes en espérant que l'autre les devine ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q6b" oninput="updateSlider('q6b','q6bv');updateProgress()">
           <div class="slider-labels"><span>Je garde tout</span><span>J'exprime clairement</span></div>
-          <div class="slider-value" id="v6b">5</div>
+          <div class="slider-value" id="q6bv">5</div>
         </div>
       </div>
-
-      <!-- Q6c Relations -->
       <div class="question">
         <span class="pilier-tag">Relations & Amour</span>
-        <label>Y a-t-il des relations dans votre vie qui vous épuisent plus qu'elles ne vous nourrissent — et que vous maintenez malgré tout par peur ou par habitude ?</label>
+        <label>Y a-t-il des relations qui vous épuisent plus qu'elles ne vous nourrissent — et que vous maintenez malgré tout ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q6c" oninput="updateSlider('q6c','v6c');updateProgress2()">
-          <div class="slider-labels"><span>Plusieurs relations épuisantes</span><span>Relations nourrissantes</span></div>
-          <div class="slider-value" id="v6c">5</div>
+          <input type="range" class="slider" min="1" max="10" value="5" id="q6c" oninput="updateSlider('q6c','q6cv');updateProgress()">
+          <div class="slider-labels"><span>Plusieurs épuisantes</span><span>Toutes nourrissantes</span></div>
+          <div class="slider-value" id="q6cv">5</div>
         </div>
       </div>
-
-      <!-- Q7b Travail -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Travail & Sens</h4>
       <div class="question">
         <span class="pilier-tag">Travail & Sens</span>
-        <label>Avez-vous le sentiment d'être reconnu à votre juste valeur dans votre vie professionnelle — ou portez-vous des responsabilités sans que cela soit vraiment vu ou reconnu ?</label>
+        <label>Votre travail vous nourrit-il quelque chose d'essentiel — ou avez-vous l'impression de remplir une fonction sans vous y reconnaître ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q7b" oninput="updateSlider('q7b','v7b');updateProgress2()">
-          <div class="slider-labels"><span>Invisible, non reconnu</span><span>Pleinement reconnu</span></div>
-          <div class="slider-value" id="v7b">5</div>
+          <input type="range" class="slider" min="1" max="10" value="5" id="q7a" oninput="updateSlider('q7a','q7av');updateProgress()">
+          <div class="slider-labels"><span>Cage dorée</span><span>Travail nourricier</span></div>
+          <div class="slider-value" id="q7av">5</div>
         </div>
       </div>
-
-      <!-- Q7c Travail -->
       <div class="question">
         <span class="pilier-tag">Travail & Sens</span>
-        <label>Si vous pouviez changer quelque chose dans votre vie professionnelle demain, auriez-vous une idée claire de ce que ce serait — ou ne savez-vous même plus ce que vous voulez vraiment ?</label>
+        <label>Avez-vous le sentiment d'être reconnu à votre juste valeur — ou portez-vous des responsabilités sans que cela soit vu ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q7c" oninput="updateSlider('q7c','v7c');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q7b" oninput="updateSlider('q7b','q7bv');updateProgress()">
+          <div class="slider-labels"><span>Invisible</span><span>Pleinement reconnu</span></div>
+          <div class="slider-value" id="q7bv">5</div>
+        </div>
+      </div>
+      <div class="question">
+        <span class="pilier-tag">Travail & Sens</span>
+        <label>Si vous pouviez changer quelque chose dans votre vie professionnelle demain, auriez-vous une idée claire de ce que ce serait ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q7c" oninput="updateSlider('q7c','q7cv');updateProgress()">
           <div class="slider-labels"><span>Aucune idée</span><span>Très claire</span></div>
-          <div class="slider-value" id="v7c">5</div>
+          <div class="slider-value" id="q7cv">5</div>
         </div>
       </div>
-
-      <!-- Q8b Argent -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Argent & Abondance</h4>
       <div class="question">
         <span class="pilier-tag">Argent & Abondance</span>
-        <label>Avez-vous tendance à éviter de regarder vos comptes ou à reporter les décisions financières importantes — ou faites-vous face à votre situation financière avec clarté ?</label>
+        <label>Votre rapport à l'argent est-il serein — ou lui laissez-vous le pouvoir de gouverner vos décisions et votre humeur ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q8b" oninput="updateSlider('q8b','v8b');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q8a" oninput="updateSlider('q8a','q8av');updateProgress()">
+          <div class="slider-labels"><span>Angoisse constante</span><span>Sérénité totale</span></div>
+          <div class="slider-value" id="q8av">5</div>
+        </div>
+      </div>
+      <div class="question">
+        <span class="pilier-tag">Argent & Abondance</span>
+        <label>Avez-vous tendance à éviter de regarder vos comptes — ou faites-vous face à votre situation financière avec clarté ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q8b" oninput="updateSlider('q8b','q8bv');updateProgress()">
           <div class="slider-labels"><span>J'évite</span><span>Je regarde en face</span></div>
-          <div class="slider-value" id="v8b">5</div>
+          <div class="slider-value" id="q8bv">5</div>
         </div>
       </div>
-
-      <!-- Q8c Argent -->
       <div class="question">
         <span class="pilier-tag">Argent & Abondance</span>
-        <label>Avez-vous le sentiment de mériter ce que vous gagnez — ou une voix intérieure vous dit parfois que vous ne valez pas autant que ce que vous demandez ou recevez ?</label>
+        <label>Avez-vous le sentiment de mériter ce que vous gagnez — ou une voix intérieure vous dit parfois que vous ne valez pas autant ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q8c" oninput="updateSlider('q8c','v8c');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q8c" oninput="updateSlider('q8c','q8cv');updateProgress()">
           <div class="slider-labels"><span>Je ne me sens pas légitime</span><span>Pleinement légitime</span></div>
-          <div class="slider-value" id="v8c">5</div>
+          <div class="slider-value" id="q8cv">5</div>
         </div>
       </div>
-
-      <!-- Q9b Identité -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Identité & Confiance</h4>
       <div class="question">
         <span class="pilier-tag">Identité & Confiance</span>
-        <label>Êtes-vous capable de dire non sans culpabilité excessive — ou avez-vous tendance à vous soumettre aux demandes des autres au détriment de vos propres besoins ?</label>
+        <label>Savez-vous qui vous êtes vraiment — quand personne ne regarde ? Avez-vous confiance en votre valeur propre ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q9b" oninput="updateSlider('q9b','v9b');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q9a" oninput="updateSlider('q9a','q9av');updateProgress()">
+          <div class="slider-labels"><span>Perdu, incertain</span><span>Ancré, confiant</span></div>
+          <div class="slider-value" id="q9av">5</div>
+        </div>
+      </div>
+      <div class="question">
+        <span class="pilier-tag">Identité & Confiance</span>
+        <label>Êtes-vous capable de dire non sans culpabilité excessive — ou vous soumettez-vous aux demandes au détriment de vos besoins ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q9b" oninput="updateSlider('q9b','q9bv');updateProgress()">
           <div class="slider-labels"><span>Je ne sais pas dire non</span><span>Je pose mes limites</span></div>
-          <div class="slider-value" id="v9b">5</div>
+          <div class="slider-value" id="q9bv">5</div>
         </div>
       </div>
-
-      <!-- Q9c Identité -->
       <div class="question">
         <span class="pilier-tag">Identité & Confiance</span>
-        <label>Votre image de vous-même est-elle stable — ou change-t-elle fortement selon les regards et les jugements des autres autour de vous ?</label>
+        <label>Votre image de vous-même est-elle stable — ou change-t-elle fortement selon les jugements des autres ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q9c" oninput="updateSlider('q9c','v9c');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q9c" oninput="updateSlider('q9c','q9cv');updateProgress()">
           <div class="slider-labels"><span>Très instable</span><span>Solide et stable</span></div>
-          <div class="slider-value" id="v9c">5</div>
+          <div class="slider-value" id="q9cv">5</div>
         </div>
       </div>
-
-      <!-- Q10b Spiritualité -->
+      </div>
+      <div class="pilier-section"><h4 class="pilier-section-title">Spiritualité & Pneuma</h4>
       <div class="question">
         <span class="pilier-tag">Spiritualité & Pneuma</span>
-        <label>Avez-vous le sentiment d'être en accord avec vos valeurs profondes dans la façon dont vous vivez au quotidien — ou ressentez-vous un écart entre ce que vous êtes et ce que vous faites ?</label>
+        <label>Avez-vous une pratique intérieure régulière — silence, contemplation, foi, nature — qui vous recentre ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q10b" oninput="updateSlider('q10b','v10b');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q10a" oninput="updateSlider('q10a','q10av');updateProgress()">
+          <div class="slider-labels"><span>Aucune pratique</span><span>Pratique régulière</span></div>
+          <div class="slider-value" id="q10av">5</div>
+        </div>
+      </div>
+      <div class="question">
+        <span class="pilier-tag">Spiritualité & Pneuma</span>
+        <label>Avez-vous le sentiment d'être en accord avec vos valeurs dans la façon dont vous vivez au quotidien ?</label>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q10b" oninput="updateSlider('q10b','q10bv');updateProgress()">
           <div class="slider-labels"><span>Grand écart</span><span>Plein accord</span></div>
-          <div class="slider-value" id="v10b">5</div>
+          <div class="slider-value" id="q10bv">5</div>
         </div>
       </div>
-
-      <!-- Q10c Spiritualité -->
       <div class="question">
         <span class="pilier-tag">Spiritualité & Pneuma</span>
-        <label>Face à une épreuve difficile, trouvez-vous des ressources intérieures pour tenir — ou avez-vous l'impression d'être seul, sans ancrage, face à ce qui vous dépasse ?</label>
+        <label>Face à une épreuve difficile, trouvez-vous des ressources intérieures pour tenir — ou avez-vous l'impression d'être seul, sans ancrage ?</label>
         <div class="slider-wrap">
-          <input type="range" class="slider" min="1" max="10" value="5" id="q10c" oninput="updateSlider('q10c','v10c');updateProgress2()">
+          <input type="range" class="slider" min="1" max="10" value="5" id="q10c" oninput="updateSlider('q10c','q10cv');updateProgress()">
           <div class="slider-labels"><span>Seul, sans ancrage</span><span>Ressources solides</span></div>
-          <div class="slider-value" id="v10c">5</div>
+          <div class="slider-value" id="q10cv">5</div>
         </div>
+      </div>
       </div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="goTo1()">← Retour</button>
@@ -476,7 +437,7 @@ body{
     </div>
   </div>
 
-  <!-- RÉSULTATS -->
+<!-- RÉSULTATS -->
   <div id="results" class="results">
     <div class="results-title">Votre diagnostic</div>
 
@@ -514,22 +475,23 @@ body{
 </div>
 
 <script>
-// Slider update
 function updateSlider(id, vid) {
   document.getElementById(vid).textContent = document.getElementById(id).value;
 }
 
-function updateProgress1() {
-  const vals = ['q1','q2','q3','q4'].map(id => parseInt(document.getElementById(id).value));
-  const avg = vals.reduce((a,b) => a+b, 0) / 40 * 100;
-  document.getElementById('prog1').style.width = avg + '%';
+function updateProgress() {
+  // progress handled per part
 }
 
-function updateProgress2() {
-  const vals = ['q5','q6','q7','q8','q9','q10'].map(id => parseInt(document.getElementById(id).value));
-  const avg = vals.reduce((a,b) => a+b, 0) / 60 * 100;
-  document.getElementById('prog2').style.width = avg + '%';
+function updateProgress1() {}
+function updateProgress2() {}
+
+function getVal(id) { 
+  const el = document.getElementById(id);
+  return el ? parseInt(el.value) : 5; 
 }
+
+function avg3(a,b,c) { return Math.round((getVal(a)+getVal(b)+getVal(c))/3); }
 
 function goTo1() {
   document.getElementById('part1').style.display = 'block';
@@ -547,8 +509,6 @@ function goTo2() {
   window.scrollTo(0, 0);
 }
 
-function getVal(id) { return parseInt(document.getElementById(id).value); }
-
 function showResults() {
   document.getElementById('part2').style.display = 'none';
   document.getElementById('results').style.display = 'block';
@@ -557,21 +517,20 @@ function showResults() {
   window.scrollTo(0, 0);
 
   const p = {
-    psycho: Math.round((getVal('q1')+getVal('q1b')+getVal('q1c'))/3),
-    physique: Math.round((getVal('q2')+getVal('q2b')+getVal('q2c'))/3),
-    philo: Math.round((getVal('q3')+getVal('q3b')+getVal('q3c'))/3),
-    pneuma: Math.round((getVal('q4')+getVal('q4b')+getVal('q4c'))/3)
+    psycho:  avg3('q1a','q1b','q1c'),
+    physique: avg3('q2a','q2b','q2c'),
+    philo:   avg3('q3a','q3b','q3c'),
+    pneuma:  avg3('q4a','q4b','q4c')
   };
   const d = {
-    fatigue: Math.round((getVal('q5')+getVal('q5b')+getVal('q5c'))/3),
-    relations: Math.round((getVal('q6')+getVal('q6b')+getVal('q6c'))/3),
-    travail: Math.round((getVal('q7')+getVal('q7b')+getVal('q7c'))/3),
-    argent: Math.round((getVal('q8')+getVal('q8b')+getVal('q8c'))/3),
-    identite: Math.round((getVal('q9')+getVal('q9b')+getVal('q9c'))/3),
-    spirituel: Math.round((getVal('q10')+getVal('q10b')+getVal('q10c'))/3)
+    fatigue:   avg3('q5a','q5b','q5c'),
+    relations: avg3('q6a','q6b','q6c'),
+    travail:   avg3('q7a','q7b','q7c'),
+    argent:    avg3('q8a','q8b','q8c'),
+    identite:  avg3('q9a','q9b','q9c'),
+    spirituel: avg3('q10a','q10b','q10c')
   };
 
-  // Chart 4P
   new Chart(document.getElementById('chart4p'), {
     type: 'radar',
     data: {
@@ -579,20 +538,16 @@ function showResults() {
       datasets: [{
         data: [p.psycho, p.physique, p.philo, p.pneuma],
         backgroundColor: 'rgba(232,131,42,0.15)',
-        borderColor: '#E8832A',
-        borderWidth: 2,
-        pointBackgroundColor: '#E8832A',
-        pointRadius: 5
+        borderColor: '#E8832A', borderWidth: 2,
+        pointBackgroundColor: '#E8832A', pointRadius: 5
       }]
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
+    options: { responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { r: { min: 0, max: 10, ticks: { stepSize: 2, font: { size: 10 } }, pointLabels: { font: { size: 11, family: 'Montserrat' } } } }
+      scales: { r: { min: 0, max: 10, ticks: { stepSize: 2, font:{size:10} }, pointLabels: { font:{size:11,family:'Montserrat'} } } }
     }
   });
 
-  // Chart 6D
   new Chart(document.getElementById('chart6d'), {
     type: 'radar',
     data: {
@@ -600,28 +555,22 @@ function showResults() {
       datasets: [{
         data: [d.fatigue, d.relations, d.travail, d.argent, d.identite, d.spirituel],
         backgroundColor: 'rgba(197,106,16,0.15)',
-        borderColor: '#C96A10',
-        borderWidth: 2,
-        pointBackgroundColor: '#C96A10',
-        pointRadius: 5
+        borderColor: '#C96A10', borderWidth: 2,
+        pointBackgroundColor: '#C96A10', pointRadius: 5
       }]
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
+    options: { responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { r: { min: 0, max: 10, ticks: { stepSize: 2, font: { size: 10 } }, pointLabels: { font: { size: 11, family: 'Montserrat' } } } }
+      scales: { r: { min: 0, max: 10, ticks: { stepSize: 2, font:{size:10} }, pointLabels: { font:{size:11,family:'Montserrat'} } } }
     }
   });
 
-  // Synthèse
   const allP = [p.psycho, p.physique, p.philo, p.pneuma];
   const allD = [d.fatigue, d.relations, d.travail, d.argent, d.identite, d.spirituel];
   const moyP = (allP.reduce((a,b)=>a+b,0)/4).toFixed(1);
   const moyD = (allD.reduce((a,b)=>a+b,0)/6).toFixed(1);
-
-  const pilierNames = ['Psychologique', 'Physique', 'Philosophique', 'Pneuma'];
-  const domaineNames = ['Fatigue & Santé', 'Relations & Amour', 'Travail & Sens', 'Argent & Abondance', 'Identité & Confiance', 'Spiritualité & Pneuma'];
-
+  const pilierNames = ['Psychologique','Physique','Philosophique','Pneuma'];
+  const domaineNames = ['Fatigue & Santé','Relations & Amour','Travail & Sens','Argent & Abondance','Identité & Confiance','Spiritualité & Pneuma'];
   const weakP = pilierNames[allP.indexOf(Math.min(...allP))];
   const weakD = domaineNames[allD.indexOf(Math.min(...allD))];
   const strongP = pilierNames[allP.indexOf(Math.max(...allP))];
@@ -632,7 +581,7 @@ function showResults() {
   } else if (weakP === 'Physique' || weakD === 'Fatigue & Santé') {
     insight = `Votre corps vous envoie un signal clair. Le pilier Physique et le domaine "${weakD}" sont liés — l'un ne peut pas avancer sans l'autre.`;
   } else if (weakP === 'Philosophique' || weakD === 'Travail & Sens') {
-    insight = `La question du sens traverse votre diagnostic. Votre pilier Philosophique et votre domaine "${weakD}" pointent vers la même nécessité : trouver ou retrouver votre boussole intérieure.`;
+    insight = `La question du sens traverse votre diagnostic. Votre pilier Philosophique et votre domaine "${weakD}" pointent vers la même nécessité : retrouver votre boussole intérieure.`;
   } else {
     insight = `Votre pilier le plus fragile est le ${weakP} — et votre domaine "${weakD}" en ressent les effets. C'est exactement là que le travail peut commencer.`;
   }
@@ -641,7 +590,7 @@ function showResults() {
     <p class="synthese-txt">Votre score moyen sur les 4 piliers est de <strong>${moyP}/10</strong>. Sur les 6 domaines de vie, il est de <strong>${moyD}/10</strong>.</p>
     <p class="synthese-txt">Votre point d'appui le plus solide est le pilier <strong>${strongP}</strong> — c'est de là qu'on part.</p>
     <div class="synthese-insight">${insight}</div>
-    <p class="synthese-txt" style="margin-top:20px;">Ces chiffres ne sont pas un jugement. Ils sont un point de départ. Un regard honnête sur là où vous en êtes — pour décider ensemble où vous voulez aller.</p>
+    <p class="synthese-txt" style="margin-top:20px;">Ces chiffres ne sont pas un jugement. Ils sont un point de départ.</p>
     ${allP.map((v,i) => `<div class="score-item"><span class="score-label">${pilierNames[i]}</span><div class="score-bar-wrap"><div class="score-bar" style="width:${v*10}%"></div></div><span class="score-val">${v}/10</span></div>`).join('')}
     <div style="height:16px;"></div>
     ${allD.map((v,i) => `<div class="score-item"><span class="score-label">${domaineNames[i]}</span><div class="score-bar-wrap"><div class="score-bar" style="width:${v*10}%"></div></div><span class="score-val">${v}/10</span></div>`).join('')}
