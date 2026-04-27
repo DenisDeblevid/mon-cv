@@ -613,5 +613,19 @@ document.getElementById('c-btn').onclick=function(){
 
 
 </script>-e 
+<!-- BANDEAU COOKIES -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(44,26,8,0.95);backdrop-filter:blur(12px);padding:16px 24px;z-index:9999;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid rgba(232,131,42,0.3);">
+  <p style="font-family:'Montserrat',sans-serif;font-size:12px;color:rgba(255,255,255,0.8);margin:0;max-width:680px;line-height:1.6;">Ce site n'utilise pas de cookies de suivi ou publicitaires. Il peut utiliser des cookies techniques nécessaires à son bon fonctionnement.</p>
+  <button onclick="acceptCookies()" style="font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--amber);color:white;border:none;padding:10px 20px;cursor:pointer;white-space:nowrap;border-radius:2px;">J'ai compris</button>
+</div>
+<script>
+function acceptCookies(){
+  localStorage.setItem('cookies_accepted','1');
+  document.getElementById('cookie-banner').style.display='none';
+}
+if(!localStorage.getItem('cookies_accepted')){
+  document.getElementById('cookie-banner').style.display='flex';
+}
+</script>
 </body>
 </html>
