@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mots-clés Diagnostiques — Méthode 4P</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --or:#C9A84C;
+  --encre:#1A1A2E;
+  --ardoise:#4A4A6A;
+  --brume:#F5F3EE;
+  --blanc:#FDFCF9;
+  --rouge:#C0392B;
+  --vert:#5A7A5A;
+  --bleu:#2C4A7C;
+  --violet:#6B4F8A;
+  --amber:#E8832A;
+}
+body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--encre);padding:40px 20px;}
+.page{max-width:900px;margin:0 auto;}
+
+.header{background:var(--encre);padding:40px 48px;border-radius:4px;margin-bottom:32px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--blanc);margin-bottom:6px;}
+.header h1 em{color:var(--or);font-style:italic;}
+.header p{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+
+/* SEARCH */
+.search-wrap{margin-bottom:28px;}
+.search-input{width:100%;padding:14px 20px;border:1px solid rgba(26,26,46,0.15);border-radius:4px;font-family:'Montserrat',sans-serif;font-size:14px;color:var(--encre);background:var(--blanc);outline:none;}
+.search-input:focus{border-color:var(--or);}
+
+.section{background:var(--blanc);border-radius:4px;padding:28px 32px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--or);}
+.section-letter{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;line-height:1;opacity:0.15;}
+.section-title{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--or);}
+.section-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--encre);}
+
+.psycho .section-letter{color:var(--bleu);}
+.psycho .section-title{color:var(--bleu);}
+.psycho .section-header{border-bottom-color:var(--bleu);}
+.philo .section-letter{color:var(--violet);}
+.philo .section-title{color:var(--violet);}
+.philo .section-header{border-bottom-color:var(--violet);}
+.physique .section-letter{color:var(--vert);}
+.physique .section-title{color:var(--vert);}
+.physique .section-header{border-bottom-color:var(--vert);}
+.pneuma .section-letter{color:var(--or);}
+.domaine .section-letter{color:var(--amber);}
+.domaine .section-title{color:var(--amber);}
+.domaine .section-header{border-bottom-color:var(--amber);}
+
+.subsection{margin-bottom:16px;}
+.subsection-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ardoise);margin-bottom:10px;opacity:0.7;}
+.tags{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{
+  display:inline-block;
+  padding:5px 12px;
+  border-radius:2px;
+  font-size:12px;
+  cursor:pointer;
+  transition:all .2s;
+  border:1px solid rgba(26,26,46,0.12);
+  color:var(--ardoise);
+  background:rgba(26,26,46,0.03);
+  user-select:none;
+}
+.tag:hover{background:rgba(201,168,76,0.1);border-color:var(--or);color:var(--encre);}
+.tag.selected{background:var(--encre);color:var(--or);border-color:var(--encre);}
+.tag.hidden{display:none;}
+
+.footer-bar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:var(--encre);
+  padding:16px 32px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index:100;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.2);
+}
+.footer-selected{font-size:12px;color:rgba(255,255,255,0.6);}
+.footer-selected strong{color:var(--or);}
+.footer-btn{
+  padding:10px 24px;
+  background:var(--or);
+  color:var(--encre);
+  border:none;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-radius:2px;
+  transition:all .2s;
+}
+.footer-btn:hover{background:#b8922e;}
+.footer-clear{font-size:11px;color:rgba(255,255,255,0.4);cursor:pointer;text-decoration:underline;margin-right:16px;}
+
+.result-modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.6);
+  z-index:200;
+  padding:40px 20px;
+  overflow-y:auto;
+}
+.result-inner{
+  max-width:700px;
+  margin:0 auto;
+  background:var(--blanc);
+  border-radius:4px;
+  padding:40px;
+}
+.result-inner h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--encre);margin-bottom:20px;}
+.result-text{font-size:14px;color:var(--ardoise);line-height:1.8;margin-bottom:20px;white-space:pre-wrap;}
+.result-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-copy{padding:10px 24px;background:var(--encre);color:var(--or);border:none;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;}
+.btn-close{padding:10px 24px;background:transparent;color:var(--ardoise);border:1px solid rgba(26,26,46,0.2);font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;}
+.copy-ok{font-size:12px;color:var(--vert);margin-top:8px;display:none;}
+
+.pb{padding-bottom:80px;}
+</style>
+</head>
+<body>
+<div class="page pb">
+
+  <div class="header">
+    <h1>Mots-clés <em>Diagnostiques</em></h1>
+    <p>Méthode 4P · Denis Deblevid · Référentiel de séance</p>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search" placeholder="Rechercher un mot-clé..." oninput="filterTags()">
+  </div>
+
+  <!-- PSYCHOLOGIQUE -->
+  <div class="section psycho">
+    <div class="section-header">
+      <div class="section-letter">P</div>
+      <div>
+        <div class="section-title">Pilier 1</div>
+        <div class="section-name">Psychologique</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">États émotionnels</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">anxiété</span>
+        <span class="tag" onclick="toggle(this)">rumination</span>
+        <span class="tag" onclick="toggle(this)">colère refoulée</span>
+        <span class="tag" onclick="toggle(this)">tristesse</span>
+        <span class="tag" onclick="toggle(this)">honte</span>
+        <span class="tag" onclick="toggle(this)">culpabilité</span>
+        <span class="tag" onclick="toggle(this)">peur chronique</span>
+        <span class="tag" onclick="toggle(this)">hypervigilance</span>
+        <span class="tag" onclick="toggle(this)">instabilité émotionnelle</span>
+        <span class="tag" onclick="toggle(this)">dissociation</span>
+        <span class="tag" onclick="toggle(this)">alexithymie</span>
+        <span class="tag" onclick="toggle(this)">hyperempathie</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Schémas comportementaux</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">perfectionnisme</span>
+        <span class="tag" onclick="toggle(this)">besoin de contrôle</span>
+        <span class="tag" onclick="toggle(this)">dépendance affective</span>
+        <span class="tag" onclick="toggle(this)">besoin d'approbation</span>
+        <span class="tag" onclick="toggle(this)">peur du jugement</span>
+        <span class="tag" onclick="toggle(this)">peur de l'abandon</span>
+        <span class="tag" onclick="toggle(this)">peur de l'échec</span>
+        <span class="tag" onclick="toggle(this)">sabotage inconscient</span>
+        <span class="tag" onclick="toggle(this)">procrastination</span>
+        <span class="tag" onclick="toggle(this)">projection</span>
+        <span class="tag" onclick="toggle(this)">déni</span>
+        <span class="tag" onclick="toggle(this)">rationalisation excessive</span>
+        <span class="tag" onclick="toggle(this)">narcissisme blessé</span>
+        <span class="tag" onclick="toggle(this)">attachement insécure</span>
+        <span class="tag" onclick="toggle(this)">trauma non résolu</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Analyse Transactionnelle</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">driver Sois Fort</span>
+        <span class="tag" onclick="toggle(this)">driver Sois Parfait</span>
+        <span class="tag" onclick="toggle(this)">driver Fais Plaisir</span>
+        <span class="tag" onclick="toggle(this)">driver Dépêche-toi</span>
+        <span class="tag" onclick="toggle(this)">driver Fais des Efforts</span>
+        <span class="tag" onclick="toggle(this)">position Victime</span>
+        <span class="tag" onclick="toggle(this)">position Sauveur</span>
+        <span class="tag" onclick="toggle(this)">position Persécuteur</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Croyances limitantes</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">je ne suis pas légitime</span>
+        <span class="tag" onclick="toggle(this)">je ne mérite pas</span>
+        <span class="tag" onclick="toggle(this)">je dois tout contrôler</span>
+        <span class="tag" onclick="toggle(this)">les autres réussissent mieux</span>
+        <span class="tag" onclick="toggle(this)">c'est trop tard</span>
+        <span class="tag" onclick="toggle(this)">je ne suis pas fait pour ça</span>
+        <span class="tag" onclick="toggle(this)">inflation du moi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHYSIQUE -->
+  <div class="section physique">
+    <div class="section-header">
+      <div class="section-letter">P</div>
+      <div>
+        <div class="section-title">Pilier 2</div>
+        <div class="section-name">Physique</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Énergie & Vitalité</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">épuisement</span>
+        <span class="tag" onclick="toggle(this)">vitalité basse</span>
+        <span class="tag" onclick="toggle(this)">énergie fluctuante</span>
+        <span class="tag" onclick="toggle(this)">surmenage</span>
+        <span class="tag" onclick="toggle(this)">burnout</span>
+        <span class="tag" onclick="toggle(this)">fatigue chronique</span>
+        <span class="tag" onclick="toggle(this)">hyperactivité compensatoire</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Corps & Santé</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">tension corporelle</span>
+        <span class="tag" onclick="toggle(this)">douleurs chroniques</span>
+        <span class="tag" onclick="toggle(this)">insomnie</span>
+        <span class="tag" onclick="toggle(this)">sommeil non réparateur</span>
+        <span class="tag" onclick="toggle(this)">déconnexion corps-esprit</span>
+        <span class="tag" onclick="toggle(this)">somatisation</span>
+        <span class="tag" onclick="toggle(this)">image corporelle négative</span>
+        <span class="tag" onclick="toggle(this)">rapport difficile au vieillissement</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Hygiène de vie</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">sédentarité</span>
+        <span class="tag" onclick="toggle(this)">alimentation désordonnée</span>
+        <span class="tag" onclick="toggle(this)">absence de rituel</span>
+        <span class="tag" onclick="toggle(this)">manque de mouvement</span>
+        <span class="tag" onclick="toggle(this)">addiction comportementale</span>
+        <span class="tag" onclick="toggle(this)">trouble du sommeil</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHILOSOPHIQUE -->
+  <div class="section philo">
+    <div class="section-header">
+      <div class="section-letter">P</div>
+      <div>
+        <div class="section-title">Pilier 3</div>
+        <div class="section-name">Philosophique</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Sens & Valeurs</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">vide de sens</span>
+        <span class="tag" onclick="toggle(this)">quête de sens</span>
+        <span class="tag" onclick="toggle(this)">confusion des valeurs</span>
+        <span class="tag" onclick="toggle(this)">absence de boussole</span>
+        <span class="tag" onclick="toggle(this)">perte de repères</span>
+        <span class="tag" onclick="toggle(this)">questionnement existentiel</span>
+        <span class="tag" onclick="toggle(this)">nihilisme</span>
+        <span class="tag" onclick="toggle(this)">cynisme</span>
+        <span class="tag" onclick="toggle(this)">idéalisme paralysant</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Pensée & Discernement</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">confusion dépend/ne dépend pas</span>
+        <span class="tag" onclick="toggle(this)">rigidité cognitive</span>
+        <span class="tag" onclick="toggle(this)">fatalisme</span>
+        <span class="tag" onclick="toggle(this)">résistance au changement</span>
+        <span class="tag" onclick="toggle(this)">pensée binaire</span>
+        <span class="tag" onclick="toggle(this)">catastrophisme</span>
+        <span class="tag" onclick="toggle(this)">manque de discernement</span>
+        <span class="tag" onclick="toggle(this)">relativisme excessif</span>
+        <span class="tag" onclick="toggle(this)">conformisme</span>
+        <span class="tag" onclick="toggle(this)">rapport difficile à l'autorité</span>
+        <span class="tag" onclick="toggle(this)">besoin de validation intellectuelle</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Rapport au temps</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">rapport difficile au passé</span>
+        <span class="tag" onclick="toggle(this)">regrets</span>
+        <span class="tag" onclick="toggle(this)">anticipation anxieuse</span>
+        <span class="tag" onclick="toggle(this)">difficulté à vivre le présent</span>
+        <span class="tag" onclick="toggle(this)">rapport difficile à la mort</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PNEUMA -->
+  <div class="section pneuma">
+    <div class="section-header">
+      <div class="section-letter">P</div>
+      <div>
+        <div class="section-title">Pilier 4</div>
+        <div class="section-name">Pneuma</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Ancrage & Pratique</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">ancrage fragile</span>
+        <span class="tag" onclick="toggle(this)">absence de pratique intérieure</span>
+        <span class="tag" onclick="toggle(this)">isolement spirituel</span>
+        <span class="tag" onclick="toggle(this)">perte de foi</span>
+        <span class="tag" onclick="toggle(this)">sentiment de vide</span>
+        <span class="tag" onclick="toggle(this)">quête d'appartenance</span>
+        <span class="tag" onclick="toggle(this)">blessure religieuse</span>
+        <span class="tag" onclick="toggle(this)">peur du silence</span>
+        <span class="tag" onclick="toggle(this)">incapacité à la contemplation</span>
+        <span class="tag" onclick="toggle(this)">matérialisme exclusif</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Sens profond</div>
+      <div class="tags">
+        <span class="tag" onclick="toggle(this)">question du legs</span>
+        <span class="tag" onclick="toggle(this)">rapport à la transcendance</span>
+        <span class="tag" onclick="toggle(this)">sentiment d'être à sa place</span>
+        <span class="tag" onclick="toggle(this)">alignement intérieur</span>
+        <span class="tag" onclick="toggle(this)">cohérence valeurs/actions</span>
+        <span class="tag" onclick="toggle(this)">syncrétisme confus</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOMAINES -->
+  <div class="section domaine">
+    <div class="section-header">
+      <div class="section-letter">D</div>
+      <div>
+        <div class="section-title">Domaine 1</div>
+        <div class="section-name">Fatigue & Santé</div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag" onclick="toggle(this)">signaux ignorés</span>
+      <span class="tag" onclick="toggle(this)">corps mis en veille</span>
+      <span class="tag" onclick="toggle(this)">résistance au repos</span>
+      <span class="tag" onclick="toggle(this)">fierté de tenir</span>
+      <span class="tag" onclick="toggle(this)">négation de la fatigue</span>
+      <span class="tag" onclick="toggle(this)">fatigue masquée</span>
+      <span class="tag" onclick="toggle(this)">récupération insuffisante</span>
+    </div>
+  </div>
+
+  <div class="section domaine">
+    <div class="section-header">
+      <div class="section-letter">D</div>
+      <div>
+        <div class="section-title">Domaine 2</div>
+        <div class="section-name">Relations & Amour</div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag" onclick="toggle(this)">fusion</span>
+      <span class="tag" onclick="toggle(this)">dépendance relationnelle</span>
+      <span class="tag" onclick="toggle(this)">évitement</span>
+      <span class="tag" onclick="toggle(this)">manque de limites</span>
+      <span class="tag" onclick="toggle(this)">besoins non exprimés</span>
+      <span class="tag" onclick="toggle(this)">attentes implicites</span>
+      <span class="tag" onclick="toggle(this)">relation épuisante</span>
+      <span class="tag" onclick="toggle(this)">isolement relationnel</span>
+      <span class="tag" onclick="toggle(this)">peur de l'intimité</span>
+      <span class="tag" onclick="toggle(this)">jalousie</span>
+      <span class="tag" onclick="toggle(this)">rivalité</span>
+      <span class="tag" onclick="toggle(this)">triangulation</span>
+      <span class="tag" onclick="toggle(this)">parentification</span>
+    </div>
+  </div>
+
+  <div class="section domaine">
+    <div class="section-header">
+      <div class="section-letter">D</div>
+      <div>
+        <div class="section-title">Domaine 3</div>
+        <div class="section-name">Travail & Sens</div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag" onclick="toggle(this)">désalignement vocation/activité</span>
+      <span class="tag" onclick="toggle(this)">perte de motivation</span>
+      <span class="tag" onclick="toggle(this)">surinvestissement</span>
+      <span class="tag" onclick="toggle(this)">sous-investissement</span>
+      <span class="tag" onclick="toggle(this)">conflit de valeurs au travail</span>
+      <span class="tag" onclick="toggle(this)">manque de reconnaissance</span>
+      <span class="tag" onclick="toggle(this)">reconversion à envisager</span>
+      <span class="tag" onclick="toggle(this)">hyperperformance</span>
+      <span class="tag" onclick="toggle(this)">syndrome de l'imposteur</span>
+      <span class="tag" onclick="toggle(this)">workaholisme</span>
+      <span class="tag" onclick="toggle(this)">peur de réussir</span>
+    </div>
+  </div>
+
+  <div class="section domaine">
+    <div class="section-header">
+      <div class="section-letter">D</div>
+      <div>
+        <div class="section-title">Domaine 4</div>
+        <div class="section-name">Argent & Abondance</div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag" onclick="toggle(this)">croyance de manque</span>
+      <span class="tag" onclick="toggle(this)">honte autour de l'argent</span>
+      <span class="tag" onclick="toggle(this)">argent tabou</span>
+      <span class="tag" onclick="toggle(this)">dépenses compulsives</span>
+      <span class="tag" onclick="toggle(this)">rapport à la valeur personnelle</span>
+      <span class="tag" onclick="toggle(this)">blocage sur les tarifs</span>
+      <span class="tag" onclick="toggle(this)">héritage familial financier</span>
+      <span class="tag" onclick="toggle(this)">dette cachée</span>
+      <span class="tag" onclick="toggle(this)">rapport père/argent</span>
+      <span class="tag" onclick="toggle(this)">rapport mère/sécurité</span>
+    </div>
+  </div>
+
+  <div class="section domaine">
+    <div class="section-header">
+      <div class="section-letter">D</div>
+      <div>
+        <div class="section-title">Domaine 5</div>
+        <div class="section-name">Identité & Confiance</div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag" onclick="toggle(this)">image instable</span>
+      <span class="tag" onclick="toggle(this)">dépendance au regard</span>
+      <span class="tag" onclick="toggle(this)">difficulté à dire non</span>
+      <span class="tag" onclick="toggle(this)">perte d'identité</span>
+      <span class="tag" onclick="toggle(this)">rôles multiples épuisants</span>
+      <span class="tag" onclick="toggle(this)">manque d'affirmation</span>
+      <span class="tag" onclick="toggle(this)">identité construite pour les autres</span>
+      <span class="tag" onclick="toggle(this)">syndrome du caméléon</span>
+      <span class="tag" onclick="toggle(this)">effacement de soi</span>
+      <span class="tag" onclick="toggle(this)">masque social permanent</span>
+    </div>
+  </div>
+
+  <div class="section domaine">
+    <div class="section-header">
+      <div class="section-letter">D</div>
+      <div>
+        <div class="section-title">Domaine 6</div>
+        <div class="section-name">Spiritualité & Pneuma</div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag" onclick="toggle(this)">pratique absente</span>
+      <span class="tag" onclick="toggle(this)">foi questionnée</span>
+      <span class="tag" onclick="toggle(this)">sentiment d'appartenance faible</span>
+      <span class="tag" onclick="toggle(this)">rapport à la communauté</span>
+      <span class="tag" onclick="toggle(this)">solitude intérieure</span>
+      <span class="tag" onclick="toggle(this)">quête non nommée</span>
+      <span class="tag" onclick="toggle(this)">rituel manquant</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER BAR -->
+<div class="footer-bar">
+  <div class="footer-selected">
+    <strong id="count">0</strong> mot(s)-clé(s) sélectionné(s)
+  </div>
+  <div style="display:flex;align-items:center;">
+    <span class="footer-clear" onclick="clearAll()">Tout effacer</span>
+    <button class="footer-btn" onclick="generateText()">Générer l'observation →</button>
+  </div>
+</div>
+
+<!-- MODAL RÉSULTAT -->
+<div class="result-modal" id="modal">
+  <div class="result-inner">
+    <h2>Observation générée</h2>
+    <div class="result-text" id="result-text" contenteditable="true"></div>
+    <div class="result-actions">
+      <button class="btn-copy" onclick="copyResult()">Copier</button>
+      <button class="btn-close" onclick="closeModal()">Fermer</button>
+    </div>
+    <div class="copy-ok" id="copy-ok">✓ Copié dans le presse-papier</div>
+  </div>
+</div>
+
+<script>
+const selected = new Set();
+
+function toggle(el) {
+  const tag = el.textContent.trim();
+  if (selected.has(tag)) {
+    selected.delete(tag);
+    el.classList.remove('selected');
+  } else {
+    selected.add(tag);
+    el.classList.add('selected');
+  }
+  document.getElementById('count').textContent = selected.size;
+}
+
+function clearAll() {
+  selected.clear();
+  document.querySelectorAll('.tag.selected').forEach(t => t.classList.remove('selected'));
+  document.getElementById('count').textContent = 0;
+}
+
+function filterTags() {
+  const q = document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('.tag').forEach(tag => {
+    if (q === '' || tag.textContent.toLowerCase().includes(q)) {
+      tag.classList.remove('hidden');
+    } else {
+      tag.classList.add('hidden');
+    }
+  });
+}
+
+function generateText() {
+  if (selected.size === 0) return;
+  const tags = Array.from(selected);
+
+  const psycho = tags.filter(t => [
+    'anxiété','rumination','colère refoulée','tristesse','honte','culpabilité','peur chronique',
+    'hypervigilance','instabilité émotionnelle','dissociation','alexithymie','hyperempathie',
+    'perfectionnisme','besoin de contrôle','dépendance affective','besoin d\'approbation',
+    'peur du jugement','peur de l\'abandon','peur de l\'échec','sabotage inconscient',
+    'procrastination','projection','déni','rationalisation excessive','narcissisme blessé',
+    'attachement insécure','trauma non résolu','driver Sois Fort','driver Sois Parfait',
+    'driver Fais Plaisir','driver Dépêche-toi','driver Fais des Efforts','position Victime',
+    'position Sauveur','position Persécuteur','je ne suis pas légitime','je ne mérite pas',
+    'je dois tout contrôler','les autres réussissent mieux','c\'est trop tard',
+    'je ne suis pas fait pour ça','inflation du moi'
+  ].includes(t));
+
+  const physique = tags.filter(t => [
+    'épuisement','vitalité basse','énergie fluctuante','surmenage','burnout','fatigue chronique',
+    'hyperactivité compensatoire','tension corporelle','douleurs chroniques','insomnie',
+    'sommeil non réparateur','déconnexion corps-esprit','somatisation','image corporelle négative',
+    'rapport difficile au vieillissement','sédentarité','alimentation désordonnée',
+    'absence de rituel','manque de mouvement','addiction comportementale','trouble du sommeil'
+  ].includes(t));
+
+  const philo = tags.filter(t => [
+    'vide de sens','quête de sens','confusion des valeurs','absence de boussole','perte de repères',
+    'questionnement existentiel','nihilisme','cynisme','idéalisme paralysant',
+    'confusion dépend/ne dépend pas','rigidité cognitive','fatalisme','résistance au changement',
+    'pensée binaire','catastrophisme','manque de discernement','relativisme excessif',
+    'conformisme','rapport difficile à l\'autorité','besoin de validation intellectuelle',
+    'rapport difficile au passé','regrets','anticipation anxieuse','difficulté à vivre le présent',
+    'rapport difficile à la mort'
+  ].includes(t));
+
+  const pneuma = tags.filter(t => [
+    'ancrage fragile','absence de pratique intérieure','isolement spirituel','perte de foi',
+    'sentiment de vide','quête d\'appartenance','blessure religieuse','peur du silence',
+    'incapacité à la contemplation','matérialisme exclusif','question du legs',
+    'rapport à la transcendance','sentiment d\'être à sa place','alignement intérieur',
+    'cohérence valeurs/actions','syncrétisme confus'
+  ].includes(t));
+
+  let text = '';
+
+  if (psycho.length > 0) {
+    text += `Sur le plan psychologique, la séance révèle : ${psycho.join(', ')}. Ces éléments méritent une attention particulière dans la suite de l'accompagnement.\n\n`;
+  }
+  if (physique.length > 0) {
+    text += `Sur le plan physique, on observe : ${physique.join(', ')}. Le corps envoie des signaux clairs qui nécessitent d'être entendus.\n\n`;
+  }
+  if (philo.length > 0) {
+    text += `Sur le plan philosophique, la personne présente : ${philo.join(', ')}. Un travail de clarification des valeurs et du discernement semble prioritaire.\n\n`;
+  }
+  if (pneuma.length > 0) {
+    text += `Sur le plan du Pneuma, on note : ${pneuma.join(', ')}. La dimension intérieure et le rapport au sens demandent à être explorés.\n\n`;
+  }
+
+  const domaines = tags.filter(t => !psycho.includes(t) && !physique.includes(t) && !philo.includes(t) && !pneuma.includes(t));
+  if (domaines.length > 0) {
+    text += `Dans les domaines de vie, les points saillants sont : ${domaines.join(', ')}.`;
+  }
+
+  document.getElementById('result-text').textContent = text.trim();
+  document.getElementById('modal').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function copyResult() {
+  const text = document.getElementById('result-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const ok = document.getElementById('copy-ok');
+    ok.style.display = 'block';
+    setTimeout(() => ok.style.display = 'none', 2000);
+  });
+}
+</script>
+</body>
+</html>
