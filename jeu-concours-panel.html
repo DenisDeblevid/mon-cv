@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeu-concours Panel Mai 2026 — Denis Deblevid</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --brun:#2C1A08;
+  --amber:#E8832A;
+  --dark:#C96A10;
+  --cream:#F5E6D0;
+  --light:#888888;
+  --white:#ffffff;
+}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:radial-gradient(ellipse 150% 150% at 100% 0%,#ffffff 0%,#fff8d0 15%,#f5c030 35%,#e8832a 52%,#2a1f0a 85%,#1a1206 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+}
+
+.wrap{max-width:560px;width:100%;}
+
+/* CARTE PRINCIPALE */
+.card{
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(16px);
+  border-radius:4px;
+  padding:48px 40px;
+  text-align:center;
+  box-shadow:0 8px 40px rgba(44,26,8,0.15);
+  animation:fu .8s ease both;
+}
+
+.tag{
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:20px;
+  display:block;
+}
+
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,5vw,3rem);
+  font-weight:300;
+  color:var(--brun);
+  line-height:1.2;
+  margin-bottom:12px;
+}
+h1 em{color:var(--amber);font-style:italic;}
+
+.subtitle{
+  font-size:14px;
+  color:var(--light);
+  line-height:1.7;
+  margin-bottom:32px;
+  font-style:italic;
+}
+
+.sep{
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);
+  margin:24px 0;
+}
+
+/* LOTS */
+.lots{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:32px;
+  text-align:left;
+}
+.lot{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:12px 16px;
+  background:rgba(232,131,42,0.06);
+  border-left:3px solid var(--amber);
+  border-radius:0 2px 2px 0;
+}
+.lot-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;
+  color:var(--amber);
+  font-weight:300;
+  min-width:36px;
+  text-align:center;
+  line-height:1;
+}
+.lot-num small{display:block;font-size:9px;color:var(--light);font-family:'Montserrat',sans-serif;letter-spacing:1px;}
+.lot-text{font-size:13px;color:var(--brun);line-height:1.5;}
+.lot-text strong{color:var(--dark);}
+
+.gratuit{
+  font-size:11px;
+  color:var(--light);
+  margin-bottom:28px;
+  font-style:italic;
+}
+
+/* BOUTONS */
+.btn-group{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:24px;
+}
+
+.btn{
+  display:block;
+  padding:16px 24px;
+  font-family:'Montserrat',sans-serif;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border:none;
+  cursor:pointer;
+  border-radius:2px;
+  transition:all .3s;
+  text-decoration:none;
+  text-align:center;
+}
+.btn-primary{
+  background:var(--amber);
+  color:white;
+}
+.btn-primary:hover{background:var(--dark);transform:translateY(-2px);}
+.btn-secondary{
+  background:transparent;
+  color:var(--brun);
+  border:2px solid var(--amber);
+}
+.btn-secondary:hover{background:rgba(232,131,42,0.08);transform:translateY(-2px);}
+
+/* MERCI */
+.merci{
+  display:none;
+  animation:fu .6s ease both;
+}
+.merci-icon{font-size:48px;margin-bottom:16px;}
+.merci h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;
+  font-weight:300;
+  color:var(--brun);
+  margin-bottom:12px;
+}
+.merci p{font-size:14px;color:var(--light);line-height:1.7;margin-bottom:24px;}
+.merci-btns{display:flex;flex-direction:column;gap:10px;}
+
+/* LEGAL */
+.legal{
+  font-size:10px;
+  color:var(--light);
+  line-height:1.6;
+  margin-top:20px;
+  padding-top:16px;
+  border-top:1px solid rgba(44,26,8,0.1);
+}
+
+/* DEVISE */
+.devise{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  color:var(--amber);
+  font-size:15px;
+  margin-top:20px;
+}
+
+@keyframes fu{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+
+    <!-- VUE PRINCIPALE -->
+    <div id="main">
+      <span class="tag">Jeu-concours · Panel Mai 2026</span>
+      <h1>Votre avis<br><em>compte.</em></h1>
+      <p class="subtitle">Aidez-moi à améliorer ce que je construis.<br>Votre retour honnête peut vous valoir quelque chose.</p>
+
+      <div class="sep"></div>
+
+      <div class="lots">
+        <div class="lot">
+          <div class="lot-num">12<small>ème</small></div>
+          <div class="lot-text"><strong>Forfait 3 séances en visio</strong></div>
+        </div>
+        <div class="lot">
+          <div class="lot-num">24<small>ème</small></div>
+          <div class="lot-text"><strong>1 séance de 45 minutes</strong></div>
+        </div>
+        <div class="lot">
+          <div class="lot-num">30<small>ème</small></div>
+          <div class="lot-text"><strong>1 séance de 45 minutes</strong></div>
+        </div>
+        <div class="lot">
+          <div class="lot-num">33<small>ème</small></div>
+          <div class="lot-text"><strong>1 séance de 45 minutes</strong></div>
+        </div>
+      </div>
+
+      <p class="gratuit">Participation entièrement gratuite · Sans obligation d'achat · Du 5 mai au 1er juin 2026</p>
+
+      <div class="btn-group">
+        <a href="https://renaitredelasoif.fr" target="_blank" class="btn btn-secondary" onclick="trackAction('site')">Visiter le site →</a>
+        <a href="https://denisdeblevid.github.io/mon-cv/feedback-panel.html" target="_blank" class="btn btn-primary" onclick="trackAction('enquete')">Remplir l'enquête →</a>
+      </div>
+
+      <div class="legal">
+        Jeu-concours sans obligation d'achat organisé par Denis Deblevid · Marseille · denisdeblevidcontact@gmail.com · Ouvert aux majeurs résidant en France · Une participation par personne · Règlement complet disponible sur demande · Ce jeu n'est pas sponsorisé par Facebook.
+      </div>
+
+      <div class="devise">« Ἀρκεῖ — Προκόπτω »</div>
+    </div>
+
+    <!-- VUE MERCI -->
+    <div class="merci" id="merci">
+      <div class="merci-icon">🙏</div>
+      <h2>Merci pour votre action.</h2>
+      <p>Revenez ici quand vous êtes prêt(e) pour l'étape suivante.</p>
+      <div class="merci-btns">
+        <a href="https://renaitredelasoif.fr" target="_blank" class="btn btn-secondary">Visiter le site →</a>
+        <a href="https://denisdeblevid.github.io/mon-cv/feedback-panel.html" target="_blank" class="btn btn-primary">Remplir l'enquête →</a>
+      </div>
+      <div class="devise" style="margin-top:24px;">« Ἀρκεῖ — Προκόπτω »</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function trackAction(type) {
+  setTimeout(() => {
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('merci').style.display = 'block';
+  }, 400);
+}
+</script>
+</body>
+</html>
