@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mots-clés Diagnostiques — Méthode 4P</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:#F5F3EE;color:#1A1A2E;padding:40px 20px 100px;}
+.page{max-width:900px;margin:0 auto;}
+.header{background:#1A1A2E;padding:36px 40px;border-radius:4px;margin-bottom:20px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:#fff;margin-bottom:4px;}
+.header h1 em{color:#C9A84C;font-style:italic;}
+.header p{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;}
+input[type=text]{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:14px;outline:none;margin-bottom:16px;background:#fff;}
+input[type=text]:focus{border-color:#C9A84C;}
+.section{background:#fff;border-radius:4px;padding:24px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06);}
+.sec-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:2px;}
+.sec-name{font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:14px;padding-bottom:10px;}
+.psycho .sec-label{color:#2C4A7C;} .psycho .sec-name{border-bottom:2px solid #2C4A7C;}
+.physique .sec-label{color:#5A7A5A;} .physique .sec-name{border-bottom:2px solid #5A7A5A;}
+.philo .sec-label{color:#6B4F8A;} .philo .sec-name{border-bottom:2px solid #6B4F8A;}
+.pneuma .sec-label{color:#C9A84C;} .pneuma .sec-name{border-bottom:2px solid #C9A84C;}
+.domaine .sec-label{color:#E8832A;} .domaine .sec-name{border-bottom:2px solid #E8832A;}
+.sub{margin-bottom:12px;}
+.sub-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:6px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{display:inline-block;padding:5px 11px;border-radius:2px;font-size:12px;cursor:pointer;border:1px solid #ddd;color:#4A4A6A;background:#fafafa;user-select:none;}
+.tag:hover{background:#fdf3e0;border-color:#C9A84C;}
+.tag.on{background:#1A1A2E;color:#C9A84C;border-color:#1A1A2E;}
+.tag.pos{border-color:#5A7A5A;color:#5A7A5A;background:rgba(90,122,90,0.04);}
+.tag.pos:hover{background:rgba(90,122,90,0.1);}
+.tag.pos.on{background:#5A7A5A;color:#fff;border-color:#5A7A5A;}
+.tag.hidden{display:none;}
+.result-zone{margin-top:14px;padding:12px 14px;background:rgba(201,168,76,0.07);border-left:3px solid #C9A84C;display:none;}
+.result-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:6px;}
+.result-text{font-size:13px;color:#4A4A6A;line-height:1.7;outline:none;min-height:36px;}
+.copy-btn{margin-top:8px;padding:5px 12px;background:#1A1A2E;color:#C9A84C;border:none;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2px;cursor:pointer;border-radius:2px;}
+.footer-bar{position:fixed;bottom:0;left:0;right:0;background:#1A1A2E;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+.f-count{font-size:12px;color:rgba(255,255,255,0.5);}
+.f-count strong{color:#C9A84C;}
+.f-clear{font-size:11px;color:rgba(255,255,255,0.3);cursor:pointer;background:none;border:none;font-family:'Montserrat',sans-serif;text-decoration:underline;margin-right:12px;}
+.f-gen{padding:10px 20px;background:#C9A84C;color:#1A1A2E;border:none;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;cursor:pointer;border-radius:2px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <h1>Mots-clés <em>Diagnostiques</em></h1>
+  <p>Méthode 4P · Denis Deblevid · Cliquez les termes observés · Tags verts = ressources positives</p>
+</div>
+
+<input type="text" id="search" placeholder="Rechercher un mot-clé..." oninput="filtrer()">
+
+<!-- PSYCHOLOGIQUE -->
+<div class="section psycho">
+  <div class="sec-label">Pilier 1</div>
+  <div class="sec-name">Psychologique</div>
+
+  <div class="sub"><div class="sub-title">États émotionnels — difficultés</div><div class="tags">
+    <span class="tag">anxiété</span><span class="tag">rumination</span><span class="tag">colère refoulée</span>
+    <span class="tag">tristesse persistante</span><span class="tag">honte</span><span class="tag">culpabilité</span>
+    <span class="tag">peur chronique</span><span class="tag">hypervigilance</span><span class="tag">instabilité émotionnelle</span>
+    <span class="tag">dissociation</span><span class="tag">alexithymie</span><span class="tag">hyperempathie</span>
+    <span class="tag">sentiment d'impuissance</span><span class="tag">apathie</span><span class="tag">irritabilité excessive</span>
+    <span class="tag">affect plat</span><span class="tag">désespoir</span><span class="tag">sentiment de vide intérieur</span>
+    <span class="tag">signaux à orienter vers un professionnel</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">États émotionnels — ressources</div><div class="tags">
+    <span class="tag pos">stabilité émotionnelle</span><span class="tag pos">capacité à lâcher prise</span>
+    <span class="tag pos">résilience</span><span class="tag pos">empathie équilibrée</span>
+    <span class="tag pos">conscience émotionnelle</span><span class="tag pos">gestion de la colère</span>
+    <span class="tag pos">sérénité retrouvée</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Schémas comportementaux — difficultés</div><div class="tags">
+    <span class="tag">perfectionnisme</span><span class="tag">besoin de contrôle</span>
+    <span class="tag">dépendance affective</span><span class="tag">besoin d'approbation</span>
+    <span class="tag">peur du jugement</span><span class="tag">peur de l'abandon</span>
+    <span class="tag">peur de l'échec</span><span class="tag">sabotage inconscient</span>
+    <span class="tag">procrastination</span><span class="tag">projection</span><span class="tag">déni</span>
+    <span class="tag">rationalisation excessive</span><span class="tag">narcissisme blessé</span>
+    <span class="tag">attachement insécure</span><span class="tag">trauma non résolu</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Schémas comportementaux — ressources</div><div class="tags">
+    <span class="tag pos">autonomie affective</span><span class="tag pos">confiance en soi solide</span>
+    <span class="tag pos">capacité à demander de l'aide</span><span class="tag pos">attachement sécure</span>
+    <span class="tag pos">bonne gestion des limites</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Analyse Transactionnelle — difficultés</div><div class="tags">
+    <span class="tag">driver Sois Fort</span><span class="tag">driver Sois Parfait</span>
+    <span class="tag">driver Fais Plaisir</span><span class="tag">driver Dépêche-toi</span>
+    <span class="tag">driver Fais des Efforts</span><span class="tag">position Victime</span>
+    <span class="tag">position Sauveur</span><span class="tag">position Persécuteur</span>
+    <span class="tag">état du moi dominant Parent Normatif</span><span class="tag">état du moi dominant Parent Nourricier</span>
+    <span class="tag">état du moi dominant Enfant Adapté Soumis</span>
+    <span class="tag">état du moi dominant Enfant Adapté Rebelle</span>
+    <span class="tag">jeux psychologiques identifiés</span><span class="tag">scénario de vie contraignant</span>
+    <span class="tag">injonctions précoces</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Analyse Transactionnelle — ressources</div><div class="tags">
+    <span class="tag pos">état du moi dominant Adulte</span>
+    <span class="tag pos">état du moi dominant Enfant Libre</span>
+    <span class="tag pos">permissions actives</span><span class="tag pos">sortie du triangle de Karpman</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Croyances limitantes</div><div class="tags">
+    <span class="tag">je ne suis pas légitime</span><span class="tag">je ne mérite pas</span>
+    <span class="tag">je dois tout contrôler</span><span class="tag">les autres réussissent mieux</span>
+    <span class="tag">c'est trop tard</span><span class="tag">je ne suis pas fait pour ça</span>
+    <span class="tag">inflation du moi</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Croyances ressources</div><div class="tags">
+    <span class="tag pos">je suis capable d'apprendre</span><span class="tag pos">je mérite ce que je désire</span>
+    <span class="tag pos">j'ai le droit de changer</span><span class="tag pos">je suis légitime</span>
+  </div></div>
+
+  <div class="result-zone" id="rz-psycho">
+    <div class="result-label">Observation générée — Psychologique</div>
+    <div class="result-text" id="rt-psycho" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-psycho', this)">Copier</button>
+  </div>
+</div>
+
+<!-- PHYSIQUE -->
+<div class="section physique">
+  <div class="sec-label">Pilier 2</div>
+  <div class="sec-name">Physique</div>
+
+  <div class="sub"><div class="sub-title">Énergie & Vitalité — difficultés</div><div class="tags">
+    <span class="tag">épuisement</span><span class="tag">vitalité basse</span><span class="tag">énergie fluctuante</span>
+    <span class="tag">surmenage</span><span class="tag">burnout</span><span class="tag">fatigue chronique</span>
+    <span class="tag">hyperactivité compensatoire</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Énergie & Vitalité — ressources</div><div class="tags">
+    <span class="tag pos">énergie stable</span><span class="tag pos">bonne récupération</span>
+    <span class="tag pos">vitalité présente</span><span class="tag pos">sommeil réparateur</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Corps & Santé — difficultés</div><div class="tags">
+    <span class="tag">tension corporelle</span><span class="tag">douleurs chroniques</span>
+    <span class="tag">insomnie</span><span class="tag">sommeil non réparateur</span>
+    <span class="tag">déconnexion corps-esprit</span><span class="tag">somatisation</span>
+    <span class="tag">image corporelle négative</span><span class="tag">rapport difficile au vieillissement</span>
+    <span class="tag">maux de tête fréquents</span><span class="tag">troubles digestifs récurrents</span>
+    <span class="tag">palpitations signalées</span><span class="tag">perte ou prise de poids notable</span>
+    <span class="tag">signaux corporels non explorés médicalement</span>
+    <span class="tag">suivi médical absent ou interrompu</span>
+    <span class="tag">à orienter vers un professionnel de santé</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Corps & Santé — ressources</div><div class="tags">
+    <span class="tag pos">bonne écoute du corps</span><span class="tag pos">pratique sportive régulière</span>
+    <span class="tag pos">rapport positif au corps</span><span class="tag pos">suivi médical à jour</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Hygiène de vie — difficultés</div><div class="tags">
+    <span class="tag">sédentarité</span><span class="tag">alimentation désordonnée</span>
+    <span class="tag">absence de rituel</span><span class="tag">manque de mouvement</span>
+    <span class="tag">addiction comportementale</span><span class="tag">trouble du sommeil</span>
+    <span class="tag">consommation excessive d'alcool</span><span class="tag">tabac comme régulateur émotionnel</span>
+    <span class="tag">écrans comme fuite</span><span class="tag">déshydratation chronique</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Hygiène de vie — ressources</div><div class="tags">
+    <span class="tag pos">rituels matinaux établis</span><span class="tag pos">alimentation consciente</span>
+    <span class="tag pos">hydratation régulière</span><span class="tag pos">absence d'addiction</span>
+  </div></div>
+
+  <div class="result-zone" id="rz-physique">
+    <div class="result-label">Observation générée — Physique</div>
+    <div class="result-text" id="rt-physique" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-physique', this)">Copier</button>
+  </div>
+</div>
+
+<!-- PHILOSOPHIQUE -->
+<div class="section philo">
+  <div class="sec-label">Pilier 3</div>
+  <div class="sec-name">Philosophique</div>
+
+  <div class="sub"><div class="sub-title">Sens & Valeurs — difficultés</div><div class="tags">
+    <span class="tag">vide de sens</span><span class="tag">quête de sens</span>
+    <span class="tag">confusion des valeurs</span><span class="tag">absence de boussole</span>
+    <span class="tag">perte de repères</span><span class="tag">questionnement existentiel</span>
+    <span class="tag">nihilisme</span><span class="tag">cynisme</span><span class="tag">idéalisme paralysant</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Sens & Valeurs — ressources</div><div class="tags">
+    <span class="tag pos">valeurs clairement définies</span><span class="tag pos">sens trouvé dans le quotidien</span>
+    <span class="tag pos">vision à long terme</span><span class="tag pos">philosophie de vie incarnée</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Pensée & Discernement — difficultés</div><div class="tags">
+    <span class="tag">confusion dépend/ne dépend pas</span><span class="tag">rigidité cognitive</span>
+    <span class="tag">fatalisme</span><span class="tag">résistance au changement</span>
+    <span class="tag">pensée binaire</span><span class="tag">catastrophisme</span>
+    <span class="tag">relativisme excessif</span><span class="tag">conformisme</span>
+    <span class="tag">rapport difficile à l'autorité</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Pensée & Discernement — ressources</div><div class="tags">
+    <span class="tag pos">bonne prohairesis</span><span class="tag pos">pensée nuancée</span>
+    <span class="tag pos">ouverture au changement</span><span class="tag pos">discernement développé</span>
+    <span class="tag pos">capacité à relativiser</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Rapport au temps — difficultés</div><div class="tags">
+    <span class="tag">rapport difficile au passé</span><span class="tag">regrets</span>
+    <span class="tag">anticipation anxieuse</span><span class="tag">difficulté à vivre le présent</span>
+    <span class="tag">rapport difficile à la mort</span><span class="tag">nostalgie paralysante</span>
+    <span class="tag">peur de l'avenir</span><span class="tag">urgence chronique</span>
+    <span class="tag">difficulté à se projeter</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Rapport au temps — ressources</div><div class="tags">
+    <span class="tag pos">présence au moment vécu</span><span class="tag pos">paix avec le passé</span>
+    <span class="tag pos">projection sereine</span><span class="tag pos">rapport apaisé à la mort</span>
+  </div></div>
+
+  <div class="result-zone" id="rz-philo">
+    <div class="result-label">Observation générée — Philosophique</div>
+    <div class="result-text" id="rt-philo" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-philo', this)">Copier</button>
+  </div>
+</div>
+
+<!-- PNEUMA -->
+<div class="section pneuma">
+  <div class="sec-label">Pilier 4</div>
+  <div class="sec-name">Pneuma</div>
+
+  <div class="sub"><div class="sub-title">Ancrage & Pratique — difficultés</div><div class="tags">
+    <span class="tag">ancrage fragile</span><span class="tag">absence de pratique intérieure</span>
+    <span class="tag">isolement spirituel</span><span class="tag">perte de foi</span>
+    <span class="tag">sentiment de vide</span><span class="tag">quête d'appartenance</span>
+    <span class="tag">blessure religieuse</span><span class="tag">peur du silence</span>
+    <span class="tag">incapacité à la contemplation</span><span class="tag">matérialisme exclusif</span>
+    <span class="tag">spiritualité de façade</span><span class="tag">dépendance à un groupe spirituel</span>
+    <span class="tag">honte spirituelle</span><span class="tag">sentiment d'être abandonné</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Ancrage & Pratique — ressources</div><div class="tags">
+    <span class="tag pos">pratique intérieure régulière</span><span class="tag pos">foi solide</span>
+    <span class="tag pos">ancrage profond</span><span class="tag pos">capacité à la contemplation</span>
+    <span class="tag pos">appartenance communautaire saine</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Sens profond — difficultés</div><div class="tags">
+    <span class="tag">peur de mourir sans avoir vécu</span><span class="tag">question de la transmission</span>
+    <span class="tag">rapport difficile au pardon</span><span class="tag">culpabilité spirituelle</span>
+    <span class="tag">quête de sens non nommée</span><span class="tag">syncrétisme confus</span>
+  </div></div>
+
+  <div class="sub"><div class="sub-title">Sens profond — ressources</div><div class="tags">
+    <span class="tag pos">alignement intérieur</span><span class="tag pos">cohérence valeurs/actions</span>
+    <span class="tag pos">rapport apaisé à la transcendance</span><span class="tag pos">sens du legs</span>
+    <span class="tag pos">capacité au pardon</span>
+  </div></div>
+
+  <div class="result-zone" id="rz-pneuma">
+    <div class="result-label">Observation générée — Pneuma</div>
+    <div class="result-text" id="rt-pneuma" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-pneuma', this)">Copier</button>
+  </div>
+</div>
+
+<!-- FATIGUE -->
+<div class="section domaine">
+  <div class="sec-label">Domaine 1</div>
+  <div class="sec-name">Fatigue & Santé</div>
+  <div class="sub"><div class="sub-title">Difficultés</div><div class="tags">
+    <span class="tag">signaux ignorés</span><span class="tag">corps mis en veille</span>
+    <span class="tag">résistance au repos</span><span class="tag">fierté de tenir</span>
+    <span class="tag">négation de la fatigue</span><span class="tag">fatigue masquée</span>
+    <span class="tag">récupération insuffisante</span><span class="tag">fatigue au réveil</span>
+    <span class="tag">variations d'énergie extrêmes</span><span class="tag">corps perçu comme un ennemi</span>
+    <span class="tag">refus de consulter</span><span class="tag">peur du diagnostic médical</span>
+    <span class="tag">à orienter vers un médecin</span>
+  </div></div>
+  <div class="sub"><div class="sub-title">Ressources</div><div class="tags">
+    <span class="tag pos">bonne gestion de l'énergie</span><span class="tag pos">écoute des signaux du corps</span>
+    <span class="tag pos">repos assumé</span><span class="tag pos">suivi médical régulier</span>
+  </div></div>
+  <div class="result-zone" id="rz-fatigue">
+    <div class="result-label">Observation générée — Fatigue & Santé</div>
+    <div class="result-text" id="rt-fatigue" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-fatigue', this)">Copier</button>
+  </div>
+</div>
+
+<!-- RELATIONS -->
+<div class="section domaine">
+  <div class="sec-label">Domaine 2</div>
+  <div class="sec-name">Relations & Amour</div>
+  <div class="sub"><div class="sub-title">Difficultés</div><div class="tags">
+    <span class="tag">fusion</span><span class="tag">dépendance relationnelle</span>
+    <span class="tag">évitement</span><span class="tag">manque de limites</span>
+    <span class="tag">besoins non exprimés</span><span class="tag">attentes implicites</span>
+    <span class="tag">relation épuisante</span><span class="tag">isolement relationnel</span>
+    <span class="tag">peur de l'intimité</span><span class="tag">jalousie</span>
+    <span class="tag">rivalité</span><span class="tag">triangulation</span><span class="tag">parentification</span>
+  </div></div>
+  <div class="sub"><div class="sub-title">Ressources</div><div class="tags">
+    <span class="tag pos">relations nourrissantes</span><span class="tag pos">communication claire</span>
+    <span class="tag pos">limites saines</span><span class="tag pos">intimité assumée</span>
+    <span class="tag pos">réseau de soutien solide</span>
+  </div></div>
+  <div class="result-zone" id="rz-relations">
+    <div class="result-label">Observation générée — Relations & Amour</div>
+    <div class="result-text" id="rt-relations" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-relations', this)">Copier</button>
+  </div>
+</div>
+
+<!-- TRAVAIL -->
+<div class="section domaine">
+  <div class="sec-label">Domaine 3</div>
+  <div class="sec-name">Travail & Sens</div>
+  <div class="sub"><div class="sub-title">Difficultés</div><div class="tags">
+    <span class="tag">désalignement vocation/activité</span><span class="tag">perte de motivation</span>
+    <span class="tag">surinvestissement</span><span class="tag">sous-investissement</span>
+    <span class="tag">conflit de valeurs au travail</span><span class="tag">manque de reconnaissance</span>
+    <span class="tag">reconversion à envisager</span><span class="tag">hyperperformance</span>
+    <span class="tag">syndrome de l'imposteur</span><span class="tag">workaholisme</span>
+    <span class="tag">peur de réussir</span>
+  </div></div>
+  <div class="sub"><div class="sub-title">Ressources</div><div class="tags">
+    <span class="tag pos">alignement vocation/activité</span><span class="tag pos">motivation intrinsèque</span>
+    <span class="tag pos">reconnaissance reçue</span><span class="tag pos">équilibre vie pro/perso</span>
+    <span class="tag pos">sens trouvé dans le travail</span>
+  </div></div>
+  <div class="result-zone" id="rz-travail">
+    <div class="result-label">Observation générée — Travail & Sens</div>
+    <div class="result-text" id="rt-travail" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-travail', this)">Copier</button>
+  </div>
+</div>
+
+<!-- ARGENT -->
+<div class="section domaine">
+  <div class="sec-label">Domaine 4</div>
+  <div class="sec-name">Argent & Abondance</div>
+  <div class="sub"><div class="sub-title">Difficultés</div><div class="tags">
+    <span class="tag">croyance de manque</span><span class="tag">honte autour de l'argent</span>
+    <span class="tag">argent tabou</span><span class="tag">dépenses compulsives</span>
+    <span class="tag">rapport à la valeur personnelle</span><span class="tag">blocage sur les tarifs</span>
+    <span class="tag">héritage familial financier</span><span class="tag">dette cachée</span>
+    <span class="tag">rapport père/argent</span><span class="tag">rapport mère/sécurité</span>
+  </div></div>
+  <div class="sub"><div class="sub-title">Ressources</div><div class="tags">
+    <span class="tag pos">rapport serein à l'argent</span><span class="tag pos">gestion financière claire</span>
+    <span class="tag pos">sentiment de légitimité</span><span class="tag pos">abondance perçue</span>
+  </div></div>
+  <div class="result-zone" id="rz-argent">
+    <div class="result-label">Observation générée — Argent & Abondance</div>
+    <div class="result-text" id="rt-argent" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-argent', this)">Copier</button>
+  </div>
+</div>
+
+<!-- IDENTITÉ -->
+<div class="section domaine">
+  <div class="sec-label">Domaine 5</div>
+  <div class="sec-name">Identité & Confiance</div>
+  <div class="sub"><div class="sub-title">Difficultés</div><div class="tags">
+    <span class="tag">image instable</span><span class="tag">dépendance au regard</span>
+    <span class="tag">difficulté à dire non</span><span class="tag">perte d'identité</span>
+    <span class="tag">rôles multiples épuisants</span><span class="tag">manque d'affirmation</span>
+    <span class="tag">identité construite pour les autres</span><span class="tag">syndrome du caméléon</span>
+    <span class="tag">effacement de soi</span><span class="tag">masque social permanent</span>
+  </div></div>
+  <div class="sub"><div class="sub-title">Ressources</div><div class="tags">
+    <span class="tag pos">identité stable et assumée</span><span class="tag pos">confiance en soi</span>
+    <span class="tag pos">capacité à dire non</span><span class="tag pos">affirmation de soi</span>
+    <span class="tag pos">authenticité naturelle</span>
+  </div></div>
+  <div class="result-zone" id="rz-identite">
+    <div class="result-label">Observation générée — Identité & Confiance</div>
+    <div class="result-text" id="rt-identite" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-identite', this)">Copier</button>
+  </div>
+</div>
+
+<!-- SPIRITUALITÉ -->
+<div class="section domaine">
+  <div class="sec-label">Domaine 6</div>
+  <div class="sec-name">Spiritualité & Pneuma</div>
+  <div class="sub"><div class="sub-title">Difficultés</div><div class="tags">
+    <span class="tag">pratique absente</span><span class="tag">foi questionnée</span>
+    <span class="tag">sentiment d'appartenance faible</span><span class="tag">solitude intérieure</span>
+    <span class="tag">quête non nommée</span><span class="tag">rituel manquant</span>
+    <span class="tag">rapport conflictuel à la religion d'origine</span>
+  </div></div>
+  <div class="sub"><div class="sub-title">Ressources</div><div class="tags">
+    <span class="tag pos">pratique spirituelle régulière</span><span class="tag pos">foi vivante</span>
+    <span class="tag pos">appartenance saine</span><span class="tag pos">rituel ancré</span>
+    <span class="tag pos">vie intérieure riche</span>
+  </div></div>
+  <div class="result-zone" id="rz-spirituel">
+    <div class="result-label">Observation générée — Spiritualité & Pneuma</div>
+    <div class="result-text" id="rt-spirituel" contenteditable="true"></div>
+    <button class="copy-btn" onclick="copier('rt-spirituel', this)">Copier</button>
+  </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <div class="f-count"><strong id="count">0</strong> tag(s) sélectionné(s)</div>
+  <div>
+    <button class="f-clear" onclick="clearAll()">Tout effacer</button>
+    <button class="f-gen" onclick="generer()">Générer les observations →</button>
+  </div>
+</div>
+
+<script>
+// Map tags to their section
+const sectionMap = {
+  psycho: ['anxiété','rumination','colère refoulée','tristesse persistante','honte','culpabilité','peur chronique','hypervigilance','instabilité émotionnelle','dissociation','alexithymie','hyperempathie','sentiment d\'impuissance','apathie','irritabilité excessive','affect plat','désespoir','sentiment de vide intérieur','signaux à orienter vers un professionnel','stabilité émotionnelle','capacité à lâcher prise','résilience','empathie équilibrée','conscience émotionnelle','gestion de la colère','sérénité retrouvée','perfectionnisme','besoin de contrôle','dépendance affective','besoin d\'approbation','peur du jugement','peur de l\'abandon','peur de l\'échec','sabotage inconscient','procrastination','projection','déni','rationalisation excessive','narcissisme blessé','attachement insécure','trauma non résolu','autonomie affective','confiance en soi solide','capacité à demander de l\'aide','attachement sécure','bonne gestion des limites','driver Sois Fort','driver Sois Parfait','driver Fais Plaisir','driver Dépêche-toi','driver Fais des Efforts','position Victime','position Sauveur','position Persécuteur','état du moi dominant Parent Normatif','état du moi dominant Parent Nourricier','état du moi dominant Enfant Adapté Soumis','état du moi dominant Enfant Adapté Rebelle','jeux psychologiques identifiés','scénario de vie contraignant','injonctions précoces','état du moi dominant Adulte','état du moi dominant Enfant Libre','permissions actives','sortie du triangle de Karpman','je ne suis pas légitime','je ne mérite pas','je dois tout contrôler','les autres réussissent mieux','c\'est trop tard','je ne suis pas fait pour ça','inflation du moi','je suis capable d\'apprendre','je mérite ce que je désire','j\'ai le droit de changer','je suis légitime'],
+  physique: ['épuisement','vitalité basse','énergie fluctuante','surmenage','burnout','fatigue chronique','hyperactivité compensatoire','énergie stable','bonne récupération','vitalité présente','sommeil réparateur','tension corporelle','douleurs chroniques','insomnie','sommeil non réparateur','déconnexion corps-esprit','somatisation','image corporelle négative','rapport difficile au vieillissement','maux de tête fréquents','troubles digestifs récurrents','palpitations signalées','perte ou prise de poids notable','signaux corporels non explorés médicalement','suivi médical absent ou interrompu','à orienter vers un professionnel de santé','bonne écoute du corps','pratique sportive régulière','rapport positif au corps','suivi médical à jour','sédentarité','alimentation désordonnée','absence de rituel','manque de mouvement','addiction comportementale','trouble du sommeil','consommation excessive d\'alcool','tabac comme régulateur émotionnel','écrans comme fuite','déshydratation chronique','rituels matinaux établis','alimentation consciente','hydratation régulière','absence d\'addiction'],
+  philo: ['vide de sens','quête de sens','confusion des valeurs','absence de boussole','perte de repères','questionnement existentiel','nihilisme','cynisme','idéalisme paralysant','valeurs clairement définies','sens trouvé dans le quotidien','vision à long terme','philosophie de vie incarnée','confusion dépend/ne dépend pas','rigidité cognitive','fatalisme','résistance au changement','pensée binaire','catastrophisme','relativisme excessif','conformisme','rapport difficile à l\'autorité','bonne prohairesis','pensée nuancée','ouverture au changement','discernement développé','capacité à relativiser','rapport difficile au passé','regrets','anticipation anxieuse','difficulté à vivre le présent','rapport difficile à la mort','nostalgie paralysante','peur de l\'avenir','urgence chronique','difficulté à se projeter','présence au moment vécu','paix avec le passé','projection sereine','rapport apaisé à la mort'],
+  pneuma: ['ancrage fragile','absence de pratique intérieure','isolement spirituel','perte de foi','sentiment de vide','quête d\'appartenance','blessure religieuse','peur du silence','incapacité à la contemplation','matérialisme exclusif','spiritualité de façade','dépendance à un groupe spirituel','honte spirituelle','sentiment d\'être abandonné','pratique intérieure régulière','foi solide','ancrage profond','capacité à la contemplation','appartenance communautaire saine','peur de mourir sans avoir vécu','question de la transmission','rapport difficile au pardon','culpabilité spirituelle','quête de sens non nommée','syncrétisme confus','alignement intérieur','cohérence valeurs/actions','rapport apaisé à la transcendance','sens du legs','capacité au pardon'],
+  fatigue: ['signaux ignorés','corps mis en veille','résistance au repos','fierté de tenir','négation de la fatigue','fatigue masquée','récupération insuffisante','fatigue au réveil','variations d\'énergie extrêmes','corps perçu comme un ennemi','refus de consulter','peur du diagnostic médical','à orienter vers un médecin','bonne gestion de l\'énergie','écoute des signaux du corps','repos assumé','suivi médical régulier'],
+  relations: ['fusion','dépendance relationnelle','évitement','manque de limites','besoins non exprimés','attentes implicites','relation épuisante','isolement relationnel','peur de l\'intimité','jalousie','rivalité','triangulation','parentification','relations nourrissantes','communication claire','limites saines','intimité assumée','réseau de soutien solide'],
+  travail: ['désalignement vocation/activité','perte de motivation','surinvestissement','sous-investissement','conflit de valeurs au travail','manque de reconnaissance','reconversion à envisager','hyperperformance','syndrome de l\'imposteur','workaholisme','peur de réussir','alignement vocation/activité','motivation intrinsèque','reconnaissance reçue','équilibre vie pro/perso','sens trouvé dans le travail'],
+  argent: ['croyance de manque','honte autour de l\'argent','argent tabou','dépenses compulsives','rapport à la valeur personnelle','blocage sur les tarifs','héritage familial financier','dette cachée','rapport père/argent','rapport mère/sécurité','rapport serein à l\'argent','gestion financière claire','sentiment de légitimité','abondance perçue'],
+  identite: ['image instable','dépendance au regard','difficulté à dire non','perte d\'identité','rôles multiples épuisants','manque d\'affirmation','identité construite pour les autres','syndrome du caméléon','effacement de soi','masque social permanent','identité stable et assumée','confiance en soi','capacité à dire non','affirmation de soi','authenticité naturelle'],
+  spirituel: ['pratique absente','foi questionnée','sentiment d\'appartenance faible','solitude intérieure','quête non nommée','rituel manquant','rapport conflictuel à la religion d\'origine','pratique spirituelle régulière','foi vivante','appartenance saine','rituel ancré','vie intérieure riche']
+};
+
+const selected = new Set();
+
+// Add click handlers to all tags
+document.querySelectorAll('.tag').forEach(tag => {
+  tag.addEventListener('click', function() {
+    const t = this.textContent.trim();
+    if (selected.has(t)) {
+      selected.delete(t);
+      this.classList.remove('on');
+    } else {
+      selected.add(t);
+      this.classList.add('on');
+    }
+    document.getElementById('count').textContent = selected.size;
+  });
+});
+
+function clearAll() {
+  selected.clear();
+  document.querySelectorAll('.tag.on').forEach(t => t.classList.remove('on'));
+  document.getElementById('count').textContent = 0;
+  document.querySelectorAll('.result-zone').forEach(z => z.style.display = 'none');
+}
+
+function filtrer() {
+  const q = document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('.tag').forEach(tag => {
+    tag.classList.toggle('hidden', q !== '' && !tag.textContent.toLowerCase().includes(q));
+  });
+}
+
+function getSection(tag) {
+  for (const [sec, tags] of Object.entries(sectionMap)) {
+    if (tags.includes(tag)) return sec;
+  }
+  return null;
+}
+
+function isPositive(tag) {
+  return document.querySelector(`.tag.pos.on`);
+}
+
+function generer() {
+  if (selected.size === 0) return;
+
+  // Group by section
+  const groups = {};
+  selected.forEach(tag => {
+    const sec = getSection(tag);
+    if (sec) {
+      if (!groups[sec]) groups[sec] = {neg:[], pos:[]};
+      const el = Array.from(document.querySelectorAll('.tag.on')).find(t => t.textContent.trim() === tag);
+      if (el && el.classList.contains('pos')) {
+        groups[sec].pos.push(tag);
+      } else {
+        groups[sec].neg.push(tag);
+      }
+    }
+  });
+
+  const labels = {
+    psycho:'Psychologique', physique:'Physique', philo:'Philosophique', pneuma:'Pneuma',
+    fatigue:'Fatigue & Santé', relations:'Relations & Amour', travail:'Travail & Sens',
+    argent:'Argent & Abondance', identite:'Identité & Confiance', spirituel:'Spiritualité & Pneuma'
+  };
+
+  for (const [sec, {neg, pos}] of Object.entries(groups)) {
+    let text = '';
+    if (neg.length > 0) text += `Points de vigilance : ${neg.join(', ')}.`;
+    if (neg.length > 0 && pos.length > 0) text += '\n';
+    if (pos.length > 0) text += `Ressources identifiées : ${pos.join(', ')}.`;
+
+    const zone = document.getElementById('rz-' + sec);
+    const rt = document.getElementById('rt-' + sec);
+    if (zone && rt && text) {
+      rt.textContent = text;
+      zone.style.display = 'block';
+    }
+  }
+}
+
+function copier(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copié !';
+    setTimeout(() => btn.textContent = 'Copier', 2000);
+  });
+}
+</script>
+</body>
+</html>
