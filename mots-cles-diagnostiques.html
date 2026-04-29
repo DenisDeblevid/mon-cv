@@ -124,6 +124,37 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
 .copy-ok{font-size:12px;color:var(--vert);margin-top:8px;display:none;}
 
 .pb{padding-bottom:80px;}
+.result-zone{
+  margin-top:16px;
+  padding:14px 16px;
+  background:rgba(201,168,76,0.06);
+  border-left:3px solid var(--or);
+  border-radius:0 2px 2px 0;
+  display:none;
+}
+.result-zone-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:8px;}
+.result-zone-text{
+  font-size:13px;
+  color:var(--ardoise);
+  line-height:1.7;
+  white-space:pre-wrap;
+  outline:none;
+  min-height:40px;
+}
+.copy-zone-btn{
+  margin-top:8px;
+  display:inline-block;
+  padding:5px 14px;
+  background:var(--encre);
+  color:var(--or);
+  border:none;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-radius:2px;
+}
 </style>
 </head>
 <body>
@@ -154,7 +185,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">anxiété</span>
         <span class="tag" onclick="toggle(this)">rumination</span>
         <span class="tag" onclick="toggle(this)">colère refoulée</span>
-        <span class="tag" onclick="toggle(this)">tristesse</span>
+        <span class="tag" onclick="toggle(this)">tristesse persistante</span>
         <span class="tag" onclick="toggle(this)">honte</span>
         <span class="tag" onclick="toggle(this)">culpabilité</span>
         <span class="tag" onclick="toggle(this)">peur chronique</span>
@@ -163,6 +194,16 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">dissociation</span>
         <span class="tag" onclick="toggle(this)">alexithymie</span>
         <span class="tag" onclick="toggle(this)">hyperempathie</span>
+        <span class="tag" onclick="toggle(this)">sentiment d'impuissance</span>
+        <span class="tag" onclick="toggle(this)">apathie</span>
+        <span class="tag" onclick="toggle(this)">irritabilité excessive</span>
+        <span class="tag" onclick="toggle(this)">crises émotionnelles fréquentes</span>
+        <span class="tag" onclick="toggle(this)">affect plat</span>
+        <span class="tag" onclick="toggle(this)">désespoir</span>
+        <span class="tag" onclick="toggle(this)">sentiment de vide intérieur</span>
+        <span class="tag" onclick="toggle(this)">euphorie incontrôlée</span>
+        <span class="tag" onclick="toggle(this)">peurs nocturnes</span>
+        <span class="tag" onclick="toggle(this)">signaux à orienter vers un professionnel de santé</span>
       </div>
     </div>
 
@@ -198,6 +239,16 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">position Victime</span>
         <span class="tag" onclick="toggle(this)">position Sauveur</span>
         <span class="tag" onclick="toggle(this)">position Persécuteur</span>
+        <span class="tag" onclick="toggle(this)">état du moi dominant Parent Normatif</span>
+        <span class="tag" onclick="toggle(this)">état du moi dominant Parent Nourricier</span>
+        <span class="tag" onclick="toggle(this)">état du moi dominant Adulte</span>
+        <span class="tag" onclick="toggle(this)">état du moi dominant Enfant Libre</span>
+        <span class="tag" onclick="toggle(this)">état du moi dominant Enfant Adapté Soumis</span>
+        <span class="tag" onclick="toggle(this)">état du moi dominant Enfant Adapté Rebelle</span>
+        <span class="tag" onclick="toggle(this)">jeux psychologiques identifiés</span>
+        <span class="tag" onclick="toggle(this)">scénario de vie contraignant</span>
+        <span class="tag" onclick="toggle(this)">injonctions précoces</span>
+        <span class="tag" onclick="toggle(this)">permissions à développer</span>
       </div>
     </div>
 
@@ -212,6 +263,11 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">je ne suis pas fait pour ça</span>
         <span class="tag" onclick="toggle(this)">inflation du moi</span>
       </div>
+    </div>
+    <div class="result-zone" id="result-psycho">
+      <div class="result-zone-title">Observation générée — Pilier Psychologique</div>
+      <div class="result-zone-text" id="text-psycho" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('psycho')">Copier</button>
     </div>
   </div>
 
@@ -249,6 +305,14 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">somatisation</span>
         <span class="tag" onclick="toggle(this)">image corporelle négative</span>
         <span class="tag" onclick="toggle(this)">rapport difficile au vieillissement</span>
+        <span class="tag" onclick="toggle(this)">maux de tête fréquents</span>
+        <span class="tag" onclick="toggle(this)">troubles digestifs récurrents</span>
+        <span class="tag" onclick="toggle(this)">palpitations signalées</span>
+        <span class="tag" onclick="toggle(this)">essoufflement inexpliqué</span>
+        <span class="tag" onclick="toggle(this)">perte ou prise de poids notable</span>
+        <span class="tag" onclick="toggle(this)">signaux corporels non explorés médicalement</span>
+        <span class="tag" onclick="toggle(this)">suivi médical absent ou interrompu</span>
+        <span class="tag" onclick="toggle(this)">à orienter vers un professionnel de santé</span>
       </div>
     </div>
 
@@ -261,7 +325,18 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">manque de mouvement</span>
         <span class="tag" onclick="toggle(this)">addiction comportementale</span>
         <span class="tag" onclick="toggle(this)">trouble du sommeil</span>
+        <span class="tag" onclick="toggle(this)">consommation excessive d'alcool signalée</span>
+        <span class="tag" onclick="toggle(this)">tabac comme régulateur émotionnel</span>
+        <span class="tag" onclick="toggle(this)">écrans comme fuite</span>
+        <span class="tag" onclick="toggle(this)">absence d'exposition à la nature</span>
+        <span class="tag" onclick="toggle(this)">manque de lumière naturelle</span>
+        <span class="tag" onclick="toggle(this)">déshydratation chronique</span>
       </div>
+    </div>
+    <div class="result-zone" id="result-physique">
+      <div class="result-zone-title">Observation générée — Pilier Physique</div>
+      <div class="result-zone-text" id="text-physique" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('physique')">Copier</button>
     </div>
   </div>
 
@@ -315,7 +390,18 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">anticipation anxieuse</span>
         <span class="tag" onclick="toggle(this)">difficulté à vivre le présent</span>
         <span class="tag" onclick="toggle(this)">rapport difficile à la mort</span>
+        <span class="tag" onclick="toggle(this)">sentiment que le temps manque toujours</span>
+        <span class="tag" onclick="toggle(this)">nostalgie paralysante</span>
+        <span class="tag" onclick="toggle(this)">peur de l'avenir</span>
+        <span class="tag" onclick="toggle(this)">rapport difficile à la vieillesse</span>
+        <span class="tag" onclick="toggle(this)">urgence chronique</span>
+        <span class="tag" onclick="toggle(this)">difficulté à se projeter</span>
       </div>
+    </div>
+    <div class="result-zone" id="result-philo">
+      <div class="result-zone-title">Observation générée — Pilier Philosophique</div>
+      <div class="result-zone-text" id="text-philo" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('philo')">Copier</button>
     </div>
   </div>
 
@@ -342,6 +428,13 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">peur du silence</span>
         <span class="tag" onclick="toggle(this)">incapacité à la contemplation</span>
         <span class="tag" onclick="toggle(this)">matérialisme exclusif</span>
+        <span class="tag" onclick="toggle(this)">spiritualité de façade</span>
+        <span class="tag" onclick="toggle(this)">dépendance à un groupe spirituel</span>
+        <span class="tag" onclick="toggle(this)">rapport conflictuel à la religion d'origine</span>
+        <span class="tag" onclick="toggle(this)">besoin de rituel non comblé</span>
+        <span class="tag" onclick="toggle(this)">difficulté à prier ou méditer seul</span>
+        <span class="tag" onclick="toggle(this)">sentiment d'être abandonné par Dieu</span>
+        <span class="tag" onclick="toggle(this)">honte spirituelle</span>
       </div>
     </div>
 
@@ -354,7 +447,18 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
         <span class="tag" onclick="toggle(this)">alignement intérieur</span>
         <span class="tag" onclick="toggle(this)">cohérence valeurs/actions</span>
         <span class="tag" onclick="toggle(this)">syncrétisme confus</span>
+        <span class="tag" onclick="toggle(this)">peur de mourir sans avoir vécu</span>
+        <span class="tag" onclick="toggle(this)">question de la transmission</span>
+        <span class="tag" onclick="toggle(this)">rapport difficile au pardon</span>
+        <span class="tag" onclick="toggle(this)">culpabilité spirituelle</span>
+        <span class="tag" onclick="toggle(this)">besoin de réconciliation intérieure</span>
+        <span class="tag" onclick="toggle(this)">quête de sens non nommée</span>
       </div>
+    </div>
+    <div class="result-zone" id="result-pneuma">
+      <div class="result-zone-title">Observation générée — Pilier Pneuma</div>
+      <div class="result-zone-text" id="text-pneuma" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('pneuma')">Copier</button>
     </div>
   </div>
 
@@ -375,6 +479,21 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
       <span class="tag" onclick="toggle(this)">négation de la fatigue</span>
       <span class="tag" onclick="toggle(this)">fatigue masquée</span>
       <span class="tag" onclick="toggle(this)">récupération insuffisante</span>
+      <span class="tag" onclick="toggle(this)">fatigue au réveil</span>
+      <span class="tag" onclick="toggle(this)">coup de pompe après repas</span>
+      <span class="tag" onclick="toggle(this)">besoin de stimulants pour fonctionner</span>
+      <span class="tag" onclick="toggle(this)">variations d'énergie extrêmes</span>
+      <span class="tag" onclick="toggle(this)">corps perçu comme un ennemi</span>
+      <span class="tag" onclick="toggle(this)">douleurs non explorées médicalement</span>
+      <span class="tag" onclick="toggle(this)">signes précurseurs à surveiller</span>
+      <span class="tag" onclick="toggle(this)">à orienter vers un médecin</span>
+      <span class="tag" onclick="toggle(this)">refus de consulter</span>
+      <span class="tag" onclick="toggle(this)">peur du diagnostic médical</span>
+    </div>
+    <div class="result-zone" id="result-fatigue">
+      <div class="result-zone-title">Observation générée — {"fatigue":"Fatigue & Santé","relations":"Relations & Amour","travail":"Travail & Sens","argent":"Argent & Abondance","identite":"Identité & Confiance"}["fatigue"]</div>
+      <div class="result-zone-text" id="text-fatigue" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('fatigue')">Copier</button>
     </div>
   </div>
 
@@ -401,6 +520,11 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
       <span class="tag" onclick="toggle(this)">triangulation</span>
       <span class="tag" onclick="toggle(this)">parentification</span>
     </div>
+    <div class="result-zone" id="result-relations">
+      <div class="result-zone-title">Observation générée — {"fatigue":"Fatigue & Santé","relations":"Relations & Amour","travail":"Travail & Sens","argent":"Argent & Abondance","identite":"Identité & Confiance"}["relations"]</div>
+      <div class="result-zone-text" id="text-relations" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('relations')">Copier</button>
+    </div>
   </div>
 
   <div class="section domaine">
@@ -424,6 +548,11 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
       <span class="tag" onclick="toggle(this)">workaholisme</span>
       <span class="tag" onclick="toggle(this)">peur de réussir</span>
     </div>
+    <div class="result-zone" id="result-travail">
+      <div class="result-zone-title">Observation générée — {"fatigue":"Fatigue & Santé","relations":"Relations & Amour","travail":"Travail & Sens","argent":"Argent & Abondance","identite":"Identité & Confiance"}["travail"]</div>
+      <div class="result-zone-text" id="text-travail" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('travail')">Copier</button>
+    </div>
   </div>
 
   <div class="section domaine">
@@ -445,6 +574,11 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
       <span class="tag" onclick="toggle(this)">dette cachée</span>
       <span class="tag" onclick="toggle(this)">rapport père/argent</span>
       <span class="tag" onclick="toggle(this)">rapport mère/sécurité</span>
+    </div>
+    <div class="result-zone" id="result-argent">
+      <div class="result-zone-title">Observation générée — {"fatigue":"Fatigue & Santé","relations":"Relations & Amour","travail":"Travail & Sens","argent":"Argent & Abondance","identite":"Identité & Confiance"}["argent"]</div>
+      <div class="result-zone-text" id="text-argent" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('argent')">Copier</button>
     </div>
   </div>
 
@@ -468,6 +602,11 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
       <span class="tag" onclick="toggle(this)">effacement de soi</span>
       <span class="tag" onclick="toggle(this)">masque social permanent</span>
     </div>
+    <div class="result-zone" id="result-identite">
+      <div class="result-zone-title">Observation générée — {"fatigue":"Fatigue & Santé","relations":"Relations & Amour","travail":"Travail & Sens","argent":"Argent & Abondance","identite":"Identité & Confiance"}["identite"]</div>
+      <div class="result-zone-text" id="text-identite" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('identite')">Copier</button>
+    </div>
   </div>
 
   <div class="section domaine">
@@ -486,6 +625,13 @@ body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--enc
       <span class="tag" onclick="toggle(this)">solitude intérieure</span>
       <span class="tag" onclick="toggle(this)">quête non nommée</span>
       <span class="tag" onclick="toggle(this)">rituel manquant</span>
+    </div>
+  </div>
+
+    <div class="result-zone" id="result-spirituel">
+      <div class="result-zone-title">Observation générée — Spiritualité & Pneuma</div>
+      <div class="result-zone-text" id="text-spirituel" contenteditable="true"></div>
+      <button class="copy-zone-btn" onclick="copyZone('spirituel')">Copier</button>
     </div>
   </div>
 
@@ -544,6 +690,13 @@ function filterTags() {
     } else {
       tag.classList.add('hidden');
     }
+  });
+}
+
+function copyZone(key) {
+  const text = document.getElementById('text-' + key).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Copié !');
   });
 }
 
@@ -610,8 +763,45 @@ function generateText() {
     text += `Dans les domaines de vie, les points saillants sont : ${domaines.join(', ')}.`;
   }
 
-  document.getElementById('result-text').textContent = text.trim();
-  document.getElementById('modal').style.display = 'block';
+  // Populate per-zone results
+  const zoneMap = {
+    psycho: psycho,
+    physique: physique,
+    philo: philo,
+    pneuma: pneuma,
+  };
+
+  const domainMap = {
+    fatigue: tags.filter(t => ['signaux ignorés','corps mis en veille','résistance au repos','fierté de tenir','négation de la fatigue','fatigue masquée','récupération insuffisante','fatigue au réveil','coup de pompe après repas','besoin de stimulants pour fonctionner','variations d'énergie extrêmes','corps perçu comme un ennemi','douleurs non explorées médicalement','signes précurseurs à surveiller','à orienter vers un médecin','refus de consulter','peur du diagnostic médical'].includes(t)),
+    relations: tags.filter(t => ['fusion','dépendance relationnelle','évitement','manque de limites','besoins non exprimés','attentes implicites','relation épuisante','isolement relationnel','peur de l'intimité','jalousie','rivalité','triangulation','parentification'].includes(t)),
+    travail: tags.filter(t => ['désalignement vocation/activité','perte de motivation','surinvestissement','sous-investissement','conflit de valeurs au travail','manque de reconnaissance','reconversion à envisager','hyperperformance','syndrome de l'imposteur','workaholisme','peur de réussir'].includes(t)),
+    argent: tags.filter(t => ['croyance de manque','honte autour de l'argent','argent tabou','dépenses compulsives','rapport à la valeur personnelle','blocage sur les tarifs','héritage familial financier','dette cachée','rapport père/argent','rapport mère/sécurité'].includes(t)),
+    identite: tags.filter(t => ['image instable','dépendance au regard','difficulté à dire non','perte d'identité','rôles multiples épuisants','manque d'affirmation','identité construite pour les autres','syndrome du caméléon','effacement de soi','masque social permanent'].includes(t)),
+    spirituel: tags.filter(t => ['pratique absente','foi questionnée','sentiment d'appartenance faible','rapport à la communauté','solitude intérieure','quête non nommée','rituel manquant'].includes(t)),
+  };
+
+  const pilierTexts = {
+    psycho: psycho.length > 0 ? `Sur le plan psychologique, la séance révèle : ${psycho.join(', ')}. Ces éléments méritent une attention particulière dans la suite de l'accompagnement.` : '',
+    physique: physique.length > 0 ? `Sur le plan physique, on observe : ${physique.join(', ')}. Le corps envoie des signaux clairs qui nécessitent d'être entendus.` : '',
+    philo: philo.length > 0 ? `Sur le plan philosophique, la personne présente : ${philo.join(', ')}. Un travail de clarification des valeurs et du discernement semble prioritaire.` : '',
+    pneuma: pneuma.length > 0 ? `Sur le plan du Pneuma, on note : ${pneuma.join(', ')}. La dimension intérieure et le rapport au sens demandent à être explorés.` : '',
+  };
+
+  const domainTexts = {};
+  for (const [key, items] of Object.entries(domainMap)) {
+    const labels = {'fatigue':'Fatigue & Santé','relations':'Relations & Amour','travail':'Travail & Sens','argent':'Argent & Abondance','identite':'Identité & Confiance','spirituel':'Spiritualité & Pneuma'};
+    domainTexts[key] = items.length > 0 ? `Dans le domaine ${labels[key]}, les points saillants sont : ${items.join(', ')}.` : '';
+  }
+
+  // Show results in zones
+  for (const [key, text] of Object.entries({...pilierTexts, ...domainTexts})) {
+    const zone = document.getElementById('result-' + key);
+    const textEl = document.getElementById('text-' + key);
+    if (zone && textEl && text) {
+      textEl.textContent = text;
+      zone.style.display = 'block';
+    }
+  }
 }
 
 function closeModal() {
