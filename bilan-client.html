@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon bilan — Renaître de la soif</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --brun:#2C1A08;
+  --amber:#E8832A;
+  --dark:#C96A10;
+  --cream:#F5E6D0;
+  --light:#888888;
+  --white:#ffffff;
+}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:radial-gradient(ellipse 150% 150% at 100% 0%,#ffffff 0%,#fff8d0 15%,#f5c030 35%,#e8832a 52%,#2a1f0a 85%,#1a1206 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  padding:40px 20px 80px;
+}
+.wrap{max-width:680px;margin:0 auto;}
+
+.header{text-align:center;padding:40px 0 36px;animation:fu .8s ease both;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:300;color:var(--white);text-shadow:0 2px 12px rgba(0,0,0,0.5);margin-bottom:10px;}
+.header h1 em{color:var(--amber);font-style:italic;}
+.header p{color:rgba(255,255,255,0.8);font-size:14px;line-height:1.7;max-width:480px;margin:0 auto;}
+.devise{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--amber);font-size:16px;margin-top:12px;}
+
+.card{background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border-radius:4px;padding:36px 40px;margin-bottom:20px;box-shadow:0 4px 32px rgba(44,26,8,0.12);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--brun);margin-bottom:6px;}
+.card-sub{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--light);margin-bottom:24px;}
+.sep{height:2px;background:linear-gradient(90deg,var(--amber),transparent);margin-bottom:24px;}
+
+/* IDENTITÉ */
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--brun);margin-bottom:6px;letter-spacing:.5px;}
+.field input{width:100%;padding:10px 14px;border:1px solid rgba(44,26,8,0.2);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:13px;color:var(--brun);background:rgba(255,255,255,0.9);outline:none;transition:border .2s;}
+.field input:focus{border-color:var(--amber);}
+
+/* SLIDER */
+.slider-item{margin-bottom:28px;}
+.slider-label{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--brun);margin-bottom:4px;line-height:1.4;}
+.slider-sub{font-size:12px;color:var(--light);font-style:italic;margin-bottom:12px;line-height:1.5;}
+.slider-wrap{display:flex;align-items:center;gap:12px;}
+.slider{-webkit-appearance:none;flex:1;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--amber) 0%,#e8d5b0 100%);outline:none;cursor:pointer;}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--amber);border:3px solid white;box-shadow:0 2px 8px rgba(232,131,42,0.4);cursor:pointer;}
+.slider-val{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--amber);min-width:32px;text-align:center;}
+.slider-hints{display:flex;justify-content:space-between;font-size:10px;color:var(--light);margin-top:4px;}
+
+/* COMMENTAIRE */
+.field textarea{width:100%;padding:12px 14px;border:1px solid rgba(44,26,8,0.2);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:13px;color:var(--brun);background:rgba(255,255,255,0.9);outline:none;transition:border .2s;min-height:100px;resize:vertical;line-height:1.6;}
+.field textarea:focus{border-color:var(--amber);}
+.field textarea::placeholder{color:rgba(44,26,8,0.3);font-style:italic;}
+
+/* SUBMIT */
+.btn{width:100%;padding:16px;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;border-radius:2px;background:var(--amber);color:white;transition:all .3s;margin-top:8px;}
+.btn:hover{background:var(--dark);}
+
+/* MERCI */
+.merci{display:none;text-align:center;padding:60px 20px;}
+.merci h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--white);text-shadow:0 2px 12px rgba(0,0,0,0.5);margin-bottom:12px;}
+.merci p{color:rgba(255,255,255,0.8);font-size:14px;line-height:1.7;max-width:440px;margin:0 auto;}
+
+/* NOTE INFO */
+.note{background:rgba(44,26,8,0.7);border-radius:4px;padding:20px 24px;margin-bottom:24px;text-align:center;}
+.note p{color:rgba(255,255,255,0.8);font-size:13px;line-height:1.7;}
+.note strong{color:var(--amber);}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>Mon <em>bilan</em></h1>
+    <p>Prenez quelques minutes pour évaluer honnêtement là où vous en êtes. Il n'y a pas de bonne ou mauvaise réponse.</p>
+    <div class="devise">« Ἀρκεῖ — Προκόπτω »</div>
+  </div>
+
+  <div id="form-wrap">
+
+    <div class="note">
+      <p>Ce bilan est <strong>confidentiel</strong>. Il sera partagé uniquement avec Denis Deblevid pour préparer votre prochain entretien.</p>
+    </div>
+
+    <!-- IDENTITÉ -->
+    <div class="card">
+      <div class="card-title">Qui êtes-vous ?</div>
+      <div class="card-sub">Quelques informations de base</div>
+      <div class="sep"></div>
+      <div class="field"><label>Prénom et Nom</label><input type="text" id="client_name" placeholder="Votre prénom et nom"></div>
+      <div class="field"><label>Date</label><input type="text" id="date" placeholder="JJ/MM/AAAA"></div>
+    </div>
+
+    <!-- PILIERS -->
+    <div class="card">
+      <div class="card-title">Vos quatre piliers</div>
+      <div class="card-sub">Sur une échelle de 0 à 10 — comment vous sentez-vous ?</div>
+      <div class="sep"></div>
+
+      <div class="slider-item">
+        <div class="slider-label">Pilier Psychologique</div>
+        <div class="slider-sub">Votre monde intérieur — vos pensées, émotions, réactions. Êtes-vous en paix avec vous-même ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="psycho" oninput="updateVal('psycho','vp')">
+          <div class="slider-val" id="vp">5</div>
+        </div>
+        <div class="slider-hints"><span>Très difficile</span><span>Très bien</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Pilier Physique</div>
+        <div class="slider-sub">Votre corps, votre énergie, votre vitalité. Êtes-vous à l'écoute de votre corps ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="physique" oninput="updateVal('physique','vph')">
+          <div class="slider-val" id="vph">5</div>
+        </div>
+        <div class="slider-hints"><span>Très difficile</span><span>Très bien</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Pilier Philosophique</div>
+        <div class="slider-sub">Vos valeurs, votre boussole intérieure. Savez-vous ce qui dépend de vous et ce qui n'en dépend pas ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="philo" oninput="updateVal('philo','vphi')">
+          <div class="slider-val" id="vphi">5</div>
+        </div>
+        <div class="slider-hints"><span>Très difficile</span><span>Très bien</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Pilier Pneuma</div>
+        <div class="slider-sub">Votre souffle intérieur, votre sens profond. Avez-vous quelque chose à quoi vous raccrocher quand tout s'effondre ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="pneuma" oninput="updateVal('pneuma','vpne')">
+          <div class="slider-val" id="vpne">5</div>
+        </div>
+        <div class="slider-hints"><span>Très difficile</span><span>Très bien</span></div>
+      </div>
+    </div>
+
+    <!-- DOMAINES -->
+    <div class="card">
+      <div class="card-title">Vos six domaines de vie</div>
+      <div class="card-sub">Dans votre quotidien — comment ça se passe ?</div>
+      <div class="sep"></div>
+
+      <div class="slider-item">
+        <div class="slider-label">Fatigue & Santé</div>
+        <div class="slider-sub">Votre énergie générale, votre rapport à votre corps et à votre santé.</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="fatigue" oninput="updateVal('fatigue','vf')">
+          <div class="slider-val" id="vf">5</div>
+        </div>
+        <div class="slider-hints"><span>Épuisé(e)</span><span>Pleine énergie</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Relations & Amour</div>
+        <div class="slider-sub">La qualité de vos relations — couple, famille, amis. Vous sentez-vous libre d'être vous-même ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="relations" oninput="updateVal('relations','vr')">
+          <div class="slider-val" id="vr">5</div>
+        </div>
+        <div class="slider-hints"><span>Très difficile</span><span>Très épanouissant</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Travail & Sens</div>
+        <div class="slider-sub">Votre rapport au travail. Ce que vous faites vous nourrit-il quelque chose d'essentiel ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="travail" oninput="updateVal('travail','vt')">
+          <div class="slider-val" id="vt">5</div>
+        </div>
+        <div class="slider-hints"><span>Aucun sens</span><span>Plein de sens</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Argent & Abondance</div>
+        <div class="slider-sub">Votre rapport à l'argent. Est-il serein ou source d'angoisse ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="argent" oninput="updateVal('argent','va')">
+          <div class="slider-val" id="va">5</div>
+        </div>
+        <div class="slider-hints"><span>Très anxiogène</span><span>Très serein</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Identité & Confiance</div>
+        <div class="slider-sub">Savez-vous qui vous êtes vraiment — indépendamment du regard des autres ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="identite" oninput="updateVal('identite','vi')">
+          <div class="slider-val" id="vi">5</div>
+        </div>
+        <div class="slider-hints"><span>Très incertain(e)</span><span>Très ancré(e)</span></div>
+      </div>
+
+      <div class="slider-item">
+        <div class="slider-label">Spiritualité & Pneuma</div>
+        <div class="slider-sub">Votre vie intérieure. Avez-vous une pratique, une foi, quelque chose qui vous recentre ?</div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" min="0" max="10" value="5" id="spirituel" oninput="updateVal('spirituel','vs')">
+          <div class="slider-val" id="vs">5</div>
+        </div>
+        <div class="slider-hints"><span>Absent</span><span>Très présent</span></div>
+      </div>
+    </div>
+
+    <!-- COMMENTAIRE LIBRE -->
+    <div class="card">
+      <div class="card-title">Votre parole libre</div>
+      <div class="card-sub">Ce que vous voulez ajouter</div>
+      <div class="sep"></div>
+      <div class="field">
+        <label>Y a-t-il quelque chose que vous souhaitez partager — une situation, une question, ce qui vous pèse en ce moment ?</label>
+        <textarea id="commentaire" placeholder="Écrivez librement — il n'y a pas de bonne ou mauvaise réponse..."></textarea>
+      </div>
+    </div>
+
+    <button class="btn" onclick="envoyer()">Envoyer mon bilan →</button>
+
+  </div>
+
+  <!-- MERCI -->
+  <div class="merci" id="merci">
+    <h2>Merci.</h2>
+    <p>Votre bilan a été transmis à Denis. Il le comparera avec sa propre lecture pour préparer votre prochain entretien.</p>
+    <p style="margin-top:20px;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--amber);font-size:18px;">« Ἀρκεῖ — Προκόπτω »</p>
+  </div>
+
+</div>
+
+<script>
+  // ⚠️ REMPLACE CES VALEURS PAR TES CLÉS EMAILJS
+  const EMAILJS_PUBLIC_KEY = 'VOTRE_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID = 'VOTRE_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID = 'VOTRE_TEMPLATE_ID';
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  function updateVal(id, vid) {
+    document.getElementById(vid).textContent = document.getElementById(id).value;
+  }
+
+  function g(id) { return document.getElementById(id)?.value || '-'; }
+
+  function envoyer() {
+    const params = {
+      client_name: g('client_name'),
+      date: g('date'),
+      psycho: g('psycho'),
+      physique: g('physique'),
+      philo: g('philo'),
+      pneuma: g('pneuma'),
+      fatigue: g('fatigue'),
+      relations: g('relations'),
+      travail: g('travail'),
+      argent: g('argent'),
+      identite: g('identite'),
+      spirituel: g('spirituel'),
+      commentaire: g('commentaire'),
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(() => {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('merci').style.display = 'block';
+        window.scrollTo(0, 0);
+      })
+      .catch(() => {
+        alert('Une erreur est survenue. Vérifiez votre connexion et réessayez.');
+      });
+  }
+</script>
+</body>
+</html>
