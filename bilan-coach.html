@@ -121,7 +121,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
         <input type="text" id="client_name" placeholder="Prénom Nom">
       </div>
       <div class="meta-field">
-        <label>Date</label>
+        <label>Date <span style="color:#C0392B;">*</span></label>
         <input type="text" id="date" placeholder="JJ/MM/AAAA">
       </div>
       <div class="meta-field">
@@ -140,7 +140,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
       <div class="pilier-card psycho">
         <div class="pilier-name">Psychologique</div>
         <div class="score-row">
-          <label>Score</label>
+          <label>Score <span style="color:#C0392B;">*</span></label>
           <input type="text" class="score-input" id="psycho_score" placeholder="7/10" oninput="updateBadge('psycho')">
           <span class="score-hint">sur 10</span>
         </div>
@@ -150,7 +150,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
       <div class="pilier-card philo">
         <div class="pilier-name">Philosophique</div>
         <div class="score-row">
-          <label>Score</label>
+          <label>Score <span style="color:#C0392B;">*</span></label>
           <input type="text" class="score-input" id="philo_score" placeholder="5/10">
           <span class="score-hint">sur 10</span>
         </div>
@@ -160,7 +160,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
       <div class="pilier-card physique">
         <div class="pilier-name">Physique</div>
         <div class="score-row">
-          <label>Score</label>
+          <label>Score <span style="color:#C0392B;">*</span></label>
           <input type="text" class="score-input" id="physique_score" placeholder="6/10">
           <span class="score-hint">sur 10</span>
         </div>
@@ -175,7 +175,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
       <div class="pilier-card pneuma">
         <div class="pilier-name">Pneuma</div>
         <div class="score-row">
-          <label>Score</label>
+          <label>Score <span style="color:#C0392B;">*</span></label>
           <input type="text" class="score-input" id="pneuma_score" placeholder="4/10">
           <span class="score-hint">sur 10</span>
         </div>
@@ -314,7 +314,8 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
 
     <div style="margin-bottom:20px;">
       <button onclick="genererTransversale()" style="padding:10px 24px;background:var(--encre);color:var(--or);border:1px solid var(--or);font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;">⚡ Générer l'analyse automatique</button>
-      <p style="font-size:11px;color:var(--ardoise);margin-top:8px;font-style:italic;">Basée sur vos scores — modifiable ensuite.</p>
+      <p style="font-size:11px;color:var(--ardoise);margin-top:8px;font-style:italic;">Entrez des scores numériques (ex: 7) dans les piliers et domaines, puis cliquez.</p>
+      <div id="transversal-result" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(201,168,76,0.06);border-left:3px solid var(--or);font-size:12px;color:var(--ardoise);line-height:1.7;"></div>
     </div>
 
     <div class="trans-grid">
@@ -379,7 +380,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
   // ⚠️ REMPLACE CES VALEURS PAR TES CLÉS EMAILJS
   const EMAILJS_PUBLIC_KEY = 'AM-9Jj1Nx3w-5TRNo';
   const EMAILJS_SERVICE_ID = 'service_i3xmhab';
-  const EMAILJS_TEMPLATE_ID = 'template_wwhuwch';
+  const EMAILJS_TEMPLATE_ID = 'template_8vbelg5';
 
   emailjs.init(EMAILJS_PUBLIC_KEY);
 
@@ -500,9 +501,20 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
     // Axe de travail
     var axe = 'Axe prioritaire : renforcer le pilier ' + pMin + ' pour libérer le domaine ' + dMin + '. En parallèle, surveiller ' + dMin2 + ' (' + domaines[dMin2] + '/10) qui constitue un second point de vigilance.';
 
-    document.getElementById('tension').value = tension;
-    document.getElementById('levier').value = levier;
-    document.getElementById('axe').value = axe;
+    var tEl = document.getElementById('tension');
+    var lEl = document.getElementById('levier');
+    var aEl = document.getElementById('axe');
+    var rEl = document.getElementById('transversal-result');
+    
+    if (tEl) tEl.value = tension;
+    if (lEl) lEl.value = levier;
+    if (aEl) aEl.value = axe;
+    if (rEl) {
+      rEl.innerHTML = '<strong style="color:var(--or);">⚡ Zone de tension :</strong> ' + tension + '<br><br>' +
+        '<strong style="color:var(--or);">🌱 Levier principal :</strong> ' + levier + '<br><br>' +
+        '<strong style="color:var(--or);">🎯 Axe de travail :</strong> ' + axe;
+      rEl.style.display = 'block';
+    }
   }
 
   function envoyerBilan() {
