@@ -3,376 +3,483 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bilan Coach — Méthode 4P</title>
+<title>Bilan Diagnostique — Méthode 4P</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --or:#C9A84C;
-  --encre:#1A1A2E;
-  --ardoise:#4A4A6A;
-  --brume:#F5F3EE;
-  --blanc:#FDFCF9;
-  --rouge:#C0392B;
+  --brun:#2C1A08;
+  --amber:#E8832A;
+  --dark:#C96A10;
+  --cream:#F5E6D0;
+  --light:#888888;
+  --white:#ffffff;
   --vert:#5A7A5A;
-  --bleu:#2C4A7C;
-  --violet:#6B4F8A;
+  --rouge:#C0392B;
+  --orange:#E8832A;
 }
-body{font-family:'Montserrat',sans-serif;background:var(--brume);color:var(--encre);font-size:14px;line-height:1.6;padding:40px 20px;}
-.page{max-width:820px;margin:0 auto;background:var(--blanc);box-shadow:0 4px 40px rgba(0,0,0,0.1);}
+body{font-family:'Montserrat',sans-serif;background:#F5F0E8;color:var(--brun);font-size:14px;line-height:1.6;}
+.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh;}
 
-.header{background:var(--encre);padding:40px 56px;position:relative;overflow:hidden;}
-.header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;border:1px solid rgba(201,168,76,0.2);}
-.eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--or);margin-bottom:12px;}
-.header h1{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--blanc);margin-bottom:6px;}
-.header h1 em{color:var(--or);font-style:italic;}
-.header-sub{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;}
-.header-meta{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-top:20px;border-top:1px solid rgba(201,168,76,0.2);}
-.meta-field label{display:block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:6px;}
-.meta-field input{background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.3);color:rgba(255,255,255,0.8);font-family:'Montserrat',sans-serif;font-size:13px;width:100%;padding:4px 0;outline:none;}
-.meta-field input::placeholder{color:rgba(255,255,255,0.25);font-style:italic;}
+/* HEADER */
+.header{background:var(--brun);padding:40px 48px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;border:1px solid rgba(232,131,42,0.2);}
+.header-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:6px;}
+.header-confidential{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--white);margin-bottom:4px;}
+.header h1 em{color:var(--amber);font-style:italic;}
+.header-meta{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-top:20px;border-top:1px solid rgba(232,131,42,0.2);}
+.meta-field label{display:block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:6px;}
+.meta-field input{background:transparent;border:none;border-bottom:1px solid rgba(232,131,42,0.3);color:rgba(255,255,255,0.8);font-family:'Montserrat',sans-serif;font-size:13px;width:100%;padding:4px 0;outline:none;}
+.meta-field input::placeholder{color:rgba(255,255,255,0.2);font-style:italic;}
 
-.section{padding:40px 56px;border-bottom:1px solid rgba(26,26,46,0.08);}
-.section-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--or);margin-bottom:4px;}
-.section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--encre);margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid rgba(26,26,46,0.1);}
+/* SECTIONS */
+.section{padding:36px 48px;border-bottom:1px solid rgba(44,26,8,0.08);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--brun);margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--amber);}
 
-/* PILIERS */
-.piliers-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.pilier-card{border:1px solid rgba(26,26,46,0.1);border-radius:2px;padding:20px;position:relative;}
+/* GRADUATION COULEUR */
+.graduation-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.graduation-wrap label{font-size:11px;color:var(--light);min-width:50px;}
+.graduation{display:flex;gap:4px;}
+.grad-btn{width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;font-size:9px;font-weight:600;color:transparent;}
+.grad-btn:hover{transform:scale(1.15);}
+.grad-btn.g1{background:rgba(192,57,43,0.15);border-color:rgba(192,57,43,0.3);}
+.grad-btn.g2{background:rgba(192,57,43,0.25);border-color:rgba(192,57,43,0.4);}
+.grad-btn.g3{background:rgba(232,131,42,0.2);border-color:rgba(232,131,42,0.4);}
+.grad-btn.g4{background:rgba(232,131,42,0.3);border-color:rgba(232,131,42,0.5);}
+.grad-btn.g5{background:rgba(200,180,80,0.25);border-color:rgba(200,180,80,0.5);}
+.grad-btn.g6{background:rgba(200,180,80,0.35);border-color:rgba(200,180,80,0.6);}
+.grad-btn.g7{background:rgba(90,122,90,0.2);border-color:rgba(90,122,90,0.4);}
+.grad-btn.g8{background:rgba(90,122,90,0.3);border-color:rgba(90,122,90,0.5);}
+.grad-btn.g9{background:rgba(44,122,44,0.3);border-color:rgba(44,122,44,0.5);}
+.grad-btn.g10{background:rgba(44,122,44,0.45);border-color:rgba(44,122,44,0.7);}
+.grad-btn.active{border-width:3px;color:var(--brun);transform:scale(1.2);}
+.grad-hint{font-size:10px;color:var(--light);display:flex;justify-content:space-between;margin-bottom:10px;}
+.grad-hint span{font-size:9px;}
+
+/* CHAMPS */
+.field-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px;display:block;}
+.field-tags{width:100%;padding:10px 12px;border:1px solid rgba(44,26,8,0.12);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--brun);background:rgba(232,131,42,0.03);outline:none;min-height:52px;resize:vertical;margin-bottom:8px;}
+.field-tags:focus{border-color:var(--amber);}
+.field-tags::placeholder{color:rgba(44,26,8,0.25);font-style:italic;}
+.field-obs{width:100%;padding:10px 12px;border:1px solid rgba(44,26,8,0.15);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:13px;color:var(--brun);background:var(--white);outline:none;min-height:72px;resize:vertical;margin-bottom:16px;}
+.field-obs:focus{border-color:var(--amber);}
+.field-obs::placeholder{color:rgba(44,26,8,0.25);font-style:italic;}
+
+/* PILIER CARD */
+.pilier-card{border:1px solid rgba(44,26,8,0.1);border-radius:2px;padding:20px;margin-bottom:16px;position:relative;}
 .pilier-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
-.pilier-card.psycho::before{background:var(--bleu);}
-.pilier-card.philo::before{background:var(--violet);}
-.pilier-card.physique::before{background:var(--vert);}
-.pilier-card.pneuma::before{background:var(--or);}
-.pilier-name{font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
-.pilier-card.psycho .pilier-name{color:var(--bleu);}
-.pilier-card.philo .pilier-name{color:var(--violet);}
-.pilier-card.physique .pilier-name{color:var(--vert);}
-.pilier-card.pneuma .pilier-name{color:var(--or);}
+.pilier-card.psycho::before{background:#2C4A7C;}
+.pilier-card.philo::before{background:#6B4F8A;}
+.pilier-card.physique::before{background:#5A7A5A;}
+.pilier-card.pneuma::before{background:var(--amber);}
+.pilier-name{font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;font-weight:500;}
+.pilier-card.psycho .pilier-name{color:#2C4A7C;}
+.pilier-card.philo .pilier-name{color:#6B4F8A;}
+.pilier-card.physique .pilier-name{color:#5A7A5A;}
+.pilier-card.pneuma .pilier-name{color:var(--amber);}
 
-.score-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.score-row label{font-size:11px;color:var(--ardoise);min-width:50px;}
-.score-input{width:60px;border:1px solid rgba(26,26,46,0.2);border-radius:2px;padding:4px 8px;font-family:'Montserrat',sans-serif;font-size:12px;text-align:center;outline:none;}
-.score-input:focus{border-color:var(--or);}
-.score-hint{font-size:10px;color:rgba(74,74,106,0.4);}
+/* DOMAINE */
+.domaine-item{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(44,26,8,0.07);}
+.domaine-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.domaine-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--brun);margin-bottom:12px;}
 
-textarea{width:100%;border:1px solid rgba(26,26,46,0.15);border-radius:2px;padding:10px 12px;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--ardoise);resize:vertical;min-height:64px;outline:none;line-height:1.6;}
-textarea:focus{border-color:var(--or);}
-textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
+/* PHRASES RAPIDES */
+.phrases-rapides{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.phrase-btn{padding:4px 12px;border:1px solid rgba(44,26,8,0.15);border-radius:2px;font-size:11px;color:var(--light);cursor:pointer;background:white;transition:all .2s;}
+.phrase-btn:hover{border-color:var(--amber);color:var(--brun);}
 
-/* DOMAINES */
-.domaine-item{margin-bottom:20px;}
-.domaine-header{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
-.domaine-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:var(--encre);flex:1;}
-.badge-select{font-size:11px;border:1px solid rgba(26,26,46,0.15);border-radius:2px;padding:3px 8px;font-family:'Montserrat',sans-serif;color:var(--ardoise);background:white;outline:none;cursor:pointer;}
-
-/* TRANSVERSAL */
-.trans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
-.trans-item label{display:block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:6px;}
-
-.synthese-area{background:var(--encre);padding:24px;border-radius:2px;}
-.synthese-area label{display:block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:8px;}
-.synthese-area textarea{background:transparent;border:1px solid rgba(201,168,76,0.2);color:rgba(255,255,255,0.85);font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;}
-.synthese-area textarea::placeholder{color:rgba(255,255,255,0.2);}
-.synthese-area textarea:focus{border-color:rgba(201,168,76,0.5);}
+/* SYNTHÈSE */
+.synthese-wrap{background:var(--brun);padding:28px;border-radius:2px;margin-bottom:20px;}
+.synthese-wrap label{display:block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+.synthese-wrap textarea{background:transparent;border:1px solid rgba(232,131,42,0.2);color:rgba(255,255,255,0.85);font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;width:100%;padding:12px;outline:none;min-height:100px;resize:vertical;line-height:1.7;}
+.synthese-wrap textarea::placeholder{color:rgba(255,255,255,0.2);}
+.synthese-wrap textarea:focus{border-color:rgba(232,131,42,0.5);}
 
 /* PRÉCONISATIONS */
 .preco-item{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;margin-bottom:14px;}
-.preco-num{width:32px;height:32px;border:1px solid var(--or);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--or);flex-shrink:0;margin-top:2px;}
+.preco-num{width:32px;height:32px;border:1px solid var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--amber);flex-shrink:0;margin-top:2px;}
 
-/* SUBMIT */
-.submit-section{padding:32px 56px;text-align:center;}
-.submit-btn{display:inline-block;padding:16px 48px;background:var(--encre);color:var(--or);font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--or);cursor:pointer;transition:all .3s;border-radius:2px;}
-.submit-btn:hover{background:var(--or);color:var(--encre);}
-.success-msg{display:none;margin-top:16px;font-size:13px;color:var(--vert);letter-spacing:1px;}
-.error-msg{display:none;margin-top:16px;font-size:13px;color:var(--rouge);}
+/* FOOTER */
+.footer{background:var(--brun);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;}
+.footer-motto{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--amber);}
+.footer-contact{font-size:10px;color:rgba(255,255,255,0.4);text-align:right;line-height:1.6;}
 
-.footer{background:var(--encre);padding:24px 56px;display:flex;justify-content:space-between;align-items:center;}
-.footer-motto{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--or);}
-.footer-contact{font-size:10px;color:rgba(255,255,255,0.4);text-align:right;}
+/* IMPRESSION */
+@media print {
+  body{background:white;}
+  .page{max-width:100%;box-shadow:none;}
+  .no-print{display:none !important;}
+  textarea{height:auto !important;min-height:0 !important;overflow:visible !important;resize:none;border:1px solid #ddd !important;white-space:pre-wrap;word-wrap:break-word;}
+  .section{page-break-inside:avoid;}
+  .pilier-card{page-break-inside:avoid;}
+}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <div class="header">
-    <div class="eyebrow">Méthode 4P · Bilan Coach</div>
-    <h1>Bilan de <em>Coaching</em></h1>
-    <div class="header-sub">Version Coach · Confidentiel</div>
-    <div class="header-meta">
-      <div class="meta-field">
-        <label>Client(e)</label>
-        <input type="text" id="client_name" placeholder="Prénom Nom">
-      </div>
-      <div class="meta-field">
-        <label>Date</label>
-        <input type="text" id="date" placeholder="JJ/MM/AAAA">
-      </div>
-      <div class="meta-field">
-        <label>Durée</label>
-        <input type="text" id="duree" placeholder="30 min · 45 min">
-      </div>
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">Méthode 4P · Bilan Diagnostique</div>
+  <div class="header-confidential">Version Coach · Confidentiel</div>
+  <h1>Bilan <em>Diagnostique</em></h1>
+  <div class="header-meta">
+    <div class="meta-field">
+      <label>Prénom Nom *</label>
+      <input type="text" id="client_name" placeholder="Prénom Nom">
+    </div>
+    <div class="meta-field">
+      <label>Date bilan *</label>
+      <input type="text" id="date_bilan" placeholder="JJ/MM/AAAA">
+    </div>
+    <div class="meta-field">
+      <label>Date rencontre</label>
+      <input type="text" id="date_rencontre" placeholder="JJ/MM/AAAA">
+    </div>
+    <div class="meta-field">
+      <label>Durée</label>
+      <input type="text" id="duree" placeholder="30 · 45 · 60 min">
     </div>
   </div>
+</div>
 
-  <!-- PILIERS -->
-  <div class="section">
-    <div class="section-label">Partie I</div>
-    <div class="section-title">Les 4 Piliers</div>
-    <div class="piliers-grid">
+<!-- PARTIE 1 — PILIERS -->
+<div class="section">
+  <div class="section-title">Les 4 Piliers</div>
 
-      <div class="pilier-card psycho">
-        <div class="pilier-name">Psychologique</div>
-        <div class="score-row">
-          <label>Score</label>
-          <input type="text" class="score-input" id="psycho_score" placeholder="7/10">
-          <span class="score-hint">sur 10</span>
-        </div>
-        <textarea id="psycho_obs" placeholder="Observations : état émotionnel, croyances identifiées, ressources internes…"></textarea>
+  <!-- PSYCHOLOGIQUE -->
+  <div class="pilier-card psycho">
+    <div class="pilier-name">Psychologique</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-psycho">
+        <div class="grad-btn g1" onclick="setGrad('psycho',1)" title="Alerte"></div>
+        <div class="grad-btn g2" onclick="setGrad('psycho',2)" title="Alerte"></div>
+        <div class="grad-btn g3" onclick="setGrad('psycho',3)" title="Attention"></div>
+        <div class="grad-btn g4" onclick="setGrad('psycho',4)" title="Attention"></div>
+        <div class="grad-btn g5" onclick="setGrad('psycho',5)" title="Surveiller"></div>
+        <div class="grad-btn g6" onclick="setGrad('psycho',6)" title="Surveiller"></div>
+        <div class="grad-btn g7" onclick="setGrad('psycho',7)" title="Solide"></div>
+        <div class="grad-btn g8" onclick="setGrad('psycho',8)" title="Solide"></div>
+        <div class="grad-btn g9" onclick="setGrad('psycho',9)" title="Ressource"></div>
+        <div class="grad-btn g10" onclick="setGrad('psycho',10)" title="Ressource"></div>
       </div>
-
-      <div class="pilier-card philo">
-        <div class="pilier-name">Philosophique</div>
-        <div class="score-row">
-          <label>Score</label>
-          <input type="text" class="score-input" id="philo_score" placeholder="5/10">
-          <span class="score-hint">sur 10</span>
-        </div>
-        <textarea id="philo_obs" placeholder="Observations : sens, valeurs, vision du monde, questionnements…"></textarea>
-      </div>
-
-      <div class="pilier-card physique">
-        <div class="pilier-name">Physique</div>
-        <div class="score-row">
-          <label>Score</label>
-          <input type="text" class="score-input" id="physique_score" placeholder="6/10">
-          <span class="score-hint">sur 10</span>
-        </div>
-        <textarea id="physique_obs" placeholder="Observations : vitalité, corps, énergie, hygiène de vie…"></textarea>
-      </div>
-
-      <div class="pilier-card pneuma">
-        <div class="pilier-name">Pneuma</div>
-        <div class="score-row">
-          <label>Score</label>
-          <input type="text" class="score-input" id="pneuma_score" placeholder="4/10">
-          <span class="score-hint">sur 10</span>
-        </div>
-        <textarea id="pneuma_obs" placeholder="Observations : souffle intérieur, ancrage spirituel, transcendance…"></textarea>
-      </div>
-
+      <span id="label-psycho" style="font-size:11px;color:var(--light);"></span>
     </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="psycho_tags" placeholder="Collez ici les tags depuis l'outil mots-clés…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="psycho_obs" placeholder="Vos observations sur ce pilier…"></textarea>
   </div>
 
-  <!-- DOMAINES -->
-  <div class="section">
-    <div class="section-label">Partie II</div>
-    <div class="section-title">Les 6 Domaines</div>
-
-    <div class="domaine-item">
-      <div class="domaine-header">
-        <div class="domaine-name">Fatigue &amp; Santé</div>
-        <input type="text" class="score-input" id="fatigue_score" placeholder="5/10">
-        <select class="badge-select" id="fatigue_badge">
-          <option>— état —</option>
-          <option>Alerte</option>
-          <option>À travailler</option>
-          <option>Solide</option>
-          <option>Ressource</option>
-        </select>
+  <!-- PHYSIQUE -->
+  <div class="pilier-card physique">
+    <div class="pilier-name">Physique</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-physique">
+        <div class="grad-btn g1" onclick="setGrad('physique',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('physique',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('physique',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('physique',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('physique',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('physique',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('physique',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('physique',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('physique',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('physique',10)"></div>
       </div>
-      <textarea id="fatigue_obs" placeholder="Observations : épuisement, rapport au corps, signaux repérés…"></textarea>
+      <span id="label-physique" style="font-size:11px;color:var(--light);"></span>
     </div>
-
-    <div class="domaine-item">
-      <div class="domaine-header">
-        <div class="domaine-name">Relations &amp; Amour</div>
-        <input type="text" class="score-input" id="relations_score" placeholder="5/10">
-        <select class="badge-select" id="relations_badge">
-          <option>— état —</option>
-          <option>Alerte</option>
-          <option>À travailler</option>
-          <option>Solide</option>
-          <option>Ressource</option>
-        </select>
-      </div>
-      <textarea id="relations_obs" placeholder="Observations : qualité des liens, besoins relationnels…"></textarea>
-    </div>
-
-    <div class="domaine-item">
-      <div class="domaine-header">
-        <div class="domaine-name">Travail &amp; Sens</div>
-        <input type="text" class="score-input" id="travail_score" placeholder="5/10">
-        <select class="badge-select" id="travail_badge">
-          <option>— état —</option>
-          <option>Alerte</option>
-          <option>À travailler</option>
-          <option>Solide</option>
-          <option>Ressource</option>
-        </select>
-      </div>
-      <textarea id="travail_obs" placeholder="Observations : rapport au travail, quête de sens…"></textarea>
-    </div>
-
-    <div class="domaine-item">
-      <div class="domaine-header">
-        <div class="domaine-name">Argent &amp; Abondance</div>
-        <input type="text" class="score-input" id="argent_score" placeholder="5/10">
-        <select class="badge-select" id="argent_badge">
-          <option>— état —</option>
-          <option>Alerte</option>
-          <option>À travailler</option>
-          <option>Solide</option>
-          <option>Ressource</option>
-        </select>
-      </div>
-      <textarea id="argent_obs" placeholder="Observations : rapport à l'argent, blocages identifiés…"></textarea>
-    </div>
-
-    <div class="domaine-item">
-      <div class="domaine-header">
-        <div class="domaine-name">Identité &amp; Confiance</div>
-        <input type="text" class="score-input" id="identite_score" placeholder="5/10">
-        <select class="badge-select" id="identite_badge">
-          <option>— état —</option>
-          <option>Alerte</option>
-          <option>À travailler</option>
-          <option>Solide</option>
-          <option>Ressource</option>
-        </select>
-      </div>
-      <textarea id="identite_obs" placeholder="Observations : solidité identitaire, estime de soi…"></textarea>
-    </div>
-
-    <div class="domaine-item">
-      <div class="domaine-header">
-        <div class="domaine-name">Spiritualité &amp; Pneuma</div>
-        <input type="text" class="score-input" id="spirituel_score" placeholder="5/10">
-        <select class="badge-select" id="spirituel_badge">
-          <option>— état —</option>
-          <option>Alerte</option>
-          <option>À travailler</option>
-          <option>Solide</option>
-          <option>Ressource</option>
-        </select>
-      </div>
-      <textarea id="spirituel_obs" placeholder="Observations : sens ultime, pratique spirituelle…"></textarea>
-    </div>
-
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="physique_tags" placeholder="Collez ici les tags depuis l'outil mots-clés…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="physique_obs" placeholder="Vos observations sur ce pilier…"></textarea>
   </div>
 
-  <!-- ANALYSE TRANSVERSALE -->
-  <div class="section">
-    <div class="section-label">Partie III</div>
-    <div class="section-title">Analyse Transversale</div>
-    <div class="trans-grid">
-      <div class="trans-item">
-        <label>⚡ Zone de tension</label>
-        <textarea id="tension" placeholder="Croisement piliers / domaines en tension…" style="min-height:80px;"></textarea>
+  <!-- PHILOSOPHIQUE -->
+  <div class="pilier-card philo">
+    <div class="pilier-name">Philosophique</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-philo">
+        <div class="grad-btn g1" onclick="setGrad('philo',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('philo',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('philo',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('philo',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('philo',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('philo',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('philo',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('philo',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('philo',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('philo',10)"></div>
       </div>
-      <div class="trans-item">
-        <label>🌱 Levier principal</label>
-        <textarea id="levier" placeholder="Point d'appui fort à activer…" style="min-height:80px;"></textarea>
+      <span id="label-philo" style="font-size:11px;color:var(--light);"></span>
+    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="philo_tags" placeholder="Collez ici les tags depuis l'outil mots-clés…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="philo_obs" placeholder="Vos observations sur ce pilier…"></textarea>
+  </div>
+
+  <!-- PNEUMA -->
+  <div class="pilier-card pneuma">
+    <div class="pilier-name">Pneuma</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-pneuma">
+        <div class="grad-btn g1" onclick="setGrad('pneuma',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('pneuma',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('pneuma',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('pneuma',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('pneuma',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('pneuma',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('pneuma',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('pneuma',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('pneuma',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('pneuma',10)"></div>
       </div>
-      <div class="trans-item">
-        <label>🎯 Axe de travail</label>
-        <textarea id="axe" placeholder="Direction recommandée…" style="min-height:80px;"></textarea>
+      <span id="label-pneuma" style="font-size:11px;color:var(--light);"></span>
+    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="pneuma_tags" placeholder="Collez ici les tags depuis l'outil mots-clés…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="pneuma_obs" placeholder="Vos observations sur ce pilier…"></textarea>
+  </div>
+
+  <!-- PREMIÈRE IMPRESSION 4P -->
+  <div style="margin-top:20px;">
+    <label class="field-label">Première impression — vue d'ensemble des 4 piliers</label>
+    <textarea class="field-obs" id="impression_4p" placeholder="Votre première lecture globale des 4 piliers…" style="min-height:80px;"></textarea>
+  </div>
+</div>
+
+<!-- PARTIE 2 — DOMAINES -->
+<div class="section">
+  <div class="section-title">Les 6 Domaines</div>
+
+  <!-- FATIGUE -->
+  <div class="domaine-item">
+    <div class="domaine-name">Fatigue & Santé</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-fatigue">
+        <div class="grad-btn g1" onclick="setGrad('fatigue',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('fatigue',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('fatigue',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('fatigue',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('fatigue',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('fatigue',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('fatigue',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('fatigue',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('fatigue',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('fatigue',10)"></div>
       </div>
+      <span id="label-fatigue" style="font-size:11px;color:var(--light);"></span>
     </div>
-    <div class="synthese-area">
-      <label>Synthèse du coach</label>
-      <textarea id="synthese" placeholder="Lecture d'ensemble personnalisée…" style="min-height:80px;"></textarea>
-    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="fatigue_tags" placeholder="Collez ici les tags…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="fatigue_obs" placeholder="Vos observations…"></textarea>
   </div>
 
-  <!-- PRÉCONISATIONS -->
-  <div class="section">
-    <div class="section-label">Partie IV</div>
-    <div class="section-title">Préconisations</div>
-    <div class="preco-item">
-      <div class="preco-num">1</div>
-      <textarea id="preco1" placeholder="Première préconisation concrète…" style="min-height:56px;"></textarea>
+  <!-- RELATIONS -->
+  <div class="domaine-item">
+    <div class="domaine-name">Relations & Amour</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-relations">
+        <div class="grad-btn g1" onclick="setGrad('relations',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('relations',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('relations',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('relations',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('relations',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('relations',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('relations',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('relations',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('relations',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('relations',10)"></div>
+      </div>
+      <span id="label-relations" style="font-size:11px;color:var(--light);"></span>
     </div>
-    <div class="preco-item">
-      <div class="preco-num">2</div>
-      <textarea id="preco2" placeholder="Deuxième préconisation…" style="min-height:56px;"></textarea>
-    </div>
-    <div class="preco-item">
-      <div class="preco-num">3</div>
-      <textarea id="preco3" placeholder="Troisième préconisation…" style="min-height:56px;"></textarea>
-    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="relations_tags" placeholder="Collez ici les tags…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="relations_obs" placeholder="Vos observations…"></textarea>
   </div>
 
-  <!-- SUBMIT -->
-  <div class="submit-section">
-    <button class="submit-btn" onclick="envoyerBilan()">Envoyer le bilan →</button>
-    <div class="success-msg" id="success">✓ Bilan envoyé avec succès à votre adresse email.</div>
-    <div class="error-msg" id="error">Une erreur est survenue. Vérifiez votre connexion et réessayez.</div>
+  <!-- TRAVAIL -->
+  <div class="domaine-item">
+    <div class="domaine-name">Travail & Sens</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-travail">
+        <div class="grad-btn g1" onclick="setGrad('travail',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('travail',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('travail',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('travail',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('travail',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('travail',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('travail',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('travail',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('travail',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('travail',10)"></div>
+      </div>
+      <span id="label-travail" style="font-size:11px;color:var(--light);"></span>
+    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="travail_tags" placeholder="Collez ici les tags…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="travail_obs" placeholder="Vos observations…"></textarea>
   </div>
 
-  <div class="footer">
-    <div class="footer-motto">Arkeï Prokoptô</div>
-    <div class="footer-contact">Denis Deblevid · Coach Philosophique<br>denisdeblevidcontact@gmail.com</div>
+  <!-- ARGENT -->
+  <div class="domaine-item">
+    <div class="domaine-name">Argent & Abondance</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-argent">
+        <div class="grad-btn g1" onclick="setGrad('argent',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('argent',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('argent',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('argent',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('argent',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('argent',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('argent',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('argent',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('argent',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('argent',10)"></div>
+      </div>
+      <span id="label-argent" style="font-size:11px;color:var(--light);"></span>
+    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="argent_tags" placeholder="Collez ici les tags…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="argent_obs" placeholder="Vos observations…"></textarea>
   </div>
 
+  <!-- IDENTITÉ -->
+  <div class="domaine-item">
+    <div class="domaine-name">Identité & Confiance</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-identite">
+        <div class="grad-btn g1" onclick="setGrad('identite',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('identite',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('identite',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('identite',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('identite',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('identite',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('identite',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('identite',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('identite',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('identite',10)"></div>
+      </div>
+      <span id="label-identite" style="font-size:11px;color:var(--light);"></span>
+    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="identite_tags" placeholder="Collez ici les tags…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="identite_obs" placeholder="Vos observations…"></textarea>
+  </div>
+
+  <!-- SPIRITUALITÉ -->
+  <div class="domaine-item">
+    <div class="domaine-name">Spiritualité & Pneuma</div>
+    <div class="graduation-wrap">
+      <label>État</label>
+      <div class="graduation" id="grad-spirituel">
+        <div class="grad-btn g1" onclick="setGrad('spirituel',1)"></div>
+        <div class="grad-btn g2" onclick="setGrad('spirituel',2)"></div>
+        <div class="grad-btn g3" onclick="setGrad('spirituel',3)"></div>
+        <div class="grad-btn g4" onclick="setGrad('spirituel',4)"></div>
+        <div class="grad-btn g5" onclick="setGrad('spirituel',5)"></div>
+        <div class="grad-btn g6" onclick="setGrad('spirituel',6)"></div>
+        <div class="grad-btn g7" onclick="setGrad('spirituel',7)"></div>
+        <div class="grad-btn g8" onclick="setGrad('spirituel',8)"></div>
+        <div class="grad-btn g9" onclick="setGrad('spirituel',9)"></div>
+        <div class="grad-btn g10" onclick="setGrad('spirituel',10)"></div>
+      </div>
+      <span id="label-spirituel" style="font-size:11px;color:var(--light);"></span>
+    </div>
+    <label class="field-label">Mots-clés observés</label>
+    <textarea class="field-tags" id="spirituel_tags" placeholder="Collez ici les tags…"></textarea>
+    <label class="field-label">Observations</label>
+    <textarea class="field-obs" id="spirituel_obs" placeholder="Vos observations…"></textarea>
+  </div>
+
+  <!-- CROISEMENTS RAPIDES -->
+  <div style="margin-top:20px;">
+    <label class="field-label">Croisements — points de vigilance</label>
+    <div class="phrases-rapides" id="phrases-rapides">
+      <button class="phrase-btn" onclick="ajouterPhrase('Zone de tension identifiée entre pilier et domaine.')">Zone de tension</button>
+      <button class="phrase-btn" onclick="ajouterPhrase('Levier principal à activer en priorité.')">Levier principal</button>
+      <button class="phrase-btn" onclick="ajouterPhrase('Cohérence forte entre les piliers et les domaines.')">Cohérence forte</button>
+      <button class="phrase-btn" onclick="ajouterPhrase('Fragilité structurelle — plusieurs domaines impactés.')">Fragilité structurelle</button>
+      <button class="phrase-btn" onclick="ajouterPhrase('Ressource identifiée — à mobiliser en premier.')">Ressource à mobiliser</button>
+      <button class="phrase-btn" onclick="ajouterPhrase('Signal fort — à explorer en priorité lors du prochain entretien.')">Signal fort</button>
+    </div>
+    <textarea class="field-obs" id="croisements" placeholder="Cliquez sur les phrases rapides ou saisissez votre analyse transversale…" style="min-height:80px;"></textarea>
+  </div>
+</div>
+
+<!-- SYNTHÈSE -->
+<div class="section">
+  <div class="section-title">Votre synthèse</div>
+  <div class="synthese-wrap">
+    <label>Votre lecture — ce que vous voyez au-delà des mots</label>
+    <textarea id="synthese" placeholder="Votre interprétation personnelle, inductive, humaine…"></textarea>
+  </div>
+</div>
+
+<!-- PRÉCONISATIONS -->
+<div class="section">
+  <div class="section-title">Préconisations</div>
+  <div class="preco-item">
+    <div class="preco-num">1</div>
+    <textarea class="field-obs" id="preco1" placeholder="Première préconisation concrète…" style="min-height:56px;margin-bottom:0;"></textarea>
+  </div>
+  <div class="preco-item">
+    <div class="preco-num">2</div>
+    <textarea class="field-obs" id="preco2" placeholder="Deuxième préconisation…" style="min-height:56px;margin-bottom:0;"></textarea>
+  </div>
+  <div class="preco-item">
+    <div class="preco-num">3</div>
+    <textarea class="field-obs" id="preco3" placeholder="Troisième préconisation…" style="min-height:56px;margin-bottom:0;"></textarea>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-motto">Arkeï — Prokoptô</div>
+  <div class="footer-contact">
+    Denis Deblevid · Coaching Philosophique<br>
+    renaitredelasoif.fr<br>
+    denisdeblevidcontact@gmail.com
+  </div>
 </div>
 
 <script>
-  // ⚠️ REMPLACE CES VALEURS PAR TES CLÉS EMAILJS
-  const EMAILJS_PUBLIC_KEY = 'AM-9Jj1Nx3w-5TRNo';
-  const EMAILJS_SERVICE_ID = 'service_i3xmhab';
-  const EMAILJS_TEMPLATE_ID = 'template_8vbelg5';
+var gradValues = {};
+var gradLabels = {1:'Alerte',2:'Alerte',3:'Attention',4:'Attention',5:'À surveiller',6:'À surveiller',7:'Solide',8:'Solide',9:'Ressource',10:'Ressource'};
 
-  emailjs.init(EMAILJS_PUBLIC_KEY);
+function setGrad(id, val) {
+  gradValues[id] = val;
+  var btns = document.querySelectorAll('#grad-' + id + ' .grad-btn');
+  btns.forEach(function(btn, i) {
+    btn.classList.toggle('active', i < val);
+  });
+  var label = document.getElementById('label-' + id);
+  if (label) label.textContent = gradLabels[val] || '';
+}
 
-  function g(id) { return document.getElementById(id)?.value || '-'; }
-
-  function envoyerBilan() {
-    const params = {
-      client_name: g('client_name'),
-      date: g('date'),
-      duree: g('duree'),
-      psycho_score: g('psycho_score'),
-      psycho_obs: g('psycho_obs'),
-      philo_score: g('philo_score'),
-      philo_obs: g('philo_obs'),
-      physique_score: g('physique_score'),
-      physique_obs: g('physique_obs'),
-      pneuma_score: g('pneuma_score'),
-      pneuma_obs: g('pneuma_obs'),
-      fatigue_score: g('fatigue_score'),
-      fatigue_obs: g('fatigue_obs'),
-      relations_score: g('relations_score'),
-      relations_obs: g('relations_obs'),
-      travail_score: g('travail_score'),
-      travail_obs: g('travail_obs'),
-      argent_score: g('argent_score'),
-      argent_obs: g('argent_obs'),
-      identite_score: g('identite_score'),
-      identite_obs: g('identite_obs'),
-      spirituel_score: g('spirituel_score'),
-      spirituel_obs: g('spirituel_obs'),
-      tension: g('tension'),
-      levier: g('levier'),
-      axe: g('axe'),
-      synthese: g('synthese'),
-      preco1: g('preco1'),
-      preco2: g('preco2'),
-      preco3: g('preco3')
-    };
-
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
-      .then(() => {
-        document.getElementById('success').style.display = 'block';
-        document.getElementById('error').style.display = 'none';
-      })
-      .catch(() => {
-        document.getElementById('error').style.display = 'block';
-        document.getElementById('success').style.display = 'none';
-      });
+function ajouterPhrase(phrase) {
+  var el = document.getElementById('croisements');
+  if (el) {
+    el.value = el.value ? el.value + '\n' + phrase : phrase;
   }
+}
 </script>
 </body>
 </html>
-
