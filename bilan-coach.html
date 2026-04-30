@@ -91,21 +91,6 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
 .footer{background:var(--encre);padding:24px 56px;display:flex;justify-content:space-between;align-items:center;}
 .footer-motto{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--or);}
 .footer-contact{font-size:10px;color:rgba(255,255,255,0.4);text-align:right;}
-
-.tags-input-wrap{margin-bottom:10px;}
-.tags-input-wrap label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:6px;}
-.tags-input{width:100%;padding:8px 12px;border:1px solid rgba(26,26,46,0.15);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:12px;color:var(--ardoise);background:white;outline:none;min-height:52px;resize:vertical;}
-.tags-input:focus{border-color:var(--or);}
-.synthese-auto{background:rgba(201,168,76,0.06);border-left:3px solid var(--or);padding:12px 16px;margin-top:8px;font-size:12px;color:var(--ardoise);line-height:1.7;font-style:italic;min-height:36px;}
-.gen-btn{margin-top:8px;padding:6px 16px;background:var(--encre);color:var(--or);border:1px solid var(--or);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2px;cursor:pointer;border-radius:2px;}
-.badge-auto{font-size:10px;padding:2px 8px;border-radius:2px;margin-left:6px;}
-.badge-alerte{background:rgba(192,57,43,0.12);color:#C0392B;}
-.badge-attention{background:rgba(201,168,76,0.15);color:#9A7A2A;}
-.badge-surveiller{background:rgba(100,100,200,0.12);color:#3A3A8A;}
-.badge-solide{background:rgba(90,122,90,0.1);color:#5A7A5A;}
-.badge-ressource{background:rgba(44,74,124,0.1);color:#2C4A7C;}
-.synthese-coach-wrap{margin-top:20px;}
-.synthese-coach-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -121,7 +106,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
         <input type="text" id="client_name" placeholder="Prénom Nom">
       </div>
       <div class="meta-field">
-        <label>Date <span style="color:#C0392B;">*</span></label>
+        <label>Date</label>
         <input type="text" id="date" placeholder="JJ/MM/AAAA">
       </div>
       <div class="meta-field">
@@ -140,8 +125,8 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
       <div class="pilier-card psycho">
         <div class="pilier-name">Psychologique</div>
         <div class="score-row">
-          <label>Score <span style="color:#C0392B;">*</span></label>
-          <input type="text" class="score-input" id="psycho_score" placeholder="7/10" oninput="updateBadge('psycho')">
+          <label>Score</label>
+          <input type="text" class="score-input" id="psycho_score" placeholder="7/10">
           <span class="score-hint">sur 10</span>
         </div>
         <textarea id="psycho_obs" placeholder="Observations : état émotionnel, croyances identifiées, ressources internes…"></textarea>
@@ -150,7 +135,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
       <div class="pilier-card philo">
         <div class="pilier-name">Philosophique</div>
         <div class="score-row">
-          <label>Score <span style="color:#C0392B;">*</span></label>
+          <label>Score</label>
           <input type="text" class="score-input" id="philo_score" placeholder="5/10">
           <span class="score-hint">sur 10</span>
         </div>
@@ -160,22 +145,17 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
       <div class="pilier-card physique">
         <div class="pilier-name">Physique</div>
         <div class="score-row">
-          <label>Score <span style="color:#C0392B;">*</span></label>
+          <label>Score</label>
           <input type="text" class="score-input" id="physique_score" placeholder="6/10">
           <span class="score-hint">sur 10</span>
         </div>
-        <div class="tags-input-wrap">
-          <label>Mots-clés observés</label>
-          <textarea class="tags-input" id="physique_tags" placeholder="Collez ici les tags depuis le document mots-clés…" oninput="genPhrase('physique')"></textarea>
-          <div class="synthese-auto" id="physique_phrase"></div>
-        </div>
-        <textarea id="physique_obs" placeholder="Observations complémentaires…"></textarea>
+        <textarea id="physique_obs" placeholder="Observations : vitalité, corps, énergie, hygiène de vie…"></textarea>
       </div>
 
       <div class="pilier-card pneuma">
         <div class="pilier-name">Pneuma</div>
         <div class="score-row">
-          <label>Score <span style="color:#C0392B;">*</span></label>
+          <label>Score</label>
           <input type="text" class="score-input" id="pneuma_score" placeholder="4/10">
           <span class="score-hint">sur 10</span>
         </div>
@@ -217,12 +197,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
           <option>Ressource</option>
         </select>
       </div>
-      <div class="tags-input-wrap">
-          <label>Mots-clés observés</label>
-          <textarea class="tags-input" id="relations_tags" placeholder="Collez ici les tags…" oninput="genPhrase('relations')"></textarea>
-          <div class="synthese-auto" id="relations_phrase"></div>
-        </div>
-        <textarea id="relations_obs" placeholder="Observations complémentaires…"></textarea>
+      <textarea id="relations_obs" placeholder="Observations : qualité des liens, besoins relationnels…"></textarea>
     </div>
 
     <div class="domaine-item">
@@ -237,12 +212,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
           <option>Ressource</option>
         </select>
       </div>
-      <div class="tags-input-wrap">
-          <label>Mots-clés observés</label>
-          <textarea class="tags-input" id="travail_tags" placeholder="Collez ici les tags…" oninput="genPhrase('travail')"></textarea>
-          <div class="synthese-auto" id="travail_phrase"></div>
-        </div>
-        <textarea id="travail_obs" placeholder="Observations complémentaires…"></textarea>
+      <textarea id="travail_obs" placeholder="Observations : rapport au travail, quête de sens…"></textarea>
     </div>
 
     <div class="domaine-item">
@@ -257,12 +227,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
           <option>Ressource</option>
         </select>
       </div>
-      <div class="tags-input-wrap">
-          <label>Mots-clés observés</label>
-          <textarea class="tags-input" id="argent_tags" placeholder="Collez ici les tags…" oninput="genPhrase('argent')"></textarea>
-          <div class="synthese-auto" id="argent_phrase"></div>
-        </div>
-        <textarea id="argent_obs" placeholder="Observations complémentaires…"></textarea>
+      <textarea id="argent_obs" placeholder="Observations : rapport à l'argent, blocages identifiés…"></textarea>
     </div>
 
     <div class="domaine-item">
@@ -277,12 +242,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
           <option>Ressource</option>
         </select>
       </div>
-      <div class="tags-input-wrap">
-          <label>Mots-clés observés</label>
-          <textarea class="tags-input" id="identite_tags" placeholder="Collez ici les tags…" oninput="genPhrase('identite')"></textarea>
-          <div class="synthese-auto" id="identite_phrase"></div>
-        </div>
-        <textarea id="identite_obs" placeholder="Observations complémentaires…"></textarea>
+      <textarea id="identite_obs" placeholder="Observations : solidité identitaire, estime de soi…"></textarea>
     </div>
 
     <div class="domaine-item">
@@ -297,12 +257,7 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
           <option>Ressource</option>
         </select>
       </div>
-      <div class="tags-input-wrap">
-          <label>Mots-clés observés</label>
-          <textarea class="tags-input" id="spirituel_tags" placeholder="Collez ici les tags…" oninput="genPhrase('spirituel')"></textarea>
-          <div class="synthese-auto" id="spirituel_phrase"></div>
-        </div>
-        <textarea id="spirituel_obs" placeholder="Observations complémentaires…"></textarea>
+      <textarea id="spirituel_obs" placeholder="Observations : sens ultime, pratique spirituelle…"></textarea>
     </div>
 
   </div>
@@ -311,13 +266,6 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
   <div class="section">
     <div class="section-label">Partie III</div>
     <div class="section-title">Analyse Transversale</div>
-
-    <div style="margin-bottom:20px;">
-      <button onclick="genererTransversale()" style="padding:10px 24px;background:var(--encre);color:var(--or);border:1px solid var(--or);font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;">⚡ Générer l'analyse automatique</button>
-      <p style="font-size:11px;color:var(--ardoise);margin-top:8px;font-style:italic;">Entrez des scores numériques (ex: 7) dans les piliers et domaines, puis cliquez.</p>
-      <div id="transversal-result" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(201,168,76,0.06);border-left:3px solid var(--or);font-size:12px;color:var(--ardoise);line-height:1.7;"></div>
-    </div>
-
     <div class="trans-grid">
       <div class="trans-item">
         <label>⚡ Zone de tension</label>
@@ -332,15 +280,9 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
         <textarea id="axe" placeholder="Direction recommandée…" style="min-height:80px;"></textarea>
       </div>
     </div>
-    <div style="margin-bottom:16px;">
-      <button class="gen-btn" onclick="genSyntheseAuto()">📋 Générer la synthèse informative</button>
-      <div class="synthese-auto" id="synthese_auto" style="margin-top:10px;min-height:60px;"></div>
-    </div>
-    <div class="synthese-coach-wrap">
-      <div class="synthese-area">
-        <label>Synthèse du coach — votre lecture personnelle</label>
-        <textarea id="synthese" placeholder="Votre interprétation personnelle, inductive, humaine — ce que vous sentez au-delà des chiffres…" style="min-height:100px;"></textarea>
-      </div>
+    <div class="synthese-area">
+      <label>Synthèse du coach</label>
+      <textarea id="synthese" placeholder="Lecture d'ensemble personnalisée…" style="min-height:80px;"></textarea>
     </div>
   </div>
 
@@ -385,137 +327,6 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
   emailjs.init(EMAILJS_PUBLIC_KEY);
 
   function g(id) { return document.getElementById(id)?.value || '-'; }
-
-
-  var pilierLabels = {psycho:'Psychologique', philo:'Philosophique', physique:'Physique', pneuma:'Pneuma'};
-  var domaineLabels = {fatigue:'Fatigue & Santé', relations:'Relations & Amour', travail:'Travail & Sens', argent:'Argent & Abondance', identite:'Identité & Confiance', spirituel:'Spiritualité & Pneuma'};
-  var allLabels = Object.assign({}, pilierLabels, domaineLabels);
-
-  var phraseTemplates = {
-    psycho: 'Sur le plan psychologique, la séance révèle : {tags}. Ces éléments constituent le terrain de travail prioritaire.',
-    philo: 'Sur le plan philosophique, on observe : {tags}. Un travail de clarification des valeurs semble prioritaire.',
-    physique: 'Sur le plan physique, plusieurs signaux méritent attention : {tags}. Le corps envoie des messages clairs.',
-    pneuma: 'Sur le plan du Pneuma, on note : {tags}. La dimension intérieure demande à être explorée.',
-    fatigue: 'Dans le domaine Fatigue & Santé, on relève : {tags}. Un travail sur le rapport au corps et au repos est recommandé.',
-    relations: 'Dans le domaine Relations & Amour, on observe : {tags}. La qualité des liens mérite attention.',
-    travail: 'Dans le domaine Travail & Sens, la séance révèle : {tags}. La question du sens professionnel est centrale.',
-    argent: 'Dans le domaine Argent & Abondance, on identifie : {tags}. Les croyances autour de la valeur personnelle sont à questionner.',
-    identite: 'Dans le domaine Identité & Confiance, on note : {tags}. La construction d'une identité stable est un axe de travail central.',
-    spirituel: 'Dans le domaine Spiritualité & Pneuma, on observe : {tags}. Un travail sur l'ancrage intérieur est à envisager.'
-  };
-
-  function genPhrase(id) {
-    var tags = document.getElementById(id + '_tags');
-    var phrase = document.getElementById(id + '_phrase');
-    if (!tags || !phrase) return;
-    var val = tags.value.trim();
-    if (!val) { phrase.textContent = ''; return; }
-    var tmpl = phraseTemplates[id] || 'Éléments observés : {tags}.';
-    phrase.textContent = tmpl.replace('{tags}', val);
-  }
-
-  function getBadgeClass(score) {
-    if (score <= 2) return 'badge-alerte';
-    if (score <= 4) return 'badge-attention';
-    if (score <= 6) return 'badge-surveiller';
-    if (score <= 8) return 'badge-solide';
-    return 'badge-ressource';
-  }
-
-  function getBadgeLabel(score) {
-    if (score <= 2) return 'Alerte';
-    if (score <= 4) return 'Attention';
-    if (score <= 6) return 'À surveiller';
-    if (score <= 8) return 'Solide';
-    return 'Ressource';
-  }
-
-  function updateBadge(id) {
-    var scoreEl = document.getElementById(id + '_score');
-    if (!scoreEl) return;
-    var score = parseFloat(scoreEl.value.replace(',', '.'));
-    if (isNaN(score)) return;
-    var existing = scoreEl.parentNode.querySelector('.badge-auto');
-    if (existing) existing.remove();
-    var badge = document.createElement('span');
-    badge.className = 'badge-auto ' + getBadgeClass(score);
-    badge.textContent = getBadgeLabel(score);
-    scoreEl.parentNode.appendChild(badge);
-  }
-
-  function genSyntheseAuto() {
-    var auto = document.getElementById('synthese_auto');
-    var lines = [];
-    var piliers = ['psycho','philo','physique','pneuma'];
-    var domaines = ['fatigue','relations','travail','argent','identite','spirituel'];
-    piliers.forEach(function(id) {
-      var phrase = document.getElementById(id + '_phrase');
-      if (phrase && phrase.textContent.trim()) lines.push(phrase.textContent.trim());
-    });
-    domaines.forEach(function(id) {
-      var phrase = document.getElementById(id + '_phrase');
-      if (phrase && phrase.textContent.trim()) lines.push(phrase.textContent.trim());
-    });
-    if (lines.length === 0) {
-      auto.textContent = 'Remplissez les mots-clés dans les piliers et domaines pour générer la synthèse.';
-      return;
-    }
-    auto.textContent = lines.join(' ');
-  }
-
-  function parseScore(val) {
-    var n = parseFloat((val || '5').replace(',', '.'));
-    return isNaN(n) ? 5 : n;
-  }
-
-  function genererTransversale() {
-    var piliers = {
-      'Psychologique': parseScore(g('psycho_score')),
-      'Physique': parseScore(g('physique_score')),
-      'Philosophique': parseScore(g('philo_score')),
-      'Pneuma': parseScore(g('pneuma_score'))
-    };
-    var domaines = {
-      'Fatigue & Santé': parseScore(g('fatigue_score')),
-      'Relations & Amour': parseScore(g('relations_score')),
-      'Travail & Sens': parseScore(g('travail_score')),
-      'Argent & Abondance': parseScore(g('argent_score')),
-      'Identité & Confiance': parseScore(g('identite_score')),
-      'Spiritualité & Pneuma': parseScore(g('spirituel_score'))
-    };
-
-    // Pilier le plus faible et le plus fort
-    var pMin = Object.keys(piliers).reduce(function(a,b){ return piliers[a] < piliers[b] ? a : b; });
-    var pMax = Object.keys(piliers).reduce(function(a,b){ return piliers[a] > piliers[b] ? a : b; });
-
-    // Domaine le plus faible
-    var dMin = Object.keys(domaines).reduce(function(a,b){ return domaines[a] < domaines[b] ? a : b; });
-    var dMin2 = Object.keys(domaines).filter(function(d){ return d !== dMin; }).reduce(function(a,b){ return domaines[a] < domaines[b] ? a : b; });
-
-    // Zone de tension
-    var tension = 'Le pilier ' + pMin + ' (' + piliers[pMin] + '/10) est en tension directe avec le domaine ' + dMin + ' (' + domaines[dMin] + '/10). Ces deux fragilités se nourrissent mutuellement et constituent le nœud central à travailler.';
-
-    // Levier principal
-    var levier = 'Le pilier ' + pMax + ' (' + piliers[pMax] + '/10) est le point d\'appui le plus solide. C\'est de là qu\'on part — en s\'appuyant sur cette ressource pour travailler progressivement les zones de fragilité.';
-
-    // Axe de travail
-    var axe = 'Axe prioritaire : renforcer le pilier ' + pMin + ' pour libérer le domaine ' + dMin + '. En parallèle, surveiller ' + dMin2 + ' (' + domaines[dMin2] + '/10) qui constitue un second point de vigilance.';
-
-    var tEl = document.getElementById('tension');
-    var lEl = document.getElementById('levier');
-    var aEl = document.getElementById('axe');
-    var rEl = document.getElementById('transversal-result');
-    
-    if (tEl) tEl.value = tension;
-    if (lEl) lEl.value = levier;
-    if (aEl) aEl.value = axe;
-    if (rEl) {
-      rEl.innerHTML = '<strong style="color:var(--or);">⚡ Zone de tension :</strong> ' + tension + '<br><br>' +
-        '<strong style="color:var(--or);">🌱 Levier principal :</strong> ' + levier + '<br><br>' +
-        '<strong style="color:var(--or);">🎯 Axe de travail :</strong> ' + axe;
-      rEl.style.display = 'block';
-    }
-  }
 
   function envoyerBilan() {
     const params = {
@@ -564,3 +375,4 @@ textarea::placeholder{color:rgba(74,74,106,0.3);font-style:italic;}
 </script>
 </body>
 </html>
+
