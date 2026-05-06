@@ -86,26 +86,68 @@ nav.sc{background:rgba(42,31,10,.97);border-bottom:1px solid var(--border);}
 @keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:640px){.hero{padding:100px 24px 60px;}.hero-quote{display:none;}}
 
-/* ══════════ PÔLES ══════════ */
-.poles{padding:60px 40px;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);}
-.poles-list{display:flex;flex-direction:column;gap:0;margin-top:36px;max-width:860px;margin-left:auto;margin-right:auto;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);padding:20px 32px;border-radius:2px;color:#000000;}
-.pole{display:grid;grid-template-columns:80px 1fr;gap:0;border-bottom:1px solid rgba(232,131,42,.08);padding:24px 0;position:relative;cursor:none;transition:all .3s;}
-.pole:first-child{border-top:1px solid rgba(232,131,42,.08);}
-.pole-left{display:flex;flex-direction:column;align-items:flex-start;padding-right:24px;}
-.pole-bar{width:3px;height:0;background:var(--amber);transition:height .4s;margin-bottom:8px;}
-.pole.open .pole-bar{height:60px;}
-.pole-n{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:rgba(232,131,42,.15);font-style:italic;font-weight:300;line-height:1;transition:color .3s;}
-.pole.open .pole-n{color:rgba(232,131,42,.5);}
-.pole-right{padding-left:24px;border-left:1px solid rgba(232,131,42,.08);transition:border-color .3s;}
-.pole.open .pole-right{border-left-color:rgba(232,131,42,.3);}
-.pole-h{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#888888;margin-bottom:8px;}
-.pole-h em{color:var(--amber);font-style:italic;}
-.pole-body{display:none;}
-.pole.open .pole-body{display:block;}
-.pole-t{font-size:16px;color:var(--stone);line-height:1.85;margin-bottom:8px;}
-.pole-q{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--amber);font-size:16px;}
-@media(max-width:640px){.poles{padding:50px 20px;}.pole{grid-template-columns:50px 1fr;}.pole-n{font-size:1.8rem;}}
-
+<!-- ═══ PÔLES ═══ -->
+<section class="poles" id="poles">
+  <div class="inner">
+    <div class="center">
+      <span class="sec-tag">Ce que tu traverses</span>
+      <h2 class="sec-h">Cinq territoires<br><em>de transformation</em></h2>
+      <p class="sec-sub">Clique sur chaque territoire pour en savoir plus.</p>
+    </div>
+    <div class="poles-list">
+      <div class="pole open" onclick="togglePole(this)">
+        <div class="pole-left"><div class="pole-bar"></div><div class="pole-n">01</div></div>
+        <div class="pole-right">
+          <h3 class="pole-h">Fatigue &amp; <em>Vitalité</em></h3>
+          <div class="pole-body">
+            <p class="pole-t">Quand le corps dit stop avant même que la journée commence. La fatigue physique — mais aussi la fatigue mentale : cette lassitude profonde qui s'installe quand on porte trop, trop longtemps, souvent seul. Ce n'est pas de la faiblesse. C'est un message que tu n'as pas encore su lire.</p>
+            <p class="pole-q">"Je fonctionne, mais je ne vis plus vraiment."</p>
+          </div>
+        </div>
+      </div>
+      <div class="pole" onclick="togglePole(this)">
+        <div class="pole-left"><div class="pole-bar"></div><div class="pole-n">02</div></div>
+        <div class="pole-right">
+          <h3 class="pole-h">Sécurité &amp; <em>Argent</em></h3>
+          <div class="pole-body">
+            <p class="pole-t">Quand la peur de manquer dicte chaque choix. Quand l'argent n'est plus un outil mais une menace silencieuse. Quand tu te sens piégé dans une vie que tu n'as pas vraiment choisie — parce que tu ne te sens pas en sécurité pour faire autrement.</p>
+            <p class="pole-q">"Je travaille pour survivre, pas pour vivre."</p>
+          </div>
+        </div>
+      </div>
+      <div class="pole" onclick="togglePole(this)">
+        <div class="pole-left"><div class="pole-bar"></div><div class="pole-n">03</div></div>
+        <div class="pole-right">
+          <h3 class="pole-h">Relations &amp; <em>Appartenance</em></h3>
+          <div class="pole-body">
+            <p class="pole-t">Quand la solitude s'installe malgré la présence des autres. Quand les mêmes conflits reviennent encore et encore. Ce territoire prépare quelque chose d'essentiel : le besoin d'appartenir vraiment — à quelque chose, à quelqu'un, à soi-même.</p>
+            <p class="pole-q">"Je suis entouré, et pourtant si seul."</p>
+          </div>
+        </div>
+      </div>
+      <div class="pole" onclick="togglePole(this)">
+        <div class="pole-left"><div class="pole-bar"></div><div class="pole-n">04</div></div>
+        <div class="pole-right">
+          <h3 class="pole-h">Identité &amp; <em>Confiance</em></h3>
+          <div class="pole-body">
+            <p class="pole-t">Quand tu ne sais plus très bien qui tu es en dehors des rôles que tu joues. Quand la confiance en toi dépend du regard des autres. Ce territoire est celui de l'estime — construire une identité stable, qui ne s'effondre pas au premier regard critique.</p>
+            <p class="pole-q">"Je joue un rôle — mais ce n'est pas moi."</p>
+          </div>
+        </div>
+      </div>
+      <div class="pole" onclick="togglePole(this)">
+        <div class="pole-left"><div class="pole-bar"></div><div class="pole-n">05</div></div>
+        <div class="pole-right">
+          <h3 class="pole-h">Sens &amp; <em>Épanouissement</em></h3>
+          <div class="pole-body">
+            <p class="pole-t">Quand la question "pourquoi ?" résonne sans réponse. Quand tu te demandes si la vie que tu vis est vraiment la tienne. C'est ici que commence l'épanouissement — non pas comme une destination, mais comme une direction.</p>
+            <p class="pole-q">"Je cherche ce pour quoi je suis vraiment fait."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 /* ══════════ MÉTHODE ══════════ */
 .methode{padding:60px 0;position:relative;overflow:hidden;}
 .methode::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(176,164,204,.05) 0%,transparent 55%);}
