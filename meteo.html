@@ -1,0 +1,484 @@
+<title>Ma météo intérieure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout : une carte centrée, un écran = une étape, réponses en gros boutons tactiles. Tons Renaître de la Soif : brun, or, noir. */
+/* --water = couleur du matin (brun), --sun = couleur du soir (or) */
+:root {
+  --bg: #f6f2ec;
+  --surface: #ffffff;
+  --ink: #1d1814;
+  --muted: #6e6359;
+  --line: #e2d8cb;
+  --water: #6b4a2f;
+  --water-soft: #efe5da;
+  --sun: #b8893b;
+  --sun-soft: #f6ecd9;
+  --focus: #6b4a2f;
+  --display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --body: "Figtree", -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14110e; --surface: #1e1a16; --ink: #f1ebe3; --muted: #b3a798; --line: #3a3129;
+    --water: #c79a6b; --water-soft: #33271d; --sun: #e2b55f; --sun-soft: #3a2f1c; --focus: #e2b55f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14110e; --surface: #1e1a16; --ink: #f1ebe3; --muted: #b3a798; --line: #3a3129;
+  --water: #c79a6b; --water-soft: #33271d; --sun: #e2b55f; --sun-soft: #3a2f1c; --focus: #e2b55f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 520px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: flex; flex-direction: column; gap: 16px; }
+.brand { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.brand b { color: var(--water); font-weight: 700; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; }
+h1, h2 { font-family: var(--display); font-weight: 400; line-height: 1.1; margin: 0; text-wrap: balance; }
+h1 { font-size: 2.4rem; }
+h1 em, h2 em { color: var(--water); }
+h2 { font-size: 1.85rem; }
+p { margin: 0; }
+.lead { color: var(--muted); }
+.small { font-size: 0.85rem; color: var(--muted); }
+label.field { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 0.92rem; }
+input[type=text], textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 12px; padding: 12px 14px; font-weight: 400;
+}
+textarea { min-height: 110px; resize: vertical; }
+input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btn {
+  font: inherit; font-weight: 600; border: none; border-radius: 14px; padding: 15px 18px; cursor: pointer;
+  background: var(--water); color: var(--surface); width: 100%; text-align: center;
+}
+.btn.sun { background: var(--sun); color: #1a1408; }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn.link { background: none; color: var(--muted); padding: 6px; font-weight: 500; text-decoration: underline; }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.moment { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; padding: 18px 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; cursor: pointer; }
+.moment .t { font-family: var(--display); font-size: 1.5rem; line-height: 1; }
+.moment .s { font-size: 0.82rem; color: var(--muted); }
+.moment.am { border-color: var(--water); }
+.moment.pm { border-color: var(--sun); }
+.done { color: var(--water); font-weight: 600; font-size: 0.82rem; }
+.progress { display: flex; gap: 6px; }
+.progress span { flex: 1; height: 6px; border-radius: 3px; background: var(--line); }
+.progress span.on { background: var(--water); }
+.pm-mode .progress span.on { background: var(--sun); }
+.qnum { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.axis { font-family: var(--display); font-size: 1.15rem; font-style: italic; color: var(--water); }
+.pm-mode .axis { color: var(--sun); }
+.statement { font-size: 1.2rem; font-weight: 500; line-height: 1.4; }
+.weather { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.wbtn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 2px; border-radius: 14px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; cursor: pointer; min-width: 0;
+}
+.wbtn .i { font-size: 1.8rem; line-height: 1; }
+.wbtn .l { font-size: 0.68rem; color: var(--muted); text-align: center; line-height: 1.2; }
+.wbtn.sel { border-color: var(--water); background: var(--water-soft); }
+.pm-mode .wbtn.sel { border-color: var(--sun); background: var(--sun-soft); }
+.scale-hint { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); }
+.nav { display: flex; gap: 10px; }
+.nav .btn { flex: 1; }
+.code { font-family: var(--display); font-size: 2.6rem; letter-spacing: 0.18em; text-align: center; color: var(--water); padding: 8px; border: 1px dashed var(--water); border-radius: 14px; font-variant-numeric: tabular-nums; }
+.radar-box { width: 100%; max-width: 420px; margin: 0 auto; }
+.radar-box svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; gap: 18px; justify-content: center; font-size: 0.85rem; flex-wrap: wrap; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.sw { width: 18px; height: 4px; border-radius: 2px; display: inline-block; }
+.sw.am { background: var(--water); }
+.sw.pm { background: var(--sun); }
+.rows { display: flex; flex-direction: column; }
+.row { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.row:first-child { border-top: none; }
+.grp { font-family: var(--display); font-style: italic; font-size: 1.1rem; color: var(--water); padding: 12px 0 2px; }
+.row .n { font-weight: 500; min-width: 0; }
+.row .e { font-size: 1.4rem; width: 2rem; text-align: center; }
+.rowhead { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.rowhead span:not(:first-child) { width: 2rem; text-align: center; }
+.quote { border-left: 3px solid var(--water); padding-left: 12px; display: flex; flex-direction: column; gap: 4px; }
+.quote.pm { border-left-color: var(--sun); }
+.quote .k { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.quote .v { font-family: var(--display); font-style: italic; font-size: 1.2rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.confirm { display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 14px; background: var(--sun-soft); }
+.motto { text-align: center; font-family: var(--display); font-style: italic; color: var(--muted); font-size: 1.05rem; }
+.reading { display: flex; flex-direction: column; gap: 8px; color: var(--muted); font-size: 0.95rem; }
+.tips { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 14px; background: var(--water-soft); }
+.tips.pm { background: var(--sun-soft); }
+.tips .tk { font-family: var(--display); font-style: italic; font-size: 1.2rem; color: var(--water); }
+.tips.pm .tk { color: var(--sun); }
+.tips p { font-size: 0.95rem; }
+.tips b { font-weight: 600; }
+.toast { font-size: 0.85rem; color: var(--water); text-align: center; min-height: 1.2em; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: rise .35s ease-out; }
+  @keyframes rise { from { transform: translateY(8px); opacity: .6; } to { transform: none; opacity: 1; } }
+}
+@media print {
+  body { background: #fff; color: #000; }
+  .no-print { display: none !important; }
+  .card { border: none; }
+}
+</style>
+
+<div class="wrap" id="app">
+  <div class="brand"><b>Renaître de la Soif</b><span>Denis Deblevid · Accompagnement &amp; coaching</span></div>
+  <main class="card" id="screen" aria-live="polite"></main>
+  <p class="motto">Ἀρκεῖ Προκόπτω — c'est suffisant, j'avance</p>
+</div>
+
+<script>
+/* ===== À personnaliser avant chaque journée ===== */
+const CONFIG = {
+  lieu: "Clinique La Salette",
+  date: "Journée d'accompagnement collectif",
+  session: "la-salette-2026"   // changer ce mot pour chaque nouvelle journée : remet tous les carnets à zéro
+};
+
+const GROUPES = {
+  "Moi": { titre: "Moi et mes émotions", couleur: "var(--water)" },
+  "Les autres": { titre: "Moi et les autres", couleur: "var(--ink)" },
+  "Mon groupe": { titre: "Mon groupe et les autres groupes", couleur: "var(--sun)" }
+};
+const AXES = [
+  { g: "Moi", court: "Accueillir", titre: "Accueillir mes émotions", phrase: "Quand une émotion monte en moi, je la laisse exister sans la repousser ni m'y noyer.",
+    appui: "Vous laissez vos émotions exister sans vous laisser emporter : c'est la première condition pour les écouter.",
+    piste: "Une émotion repoussée revient souvent plus fort. Simplement la nommer (« là, je suis agacé ») suffit à lui faire de la place." },
+  { g: "Moi", court: "Comprendre", titre: "Comprendre leur message", phrase: "Je sais reconnaître ce que mes émotions cherchent à me dire, sans le filtre de mes idées reçues.",
+    appui: "Vous savez lire ce que vos émotions vous signalent : un besoin, une limite, une valeur touchée.",
+    piste: "Derrière chaque émotion, il y a un message. La question « de quoi ai-je besoin, là ? » aide souvent à l'entendre." },
+  { g: "Moi", court: "Recul", titre: "Prendre du recul", phrase: "Avant de réagir ou de décider, je prends le temps de tout écouter et de tout voir.",
+    appui: "Vous prenez le temps de tout voir avant d'agir : vos décisions y gagnent en justesse.",
+    piste: "La précipitation se glisse partout. Trois respirations avant de répondre changent souvent la suite de l'échange." },
+  { g: "Moi", court: "Authentique", titre: "Être authentique", phrase: "Je me sens en accord avec moi-même, et je peux être moi-même devant les autres.",
+    appui: "Vous vous sentez à votre place en étant vous-même : c'est une base solide pour toutes vos relations.",
+    piste: "Jouer un rôle fatigue. Repérer les moments où vous vous sentez vraiment vous-même est un bon point de départ." },
+  { g: "Les autres", court: "Percevoir", titre: "Percevoir l'autre sans juger", phrase: "Je vois les autres tels qu'ils sont, sans les enfermer dans ma première impression.",
+    appui: "Vous laissez aux autres la chance d'être plus que votre première impression.",
+    piste: "Une première impression n'est qu'une hypothèse. Se demander « qu'est-ce que je ne sais pas de cette personne ? » ouvre la porte." },
+  { g: "Les autres", court: "Comprendre l'autre", titre: "Comprendre ce que vit l'autre", phrase: "Quand quelqu'un réagit vivement, je cherche ce qu'il vit avant de lui répondre.",
+    appui: "Face à une réaction vive, vous cherchez ce que vit l'autre : c'est ce qui désamorce bien des tensions.",
+    piste: "Une réaction vive parle souvent de celui qui la vit plus que de vous. Chercher ce qu'il traverse évite de la prendre pour soi." },
+  { g: "Les autres", court: "Exprimer", titre: "Exprimer ce que je ressens", phrase: "J'arrive à dire aux autres ce que je ressens, simplement et sans blesser.",
+    appui: "Vous savez dire ce que vous ressentez sans blesser : les autres savent où ils en sont avec vous.",
+    piste: "Dire « je ressens… » plutôt que « tu es… » permet de s'exprimer sans attaquer. C'est un geste qui s'apprend." },
+  { g: "Les autres", court: "Confiance", titre: "Confiance dans les autres", phrase: "Je me sens à l'aise et en confiance avec les autres, même avec des personnes que je connais peu.",
+    appui: "Vous accordez votre confiance assez facilement : les autres le sentent et vous la rendent.",
+    piste: "La confiance se construit par petites preuves. Un service rendu, une parole tenue : c'est souvent comme ça qu'elle commence." },
+  { g: "Mon groupe", court: "Appartenance", titre: "Me sentir membre de mon groupe", phrase: "Je me sens pleinement à ma place dans mon groupe (mon service, ma famille, mes amis…).",
+    appui: "Vous vous sentez à votre place dans votre groupe : cette appartenance vous porte.",
+    piste: "Se sentir à part arrive à chacun. Partager un moment simple, un café, un rire, suffit souvent à recréer du lien." },
+  { g: "Mon groupe", court: "Entraide", titre: "L'entraide dans mon groupe", phrase: "Dans mon groupe, on s'écoute et on s'entraide quand quelque chose ne va pas.",
+    appui: "Dans votre groupe, on s'écoute et on s'entraide : c'est une vraie ressource quand les journées sont lourdes.",
+    piste: "L'entraide commence souvent par une demande. Oser dire « j'ai besoin d'un coup de main » invite les autres à le faire aussi." },
+  { g: "Mon groupe", court: "Autres groupes", titre: "Mon regard sur les autres groupes", phrase: "Je regarde les autres groupes (un autre service, une autre famille, une autre équipe) avec curiosité plutôt qu'avec méfiance.",
+    appui: "Vous regardez les autres groupes avec curiosité : vous êtes de ceux qui créent des ponts.",
+    piste: "Chaque groupe a ses contraintes, souvent invisibles de l'extérieur. Aller voir comment travaille l'autre change le regard." }
+];
+const METEO = [
+  { i: "⛈️", l: "Orage" },
+  { i: "🌧️", l: "Pluie" },
+  { i: "☁️", l: "Nuageux" },
+  { i: "🌤️", l: "Éclaircies" },
+  { i: "☀️", l: "Grand soleil" }
+];
+const KEY = "meteo-interieure:" + CONFIG.session;
+
+/* ===== Mémoire du téléphone (avec secours si indisponible) ===== */
+let mem = {};
+function load() {
+  try { const raw = localStorage.getItem(KEY); if (raw) mem = JSON.parse(raw) || {}; } catch (e) {}
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) {}
+}
+load();
+
+const inFrame = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+const $ = (s) => document.getElementById(s);
+const esc = (s) => String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+let draft = null; // { moment: 'am'|'pm', step, answers[], text }
+
+function setMode(m) { document.body.classList.toggle("pm-mode", m === "pm"); }
+
+/* ===== Écran d'accueil ===== */
+function home(confirmReset) {
+  setMode("am");
+  const amDone = mem.am && mem.am.answers;
+  const pmDone = mem.pm && mem.pm.answers;
+  $("screen").innerHTML = `
+    <div class="small">${esc(CONFIG.lieu)} · ${esc(CONFIG.date)}</div>
+    <h1>Ma météo <em>intérieure</em></h1>
+    <p class="lead">Onze questions, environ trois minutes, en trois temps : vous et vos émotions, vous et les autres, votre groupe et les autres groupes. Le matin, vous posez votre météo du jour. Le soir, vous la reprenez à zéro. Puis vous découvrez les deux côte à côte.</p>
+    <p class="small">Ce carnet est à vous seul. Vos réponses restent sur votre téléphone : personne d'autre ne les voit, pas même le coach.</p>
+    <label class="field">Votre prénom (facultatif)
+      <input type="text" id="prenom" autocomplete="given-name" value="${esc(mem.prenom)}" placeholder="Pour personnaliser votre carnet">
+    </label>
+    <div class="choices">
+      <button class="moment am" id="goAm" type="button">
+        <span class="t">Le matin</span><span class="s">Je pose ma météo</span>
+        ${amDone ? '<span class="done">✓ Rempli</span>' : ''}
+      </button>
+      <button class="moment pm" id="goPm" type="button">
+        <span class="t">Le soir</span><span class="s">Je refais le point</span>
+        ${pmDone ? '<span class="done">✓ Rempli</span>' : ''}
+      </button>
+    </div>
+    ${amDone && pmDone ? '<button class="btn" id="goRes" type="button">Revoir ma toile de la journée</button>' : ''}
+    ${amDone || pmDone ? (confirmReset
+      ? `<div class="confirm"><p>Tout effacer et repartir de zéro ? Cette action est définitive.</p>
+          <div class="nav"><button class="btn ghost" id="noReset" type="button">Annuler</button><button class="btn sun" id="yesReset" type="button">Tout effacer</button></div></div>`
+      : '<button class="btn link" id="askReset" type="button">Recommencer à zéro</button>') : ''}
+  `;
+  $("prenom").addEventListener("input", e => { mem.prenom = e.target.value.trim(); save(); });
+  $("goAm").onclick = () => start("am");
+  $("goPm").onclick = () => (mem.am && mem.am.answers) ? start("pm") : askCode();
+  if ($("goRes")) $("goRes").onclick = result;
+  if ($("askReset")) $("askReset").onclick = () => home(true);
+  if ($("noReset")) $("noReset").onclick = () => home(false);
+  if ($("yesReset")) $("yesReset").onclick = () => { const p = mem.prenom; mem = { prenom: p }; save(); home(false); };
+}
+
+/* ===== Retrouver le matin sur un autre appareil ===== */
+function askCode(err) {
+  setMode("pm");
+  $("screen").innerHTML = `
+    <h2>Votre météo <em>du matin</em> ?</h2>
+    <p class="lead">Ce téléphone ne la retrouve pas. Si vous avez noté votre code du matin, saisissez-le ici.</p>
+    <label class="field">Code à 11 chiffres
+      <input type="text" id="code" inputmode="numeric" maxlength="11" placeholder="Ex. 34243534253">
+    </label>
+    ${err ? '<p class="small" role="alert">Ce code ne fonctionne pas : il doit contenir 11 chiffres entre 1 et 5.</p>' : ''}
+    <button class="btn sun" id="okCode" type="button">Retrouver mon matin</button>
+    <button class="btn ghost" id="noCode" type="button">Continuer sans le matin</button>
+    <button class="btn link" id="back" type="button">Retour</button>
+  `;
+  $("okCode").onclick = () => {
+    const v = $("code").value.trim();
+    if (!/^[1-5]{11}$/.test(v)) return askCode(true);
+    mem.am = { answers: v.split("").map(Number), text: "", restored: true };
+    save(); start("pm");
+  };
+  $("noCode").onclick = () => start("pm");
+  $("back").onclick = () => home(false);
+}
+
+/* ===== Questionnaire, une question par écran ===== */
+function start(moment) {
+  draft = { moment, step: 0, answers: new Array(AXES.length).fill(null), text: "" };
+  setMode(moment);
+  question();
+}
+
+function bar(step) {
+  const total = AXES.length + 1;
+  return '<div class="progress" aria-hidden="true">' +
+    Array.from({ length: total }, (_, i) => `<span class="${i <= step ? "on" : ""}"></span>`).join("") + "</div>";
+}
+
+function question() {
+  const s = draft.step;
+  if (s >= AXES.length) return openText();
+  const a = AXES[s];
+  const label = draft.moment === "am" ? "Ce matin" : "Ce soir";
+  $("screen").innerHTML = `
+    ${bar(s)}
+    <div class="qnum">${label} · ${s + 1} sur ${AXES.length} · ${esc(a.g)}</div>
+    <div class="axis">${esc(a.titre)}</div>
+    <p class="statement">${esc(a.phrase)}</p>
+    <p class="small">Quelle météo en ce moment, pour vous ?</p>
+    <div class="weather" role="radiogroup" aria-label="${esc(a.titre)}">
+      ${METEO.map((m, i) => `<button type="button" role="radio" aria-checked="${draft.answers[s] === i + 1}" class="wbtn ${draft.answers[s] === i + 1 ? "sel" : ""}" data-v="${i + 1}"><span class="i" aria-hidden="true">${m.i}</span><span class="l">${m.l}</span></button>`).join("")}
+    </div>
+    <div class="scale-hint"><span>Pas du tout</span><span>Tout à fait</span></div>
+    <div class="nav">
+      ${s > 0 ? '<button class="btn ghost" id="prev" type="button">Précédent</button>' : '<button class="btn ghost" id="quit" type="button">Accueil</button>'}
+    </div>
+  `;
+  document.querySelectorAll(".wbtn").forEach(b => b.onclick = () => {
+    draft.answers[s] = Number(b.dataset.v);
+    document.querySelectorAll(".wbtn").forEach(x => { x.classList.toggle("sel", x === b); x.setAttribute("aria-checked", x === b); });
+    setTimeout(() => { draft.step++; question(); }, 260);
+  });
+  if ($("prev")) $("prev").onclick = () => { draft.step--; question(); };
+  if ($("quit")) $("quit").onclick = () => home(false);
+}
+
+function openText() {
+  const am = draft.moment === "am";
+  $("screen").innerHTML = `
+    ${bar(AXES.length)}
+    <div class="qnum">${am ? "Ce matin" : "Ce soir"} · pour finir</div>
+    <h2>${am ? "Qu'attendez-vous <em>de cette journée</em>, pour vous ?" : "Qu'emportez-vous <em>pour vous</em> ce soir ?"}</h2>
+    <p class="small">${am ? "Un mot, une phrase, une envie. Facultatif." : "Une prise de conscience, une phrase, une envie pour demain. Facultatif."}</p>
+    <textarea id="txt" placeholder="${am ? "J'aimerais…" : "Je repars avec…"}">${esc(draft.text)}</textarea>
+    <div class="nav">
+      <button class="btn ghost" id="prev" type="button">Précédent</button>
+      <button class="btn ${am ? "" : "sun"}" id="fin" type="button">${am ? "Enregistrer ma météo" : "Voir ma toile"}</button>
+    </div>
+  `;
+  $("txt").addEventListener("input", e => draft.text = e.target.value);
+  $("prev").onclick = () => { draft.step = AXES.length - 1; question(); };
+  $("fin").onclick = () => {
+    mem[draft.moment] = { answers: draft.answers.slice(), text: draft.text.trim(), at: new Date().toISOString() };
+    save();
+    am ? morningDone() : result();
+  };
+}
+
+/* ===== Fin du matin ===== */
+function morningDone() {
+  setMode("am");
+  const code = mem.am.answers.join("");
+  $("screen").innerHTML = `
+    <h2>Votre météo <em>est posée</em>${mem.prenom ? ", " + esc(mem.prenom) : ""}.</h2>
+    <div class="radar-box">${radar(mem.am.answers, null)}</div>
+    <p class="lead">Rendez-vous ce soir, au même endroit : vous referez le point à zéro, sans voir vos réponses du matin.</p>
+    <p class="small">Si vous changez de téléphone ou de navigateur d'ici ce soir, ce code retrouvera votre matin :</p>
+    <div class="code" aria-label="Code du matin">${code}</div>
+    <button class="btn" id="home" type="button">Terminé</button>
+  `;
+  $("home").onclick = () => home(false);
+}
+
+/* ===== Toile d'araignée ===== */
+function radar(am, pm) {
+  const W = 500, H = 380, cx = W / 2, cy = 188, R = 118, n = AXES.length;
+  const pt = (i, v) => {
+    const ang = -Math.PI / 2 + (2 * Math.PI * i) / n;
+    const r = (R * v) / 5;
+    return [cx + r * Math.cos(ang), cy + r * Math.sin(ang)];
+  };
+  let g = "";
+  for (let lv = 1; lv <= 5; lv++) {
+    const p = AXES.map((_, i) => pt(i, lv).join(",")).join(" ");
+    g += `<polygon points="${p}" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+  }
+  AXES.forEach((a, i) => {
+    const [x, y] = pt(i, 5);
+    g += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)" stroke-width="1"/>`;
+    const [lx, ly] = pt(i, 6.2);
+    const anchor = Math.abs(lx - cx) < 4 ? "middle" : (lx > cx ? "start" : "end");
+    g += `<text x="${lx}" y="${ly + 5}" text-anchor="${anchor}" font-family="Figtree, sans-serif" font-size="12" font-weight="600" fill="${GROUPES[a.g].couleur}">${esc(a.court)}</text>`;
+  });
+  const shape = (vals, color, dash, op) => {
+    const p = vals.map((v, i) => pt(i, v || 0).join(",")).join(" ");
+    let s = `<polygon points="${p}" fill="${color}" fill-opacity="${op}" stroke="${color}" stroke-width="2.5" ${dash ? 'stroke-dasharray="6 5"' : ""} stroke-linejoin="round"/>`;
+    vals.forEach((v, i) => { const [x, y] = pt(i, v || 0); s += `<circle cx="${x}" cy="${y}" r="4" fill="${color}"/>`; });
+    return s;
+  };
+  if (am) g += shape(am, "var(--water)", !!pm, pm ? 0.08 : 0.2);
+  if (pm) g += shape(pm, "var(--sun)", false, 0.22);
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Toile de votre météo intérieure">${g}</svg>`;
+}
+
+/* ===== Résultat comparé ===== */
+function result() {
+  setMode("pm");
+  const am = mem.am && mem.am.answers ? mem.am.answers : null;
+  const pm = mem.pm.answers;
+  const name = mem.prenom ? esc(mem.prenom) : "";
+  $("screen").innerHTML = `
+    <div class="small">${esc(CONFIG.lieu)}</div>
+    <h2>${name ? name + ", votre" : "Votre"} toile <em>de la journée</em></h2>
+    <div class="radar-box">${radar(am, pm)}</div>
+    <div class="legend">${am ? '<span><i class="sw am"></i>Ce matin</span>' : ""}<span><i class="sw pm"></i>Ce soir</span></div>
+    <div class="rows">
+      <div class="rowhead"><span></span><span>Matin</span><span>Soir</span></div>
+      ${AXES.map((a, i) => `${i === 0 || AXES[i-1].g !== a.g ? `<div class="grp">${GROUPES[a.g].titre}</div>` : ""}<div class="row"><span class="n">${esc(a.titre)}</span><span class="e" title="${am ? METEO[am[i] - 1].l : ""}">${am ? METEO[am[i] - 1].i : "–"}</span><span class="e" title="${METEO[pm[i] - 1].l}">${METEO[pm[i] - 1].i}</span></div>`).join("")}
+    </div>
+    ${mem.am && mem.am.text ? `<div class="quote"><span class="k">Ce que j'attendais ce matin</span><span class="v">${esc(mem.am.text)}</span></div>` : ""}
+    ${mem.pm.text ? `<div class="quote pm"><span class="k">Ce que j'emporte ce soir</span><span class="v">${esc(mem.pm.text)}</span></div>` : ""}
+    <div class="reading">
+      <p>Il n'y a ni bonne ni mauvaise toile. Elle ne vous juge pas et ne vous note pas : c'est une photo de votre météo intérieure à un instant précis, ce matin puis ce soir. Demain, elle sera sans doute différente, et c'est normal.</p>
+      <p>Ce qui compte, c'est ce que vous y lisez pour vous. Vous pouvez la garder, la montrer, en parler avec les autres.</p>
+    </div>
+    ${reading(am, pm)}
+    <div class="no-print" style="display:flex;flex-direction:column;gap:10px">
+      ${inFrame ? "" : '<button class="btn sun" id="png" type="button">Enregistrer ma toile en image</button><button class="btn ghost" id="print" type="button">Imprimer ou enregistrer en PDF</button>'}
+      <button class="btn ghost" id="copy" type="button">Copier mon bilan en texte</button>
+      <p class="toast" id="toast"></p>
+      <p class="small">Astuce : une simple capture d'écran garde aussi votre toile.</p>
+      <button class="btn link" id="home" type="button">Retour à l'accueil</button>
+    </div>
+  `;
+  $("home").onclick = () => home(false);
+  $("copy").onclick = () => copyText(am, pm);
+  if ($("print")) $("print").onclick = () => window.print();
+  if ($("png")) $("png").onclick = () => savePng();
+}
+
+function summaryText(am, pm) {
+  let t = `Ma météo intérieure — ${CONFIG.lieu}${mem.prenom ? " — " + mem.prenom : ""}\n\n`;
+  AXES.forEach((a, i) => {
+    t += `${a.titre} : matin ${am ? METEO[am[i] - 1].l : "–"} → soir ${METEO[pm[i] - 1].l}\n`;
+  });
+  if (mem.am && mem.am.text) t += `\nCe que j'attendais : ${mem.am.text}`;
+  if (mem.pm.text) t += `\nCe que j'emporte : ${mem.pm.text}`;
+  return t;
+}
+
+function copyText(am, pm) {
+  const t = summaryText(am, pm);
+  const ok = () => $("toast").textContent = "Bilan copié. Collez-le dans vos notes ou un message.";
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(ok).catch(() => fallbackCopy(t));
+  } else fallbackCopy(t);
+}
+function fallbackCopy(t) {
+  const ta = document.createElement("textarea");
+  ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); $("toast").textContent = "Bilan copié."; }
+  catch (e) { $("toast").textContent = "La copie n'a pas fonctionné : faites une capture d'écran."; }
+  ta.remove();
+}
+
+function savePng() {
+  const svg = document.querySelector(".radar-box svg");
+  const cs = getComputedStyle(document.documentElement);
+  let src = new XMLSerializer().serializeToString(svg);
+  ["--water", "--sun", "--line", "--ink"].forEach(v => { src = src.split(`var(${v})`).join(cs.getPropertyValue(v).trim()); });
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement("canvas");
+    c.width = 1080; c.height = 1180;
+    const x = c.getContext("2d");
+    x.fillStyle = cs.getPropertyValue("--surface").trim() || "#fff"; x.fillRect(0, 0, c.width, c.height);
+    x.fillStyle = cs.getPropertyValue("--ink").trim(); x.font = "italic 56px 'Instrument Serif', Georgia, serif";
+    x.fillText("Ma météo intérieure", 60, 100);
+    x.font = "28px Figtree, sans-serif"; x.fillStyle = cs.getPropertyValue("--muted").trim();
+    x.fillText((mem.prenom ? mem.prenom + " · " : "") + CONFIG.lieu, 60, 148);
+    x.drawImage(img, 0, 180, 1080, 1020);
+    const a = document.createElement("a");
+    a.href = c.toDataURL("image/png"); a.download = "ma-meteo-interieure.png"; a.click();
+    $("toast").textContent = "Image enregistrée.";
+  };
+  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(src);
+}
+
+
+/* ===== Quelques pistes de lecture selon la toile ===== */
+function reading(am, pm) {
+  const idx = AXES.map((_, i) => i);
+  const appuis = idx.filter(i => pm[i] >= 4).sort((a, b) => pm[b] - pm[a]).slice(0, 3);
+  const pistes = idx.filter(i => pm[i] <= 3).sort((a, b) => pm[a] - pm[b]).slice(0, 3);
+  const bouge = am ? idx.filter(i => am[i] !== pm[i]).sort((a, b) => Math.abs(pm[b] - am[b]) - Math.abs(pm[a] - am[a])).slice(0, 3) : [];
+  let h = "";
+  if (appuis.length) h += `<div class="tips"><div class="tk">Vos points d'appui</div>${appuis.map(i => `<p><b>${esc(AXES[i].titre)}.</b> ${esc(AXES[i].appui)}</p>`).join("")}</div>`;
+  if (pistes.length) h += `<div class="tips pm"><div class="tk">Des pistes à explorer, si vous le souhaitez</div>${pistes.map(i => `<p><b>${esc(AXES[i].titre)}.</b> ${esc(AXES[i].piste)}</p>`).join("")}</div>`;
+  if (bouge.length) h += `<div class="tips"><div class="tk">Ce qui a bougé aujourd'hui</div>${bouge.map(i => `<p><b>${esc(AXES[i].titre)}</b> : ${METEO[am[i] - 1].l.toLowerCase()} ce matin, ${METEO[pm[i] - 1].l.toLowerCase()} ce soir. ${pm[i] > am[i] ? "Quelque chose s'est éclairci." : "Le ciel s'est couvert : c'est souvent le signe qu'une prise de conscience est en route."}</p>`).join("")}</div>`;
+  else if (am) h += `<div class="tips"><div class="tk">Ce qui a bougé aujourd'hui</div><p>Votre météo est restée stable. La journée a peut-être confirmé ce que vous saviez déjà de vous : c'est aussi un résultat.</p></div>`;
+  return h;
+}
+
+/* ===== Démarrage ===== */
+home(false);
+</script>
